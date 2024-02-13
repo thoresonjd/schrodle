@@ -1,19 +1,25 @@
 import 'dart:convert';
 import 'dart:io';
 
+/// {@template glossary}
+/// Stores words read from a file.
+/// Assumes the words are unique and sorted.
+/// {@endtemplate}
 class Glossary {
-  /// private constructor
+  /// {@macro glossary}
   Glossary._();
 
   late final List<String> _words;
 
-  /// static factory to construct a [Glossary] instance from a file
+  /// Static factory method that constructs a [Glossary] instance and
+  /// populates it from a file given a [filePath].
   static Future<Glossary> fromFile({required String filePath}) async {
     final glossary = Glossary._();
     await glossary._populate(filePath: filePath);
     return glossary;
   }
 
+  /// Populates the [Glossary] instance from a file given a [filePath].
   Future<void> _populate({required String filePath}) async {
     _words = List<String>.empty(growable: true);
     (await File(filePath)
@@ -24,7 +30,7 @@ class Glossary {
         .forEach(_words.add);
   }
 
-  /// assumes file is sorted
+  /// Determines if the given [word] exists in the [Glossary] instance.
   bool search(String word) {
     if (_words.isEmpty) {
       return false;
@@ -47,9 +53,12 @@ class Glossary {
     return false;
   }
 
+  /// Retrieves the word at the given [index].
   String operator [](int index) => _words[index];
 
+  /// Determines if the glossary is empty.
   bool get isEmpty => _words.isEmpty;
 
+  /// Retrieves the number of words in the glossary.
   int get length => _words.length;
 }
