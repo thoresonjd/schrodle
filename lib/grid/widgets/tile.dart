@@ -1,35 +1,60 @@
 import 'package:flip_card/flip_card.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:schrodle/grid/bloc/grid_bloc.dart';
 
-class TileWidget extends StatelessWidget {
-  TileWidget({super.key}) : _flipCardController = FlipCardController();
+class Tile extends StatefulWidget {
+  Tile({super.key, required this.row, required this.column})
+      : flipCardController = FlipCardController();
 
-  static const _flipSpeed = 400;
-  late final FlipCardController _flipCardController;
+  static const flipSpeed = 400;
+  late final FlipCardController flipCardController;
+  final int row;
+  final int column;
 
   @override
+  State<Tile> createState() => _TileState();
+}
+
+class _TileState extends State<Tile> {
+  @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: _flipCardController.toggleCard,
-      child: FlipCard(
-        controller: _flipCardController,
-        flipOnTouch: false,
-        direction: FlipDirection.VERTICAL,
-        speed: _flipSpeed,
-        front: const ColoredBox(
-          color: Colors.red,
-          child: Center(
-            child: Text('Front'),
+    return BlocBuilder<GridBloc, GridState>(
+      builder: (context, state) {
+        late Text text;
+        switch (state.runtimeType) {
+          case GridIncomplete:
+          case GridComplete:
+            final letter =
+                state.grid.letterAt(row: widget.row, column: widget.column);
+            text = Text(letter ?? '');
+            break;
+          default:
+            text = const Text('');
+        }
+        return GestureDetector(
+          onTap: widget.flipCardController.toggleCard,
+          child: FlipCard(
+            controller: widget.flipCardController,
+            flipOnTouch: false,
+            direction: FlipDirection.VERTICAL,
+            speed: Tile.flipSpeed,
+            front: ColoredBox(
+              color: Colors.red,
+              child: Center(
+                child: text,
+              ),
+            ),
+            back: ColoredBox(
+              color: Colors.orange,
+              child: Center(
+                child: text,
+              ),
+            ),
           ),
-        ),
-        back: const ColoredBox(
-          color: Colors.orange,
-          child: Center(
-            child: Text('Back'),
-          ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

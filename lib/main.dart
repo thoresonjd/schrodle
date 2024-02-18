@@ -35,18 +35,21 @@ class MyHomePage extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(title),
       ),
-      body: Column(
-        children: [
-          Center(child: Grid()),
-          MultiBlocProvider(
-            providers: [
-              BlocProvider<KeyboardBloc>(
-                create: (context) => KeyboardBloc()..add(LoadKeyboard()),
-              ),
-            ],
-            child: const Keyboard(),
+      body: MultiBlocProvider(
+        providers: [
+          BlocProvider<GridBloc>(
+            create: (context) => GridBloc()..add(LoadGrid()),
+          ),
+          BlocProvider<KeyboardBloc>(
+            create: (context) => KeyboardBloc()..add(LoadKeyboard()),
           ),
         ],
+        child: Column(
+          children: [
+            Center(child: Grid()),
+            const Keyboard(),
+          ],
+        ),
       ),
     );
   }

@@ -8,7 +8,6 @@ part 'keyboard_state.dart';
 /// Tracks the state of the keyboard and manages key events
 /// {@endtemplate}
 class KeyboardBloc extends Bloc<KeyboardEvent, KeyboardState> {
-
   /// {@macro keyboard_bloc}
   KeyboardBloc() : super(KeyboardInitial()) {
     on<LoadKeyboard>(_loadKeyboard);
@@ -17,9 +16,9 @@ class KeyboardBloc extends Bloc<KeyboardEvent, KeyboardState> {
   }
 
   static const Set<String> _validKeys = {
-    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-    'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-    'backspace', 'enter',
+    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+    'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+    'BACKSPACE', 'ENTER',
   };
 
   final Set<String> _keysPressed = Set<String>.identity();
@@ -36,8 +35,7 @@ class KeyboardBloc extends Bloc<KeyboardEvent, KeyboardState> {
       return;
     }
     final key = event.key;
-    if (_validKeys.contains(key) && !_keysPressed.contains(key)) {
-      print('$key pressed');
+    if (!_keysPressed.contains(key)) {
       _keysPressed.add(key);
     }
     emit(KeyboardActive());
@@ -50,9 +48,10 @@ class KeyboardBloc extends Bloc<KeyboardEvent, KeyboardState> {
       return;
     }
     final key = event.key;
-    if (_keysPressed.remove(key)) {
-      print('$key released');
-    }
+    _keysPressed.remove(key);
     emit(KeyboardActive());
   }
+
+  /// Determines if a [key] is valid.
+  static bool isValidKey(String key) => _validKeys.contains(key);
 }
