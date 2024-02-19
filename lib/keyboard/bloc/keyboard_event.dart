@@ -21,7 +21,7 @@ class KeyPress extends KeyboardEvent {
   /// {@macro key_press}
   const KeyPress({required this.key});
   
-  /// The lowercase [String] representation of the pressed key.
+  /// The [String] representation of the pressed key.
   final String key;
 }
 
@@ -33,6 +33,6 @@ class KeyRelease extends KeyboardEvent {
   /// {@macro key_release}
   const KeyRelease({required this.key});
 
-  /// The lowercase [String] representation of the released key.
+  /// The [String] representation of the released key.
   final String key;
 }

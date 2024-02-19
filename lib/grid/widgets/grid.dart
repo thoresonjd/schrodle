@@ -1,25 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:schrodle/grid/widgets/tile.dart';
 
+/// {@template grid}
+/// Widget displaying the grid.
+/// {@endtemplate}
 class Grid extends StatelessWidget {
-  Grid({super.key});
+
+  /// {@macro grid}
+  const Grid({super.key});
 
   static const _numRows = 5;
   static const _numColumns = 5;
   static const _gridWidth = 500.0;
   static const _gridPadding = 50.0;
   static const _tileSpacing = 4.0;
-  // late final List<List<Tile>> _tiles;
-
-  // void _createTiles() {
-  //   _tiles = List.generate(
-  //     _numRows,
-  //     (row) => List.generate(
-  //       _numCols,
-  //       (col) => Tile(),
-  //     ),
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {

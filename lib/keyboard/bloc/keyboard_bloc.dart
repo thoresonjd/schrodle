@@ -1,11 +1,12 @@
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 part 'keyboard_event.dart';
 part 'keyboard_state.dart';
 
 /// {@template keyboard_bloc}
-/// Tracks the state of the keyboard and manages key events
+/// Tracks the state of the keyboard and manages key events.
 /// {@endtemplate}
 class KeyboardBloc extends Bloc<KeyboardEvent, KeyboardState> {
   /// {@macro keyboard_bloc}
@@ -23,7 +24,7 @@ class KeyboardBloc extends Bloc<KeyboardEvent, KeyboardState> {
 
   final Set<String> _keysPressed = Set<String>.identity();
 
-  /// Emits a [KeyboardActive] state when a [LoadKeyboard] event is issued
+  /// Emits a [KeyboardActive] state when a [LoadKeyboard] event is issued.
   void _loadKeyboard(LoadKeyboard event, Emitter<KeyboardState> emit) {
     emit(KeyboardActive());
   }

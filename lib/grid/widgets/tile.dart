@@ -4,13 +4,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schrodle/grid/bloc/grid_bloc.dart';
 
+/// {@template tile}
+/// Widget displaying a tile.
+/// {@endtemplate}
 class Tile extends StatefulWidget {
-  Tile({super.key, required this.row, required this.column})
+
+  /// {@macro tile}
+  Tile({required this.row, required this.column, super.key})
       : flipCardController = FlipCardController();
 
+  /// The speed at which a tile flips in milliseconds.
   static const flipSpeed = 400;
+
+  /// Controls when the tile is flipped. 
   late final FlipCardController flipCardController;
+
+  /// The row the tile is located in.
   final int row;
+
+  /// The column the tile is located in.
   final int column;
 
   @override

@@ -8,6 +8,7 @@ import 'package:schrodle/keyboard/bloc/keyboard_bloc.dart';
 /// Handles keyboard input
 /// {@endtemplate}
 class Keyboard extends StatelessWidget {
+  
   /// {@macro keyboard}
   const Keyboard({super.key});
 
