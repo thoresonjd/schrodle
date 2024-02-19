@@ -4,7 +4,10 @@ part of 'keyboard_bloc.dart';
 /// The generic representation of a keyboard state.
 /// {@endtemplate}
 @immutable
-sealed class KeyboardState {}
+sealed class KeyboardState extends Equatable {
+  @override
+  List<Object?> get props => [];
+}
 
 /// {@template keyboard_initial}
 /// A [KeyboardState] representing the initial inactive state of the keyboard.
