@@ -14,3 +14,17 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+## Set Up
+
+To build this project locally, make sure you meet the following requirements:
+
+[] Install Flutter SDK - https://docs.flutter.dev/get-started/install/windows/desktop
+- From VS Code, run:
+    [] `$ dart pub get`
+
+## Run
+
+Open "./lib/main.dart" and click the "Run" button above the main function.
+
+Alternatively, press F5 as a shortcut.
