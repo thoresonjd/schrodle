@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
+import 'package:schrodle/keyboard/data/keys.dart';
 
 part 'keyboard_event.dart';
 part 'keyboard_state.dart';
@@ -16,16 +18,12 @@ class KeyboardBloc extends Bloc<KeyboardEvent, KeyboardState> {
     on<KeyRelease>(_keyReleased);
   }
 
-  static const Set<String> _validKeys = {
-    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-    'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-    'BACKSPACE', 'ENTER',
-  };
-
-  final Set<String> _keysPressed = Set<String>.identity();
+  /// The set of all keys currently being pressed.
+  late final Set<LogicalKeyboardKey> _keysPressed;
 
   /// Emits a [KeyboardActive] state when a [LoadKeyboard] event is issued.
   void _loadKeyboard(LoadKeyboard event, Emitter<KeyboardState> emit) {
+    _keysPressed = Set<LogicalKeyboardKey>.identity();
     emit(KeyboardActive());
   }
 
@@ -54,5 +52,5 @@ class KeyboardBloc extends Bloc<KeyboardEvent, KeyboardState> {
   }
 
   /// Determines if a [key] is valid.
-  static bool isValidKey(String key) => _validKeys.contains(key);
+  static bool isValidKey(LogicalKeyboardKey key) => keys.contains(key);
 }

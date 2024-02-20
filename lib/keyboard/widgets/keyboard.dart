@@ -12,15 +12,16 @@ class Keyboard extends StatelessWidget {
   /// {@macro keyboard}
   const Keyboard({super.key});
 
-  /// Determines the appropriate [GridEvent] to trigger given a keyboard key.
-  GridEvent _gridEventFromKey(String key) {
+  /// Determines the appropriate [GridEvent] to
+  /// trigger given a [LogicalKeyboardKey].
+  GridEvent _gridEventFromKey(LogicalKeyboardKey key) {
     switch (key) {
-      case 'BACKSPACE':
-        return ColumnBackward();
-      case 'ENTER':
+      case LogicalKeyboardKey.enter:
         return RowForward();
+      case LogicalKeyboardKey.backspace:
+        return ColumnBackward();
       default:
-        return ColumnForward(letter: key);
+        return ColumnForward(letter: key.keyLabel.toUpperCase());
     }
   }
 
@@ -32,7 +33,7 @@ class Keyboard extends StatelessWidget {
       onKey: (event) {
         final keyboardProvider = BlocProvider.of<KeyboardBloc>(context);
         final gridProvider = BlocProvider.of<GridBloc>(context);
-        final key = event.logicalKey.keyLabel.toUpperCase();
+        final key = event.logicalKey;
         if (event is RawKeyDownEvent && KeyboardBloc.isValidKey(key)) {
           keyboardProvider.add(KeyPress(key: key));
           gridProvider.add(_gridEventFromKey(key));
