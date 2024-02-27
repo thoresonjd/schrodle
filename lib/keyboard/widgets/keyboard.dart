@@ -8,12 +8,13 @@ import 'package:schrodle/keyboard/bloc/keyboard_bloc.dart';
 /// Handles keyboard input
 /// {@endtemplate}
 class Keyboard extends StatelessWidget {
+  
   /// {@macro keyboard}
   const Keyboard({super.key});
 
   /// Determines the appropriate [GridEvent] to
   /// trigger given a [LogicalKeyboardKey].
-  GridEvent _gridEventFromKey({required LogicalKeyboardKey key}) {
+  static GridEvent _gridEventFromKey({required LogicalKeyboardKey key}) {
     switch (key) {
       case LogicalKeyboardKey.enter:
         return RowForward();
@@ -26,7 +27,7 @@ class Keyboard extends StatelessWidget {
 
   /// Given a [BuildContext], constructs a callback that is called whenever
   /// a [KeyEvent] is triggered.
-  void Function(KeyEvent event) _getOnKeyCallbackFromContext(
+  static void Function(KeyEvent event) _getOnKeyCallbackFromContext(
       {required BuildContext context,}) {
     final keyboardProvider = BlocProvider.of<KeyboardBloc>(context);
     final gridProvider = BlocProvider.of<GridBloc>(context);
