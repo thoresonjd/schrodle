@@ -25,17 +25,17 @@ class Keyboard extends StatelessWidget {
   }
 
   /// Given a [BuildContext], constructs a callback that is called whenever
-  /// a [RawKeyEvent] is triggered.
-  void Function(RawKeyEvent event) _getOnKeyCallbackFromContext(
+  /// a [KeyEvent] is triggered.
+  void Function(KeyEvent event) _getOnKeyCallbackFromContext(
       {required BuildContext context,}) {
     final keyboardProvider = BlocProvider.of<KeyboardBloc>(context);
     final gridProvider = BlocProvider.of<GridBloc>(context);
     return (event) {
       final key = event.logicalKey;
-      if (event is RawKeyDownEvent && keyboardProvider.canPress(key)) {
+      if (event is KeyDownEvent && keyboardProvider.canPress(key)) {
         keyboardProvider.add(KeyPress(key: key));
         gridProvider.add(_gridEventFromKey(key: key));
-      } else if (event is RawKeyUpEvent) {
+      } else if (event is KeyUpEvent) {
         keyboardProvider.add(KeyRelease(key: key));
       }
     };
@@ -43,10 +43,10 @@ class Keyboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RawKeyboardListener(
+    return KeyboardListener(
       autofocus: true,
       focusNode: FocusNode(),
-      onKey: _getOnKeyCallbackFromContext(context: context),
+      onKeyEvent: _getOnKeyCallbackFromContext(context: context),
       // TODO: implement on-screen keyboard UI
       child: const SizedBox(),
     );
