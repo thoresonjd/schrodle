@@ -8,13 +8,12 @@ import 'package:schrodle/keyboard/bloc/keyboard_bloc.dart';
 /// Handles keyboard input
 /// {@endtemplate}
 class Keyboard extends StatelessWidget {
-  
   /// {@macro keyboard}
   const Keyboard({super.key});
 
   /// Determines the appropriate [GridEvent] to
   /// trigger given a [LogicalKeyboardKey].
-  GridEvent _gridEventFromKey(LogicalKeyboardKey key) {
+  GridEvent _gridEventFromKey({required LogicalKeyboardKey key}) {
     switch (key) {
       case LogicalKeyboardKey.enter:
         return RowForward();
@@ -25,22 +24,29 @@ class Keyboard extends StatelessWidget {
     }
   }
 
+  /// Given a [BuildContext], constructs a callback that is called whenever
+  /// a [RawKeyEvent] is triggered.
+  void Function(RawKeyEvent event) _getOnKeyCallbackFromContext(
+      {required BuildContext context,}) {
+    final keyboardProvider = BlocProvider.of<KeyboardBloc>(context);
+    final gridProvider = BlocProvider.of<GridBloc>(context);
+    return (event) {
+      final key = event.logicalKey;
+      if (event is RawKeyDownEvent && keyboardProvider.canPress(key)) {
+        keyboardProvider.add(KeyPress(key: key));
+        gridProvider.add(_gridEventFromKey(key: key));
+      } else if (event is RawKeyUpEvent) {
+        keyboardProvider.add(KeyRelease(key: key));
+      }
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     return RawKeyboardListener(
       autofocus: true,
       focusNode: FocusNode(),
-      onKey: (event) {
-        final keyboardProvider = BlocProvider.of<KeyboardBloc>(context);
-        final gridProvider = BlocProvider.of<GridBloc>(context);
-        final key = event.logicalKey;
-        if (event is RawKeyDownEvent && keyboardProvider.canPress(key)) {
-          keyboardProvider.add(KeyPress(key: key));
-          gridProvider.add(_gridEventFromKey(key));
-        } else if (event is RawKeyUpEvent) {
-          keyboardProvider.add(KeyRelease(key: key));
-        }
-      },
+      onKey: _getOnKeyCallbackFromContext(context: context),
       // TODO: implement on-screen keyboard UI
       child: const SizedBox(),
     );
