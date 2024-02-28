@@ -3,12 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schrodle/grid/grid.dart';
 import 'package:schrodle/keyboard/bloc/keyboard_bloc.dart';
+import 'package:schrodle/keyboard/data/keys.dart';
 
 /// {@template keyboard}
 /// Handles keyboard input
 /// {@endtemplate}
 class Keyboard extends StatelessWidget {
-  
   /// {@macro keyboard}
   const Keyboard({super.key});
 
@@ -27,8 +27,9 @@ class Keyboard extends StatelessWidget {
 
   /// Given a [BuildContext], constructs a callback that is called whenever
   /// a [KeyEvent] is triggered.
-  static void Function(KeyEvent event) _getOnKeyCallbackFromContext(
-      {required BuildContext context,}) {
+  static void Function(KeyEvent event) _getOnKeyCallbackFromContext({
+    required BuildContext context,
+  }) {
     final keyboardProvider = BlocProvider.of<KeyboardBloc>(context);
     final gridProvider = BlocProvider.of<GridBloc>(context);
     return (event) {
@@ -44,12 +45,45 @@ class Keyboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final gridProvider = BlocProvider.of<GridBloc>(context);
     return KeyboardListener(
       autofocus: true,
       focusNode: FocusNode(),
       onKeyEvent: _getOnKeyCallbackFromContext(context: context),
-      // TODO: implement on-screen keyboard UI
-      child: const SizedBox(),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              for (var i = 0; i < 10; i++)
+                GestureDetector(
+                    onTap: () =>
+                        {gridProvider.add(_gridEventFromKey(key: keys[i]))},
+                    child: Card(child: Text(keys[i].keyLabel)),),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              for (var i = 10; i < 19; i++)
+                GestureDetector(
+                    onTap: () =>
+                        {gridProvider.add(_gridEventFromKey(key: keys[i]))},
+                    child: Card(child: Text(keys[i].keyLabel)),),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              for (var i = 19; i < 28; i++)
+                GestureDetector(
+                    onTap: () =>
+                        {gridProvider.add(_gridEventFromKey(key: keys[i]))},
+                    child: Card(child: Text(keys[i].keyLabel)),),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

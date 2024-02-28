@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 
-/// Set of all keys that the game will accept.
-final Set<LogicalKeyboardKey> keys = {
+/// List of all keys that the game will accept.
+final List<LogicalKeyboardKey> keys = [
   // Top row
   LogicalKeyboardKey.keyQ,
   LogicalKeyboardKey.keyW,
@@ -35,4 +35,4 @@ final Set<LogicalKeyboardKey> keys = {
   LogicalKeyboardKey.keyN,
   LogicalKeyboardKey.keyM,
   LogicalKeyboardKey.backspace,
-};
+];
