@@ -8,22 +8,28 @@ import 'package:schrodle/grid/bloc/grid_bloc.dart';
 /// Widget displaying a tile.
 /// {@endtemplate}
 class Tile extends StatefulWidget {
-
   /// {@macro tile}
-  Tile({required this.row, required this.column, super.key})
+  Tile(
+      {required this.row,
+      required this.column,
+      required this.flipSpeed,
+      super.key,})
       : flipCardController = FlipCardController();
 
-  /// The speed at which a tile flips in milliseconds.
-  static const flipSpeed = 400;
-
-  /// Controls when the tile is flipped. 
+  /// Controls when the tile is flipped.
   late final FlipCardController flipCardController;
+
+  /// The speed at which a tile flips in milliseconds.
+  final int flipSpeed;
 
   /// The row the tile is located in.
   final int row;
 
   /// The column the tile is located in.
   final int column;
+
+  /// Triggers the flip animation of the tile.
+  void flip() => flipCardController.toggleCard();
 
   @override
   State<Tile> createState() => _TileState();
@@ -36,33 +42,30 @@ class _TileState extends State<Tile> {
       builder: (context, state) {
         late Text text;
         switch (state.runtimeType) {
+          case GridRowFlipping:
           case GridIncomplete:
           case GridComplete:
             final letter =
                 state.grid.letterAt(row: widget.row, column: widget.column);
             text = Text(letter ?? '');
-            break;
           default:
             text = const Text('');
         }
-        return GestureDetector(
-          onTap: widget.flipCardController.toggleCard,
-          child: FlipCard(
-            controller: widget.flipCardController,
-            flipOnTouch: false,
-            direction: FlipDirection.VERTICAL,
-            speed: Tile.flipSpeed,
-            front: ColoredBox(
-              color: Colors.red,
-              child: Center(
-                child: text,
-              ),
+        return FlipCard(
+          controller: widget.flipCardController,
+          flipOnTouch: false,
+          direction: FlipDirection.VERTICAL,
+          speed: widget.flipSpeed,
+          front: ColoredBox(
+            color: Colors.red,
+            child: Center(
+              child: text,
             ),
-            back: ColoredBox(
-              color: Colors.orange,
-              child: Center(
-                child: text,
-              ),
+          ),
+          back: ColoredBox(
+            color: Colors.orange,
+            child: Center(
+              child: text,
             ),
           ),
         );

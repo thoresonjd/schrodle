@@ -11,10 +11,10 @@ part 'grid_state.dart';
 /// Tracks the state of the grid and manages grid event.
 /// {@endtemplate}
 class GridBloc extends Bloc<GridEvent, GridState> {
-
   /// {@macro grid_bloc}
   GridBloc() : super(GridInitial(grid: Grid(tiles: List.empty()))) {
     on<LoadGrid>(_loadGrid);
+    on<RowFlip>(_rowFlip);
     on<RowForward>(_rowForward);
     on<ColumnForward>(_columnForward);
     on<ColumnBackward>(_columnBackward);
@@ -44,17 +44,28 @@ class GridBloc extends Bloc<GridEvent, GridState> {
     emit(GridIncomplete(grid: Grid(tiles: _tiles)));
   }
 
+  /// Initiates the flipping of the current row.
+  void _rowFlip(RowFlip event, Emitter<GridState> emit) {
+    if (state is GridComplete ||
+        _row >= _numRows ||
+        _column < _numColumns - 1) {
+      return;
+    }
+    emit(GridRowFlipping(row: _row, grid: Grid(tiles: _tiles)));
+  }
+
   /// Moves the current [_row] of the grid forward by one.
   void _rowForward(RowForward event, Emitter<GridState> emit) {
-    if (state is GridComplete || _row >= _numRows || _column < 4) {
+    if (state is GridComplete ||
+        _row >= _numRows ||
+        _column < _numColumns - 1) {
       return;
     }
     _row++;
     if (_row >= _numRows) {
       add(CompleteGrid());
     }
-    _column = -1;
-    emit(GridUpdated(grid: Grid(tiles: _tiles)));
+    _column = -1; 
     emit(GridIncomplete(grid: Grid(tiles: _tiles)));
   }
 
@@ -71,7 +82,7 @@ class GridBloc extends Bloc<GridEvent, GridState> {
 
   /// Moves the current [_column] of the grid backward by one.
   void _columnBackward(ColumnBackward event, Emitter<GridState> emit) {
-    if (state is GridComplete || _column <= -1) {
+    if (state is GridComplete || state is GridRowFlipping ||  _column <= -1) {
       return;
     }
     _tiles[_row][_column] = const Tile();
