@@ -23,7 +23,7 @@ class KeyboardBloc extends Bloc<KeyboardEvent, KeyboardState> {
 
   /// Emits a [KeyboardActive] state when a [LoadKeyboard] event is issued.
   void _loadKeyboard(LoadKeyboard event, Emitter<KeyboardState> emit) {
-    _keysPressed = Set<LogicalKeyboardKey>.identity();
+    _keysPressed = <LogicalKeyboardKey>{};
     emit(KeyboardActive());
   }
 
@@ -51,6 +51,9 @@ class KeyboardBloc extends Bloc<KeyboardEvent, KeyboardState> {
     emit(KeyboardActive());
   }
 
-  /// Determines if a [key] is valid.
-  static bool isValidKey(LogicalKeyboardKey key) => keys.contains(key);
+  /// Determines if a [key] is can be pressed. A key can be pressed if it is
+  /// contained in the set of all keys accepted by the game and not contained
+  /// in the set of all currently pressed keys.
+  bool canPress(LogicalKeyboardKey key) =>
+      keys.contains(key) && !_keysPressed.contains(key);
 }
