@@ -5,7 +5,6 @@ part of 'grid_bloc.dart';
 /// {@endtemplate}
 @immutable
 sealed class GridEvent {
-
   /// {@macro grid_event}
   const GridEvent();
 }
@@ -14,6 +13,11 @@ sealed class GridEvent {
 /// A [GridEvent] that triggers when the grid must be initialized.
 /// {@endtemplate}
 class LoadGrid extends GridEvent {}
+
+/// {@template row_flip}
+/// A [GridEvent] that triggers the flipping of the active row.
+/// {@endtemplate}
+class RowFlip extends GridEvent {}
 
 /// {@template row_forward}
 /// A [GridEvent] that occurs whenever the current row must advance forward.
@@ -24,7 +28,6 @@ class RowForward extends GridEvent {}
 /// A [GridEvent] that occurs whenever the current column must advance forward.
 /// {@endtemplate}
 class ColumnForward extends GridEvent {
-
   /// {@macro column_forward}
   const ColumnForward({required this.letter});
 

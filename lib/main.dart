@@ -44,10 +44,10 @@ class MyHomePage extends StatelessWidget {
             create: (context) => KeyboardBloc()..add(LoadKeyboard()),
           ),
         ],
-        child: const Column(
+        child: Column(
           children: [
             Center(child: Grid()),
-            Keyboard(),
+            const Keyboard(),
           ],
         ),
       ),

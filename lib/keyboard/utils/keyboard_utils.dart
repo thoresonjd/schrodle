@@ -6,7 +6,7 @@ import 'package:schrodle/grid/bloc/grid_bloc.dart';
 GridEvent gridEventFromKey({required LogicalKeyboardKey key}) {
   switch (key) {
     case LogicalKeyboardKey.enter:
-      return RowForward();
+      return RowFlip();
     case LogicalKeyboardKey.backspace:
       return ColumnBackward();
     default:

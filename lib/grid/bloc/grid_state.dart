@@ -5,7 +5,6 @@ part of 'grid_bloc.dart';
 /// {@endtemplate}
 @immutable
 sealed class GridState extends Equatable {
-
   /// {@macro grid_state}
   const GridState({required this.grid});
 
@@ -20,9 +19,19 @@ sealed class GridState extends Equatable {
 /// A [GridState] representing the initial state of the grid.
 /// {@endtemplate}
 final class GridInitial extends GridState {
-
   /// {@macro grid_initial}
   const GridInitial({required super.grid});
+}
+
+/// {@template grid_row_flipping}
+/// A [GridState] indicating that the active row is undergoing a flip animation.
+/// {@endtemplate}
+final class GridRowFlipping extends GridState {
+  /// {@macro grid_row_flipping}
+  const GridRowFlipping({required this.row, required super.grid});
+  
+  /// The active row number undergoing a flip animation.
+  final int row;
 }
 
 /// {@template grid_updated}
@@ -32,7 +41,6 @@ final class GridInitial extends GridState {
 /// of state. Two distict state types are required to reflect a state change.
 /// {@endtemplate}
 final class GridUpdated extends GridState {
-
   /// {@macro grid_updated}
   const GridUpdated({required super.grid});
 }
@@ -41,7 +49,6 @@ final class GridUpdated extends GridState {
 /// A [GridState] representing the grid when it is still in an incomplete stage.
 /// {@endtemplate}
 final class GridIncomplete extends GridState {
-
   /// {@macro grid_incomplete}
   const GridIncomplete({required super.grid});
 }
@@ -50,7 +57,6 @@ final class GridIncomplete extends GridState {
 /// A [GridState] representing the grid when it has been completed.
 /// {@endtemplate}
 final class GridComplete extends GridState {
-
   /// {@macro grid_complete}
   const GridComplete({required super.grid});
 }
