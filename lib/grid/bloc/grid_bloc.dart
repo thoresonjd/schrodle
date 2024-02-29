@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:schrodle/glossary/glossary.dart';
+import 'package:schrodle/glossary/src/glossary.dart';
 import 'package:schrodle/grid/models/grid.dart';
 import 'package:schrodle/grid/models/tile.dart';
 
@@ -8,7 +10,7 @@ part 'grid_event.dart';
 part 'grid_state.dart';
 
 /// {@template grid_bloc}
-/// Tracks the state of the grid and manages grid event.
+/// Tracks the state of the grid and manages grid events.
 /// {@endtemplate}
 class GridBloc extends Bloc<GridEvent, GridState> {
   /// {@macro grid_bloc}
@@ -23,9 +25,24 @@ class GridBloc extends Bloc<GridEvent, GridState> {
 
   static const _numRows = 5;
   static const _numColumns = 5;
+  late final List<List<Tile>> _tiles;
+  late final Glossary _validGuesses;
+  late final Glossary _validSolutions;
+  late final String _targetWord;
+  late final String _impostorWord;
   int _row = 0;
   int _column = -1;
-  late final List<List<Tile>> _tiles;
+
+  Future<void> _populateGlossaries() async {
+    _validGuesses = await Glossary.fromFile(filePath: 'glossary/guesses');
+    _validSolutions = await Glossary.fromFile(filePath: 'glossary/solutions');
+  }
+
+  void _selectWords() {
+    final randomWordSelector = RandomWordSelector();
+    _targetWord = randomWordSelector.select(_validSolutions);
+    _impostorWord = randomWordSelector.select(_validSolutions);
+  }
 
   /// Assigns a [Tile] at each intersecting row and column.
   void _initializeGrid() {
@@ -38,8 +55,22 @@ class GridBloc extends Bloc<GridEvent, GridState> {
     );
   }
 
+  String _getGuess(int row) {
+    final buffer = StringBuffer();
+    for (var column = 0; column < _numColumns; column++) {
+      buffer.write(_tiles[row][column].letter);
+    }
+    return buffer.toString().toLowerCase();
+  }
+
+  bool _isValidGuess(String word) {
+    return _validGuesses.search(word) || _validSolutions.search(word);
+  }
+
   /// Loads the grid.
-  void _loadGrid(LoadGrid event, Emitter<GridState> emit) {
+  Future<void> _loadGrid(LoadGrid event, Emitter<GridState> emit) async {
+    await _populateGlossaries();
+    _selectWords();
     _initializeGrid();
     emit(GridIncomplete(grid: Grid(tiles: _tiles)));
   }
@@ -51,7 +82,13 @@ class GridBloc extends Bloc<GridEvent, GridState> {
         _column < _numColumns - 1) {
       return;
     }
-    emit(GridRowFlipping(row: _row, grid: Grid(tiles: _tiles)));
+    final guess = _getGuess(_row);
+    print(guess);
+    if (!_isValidGuess(guess)) {
+      print('Invalid guess');
+    } else {
+      emit(GridRowFlipping(row: _row, grid: Grid(tiles: _tiles)));
+    }
   }
 
   /// Moves the current [_row] of the grid forward by one.
@@ -65,7 +102,7 @@ class GridBloc extends Bloc<GridEvent, GridState> {
     if (_row >= _numRows) {
       add(CompleteGrid());
     }
-    _column = -1; 
+    _column = -1;
     emit(GridIncomplete(grid: Grid(tiles: _tiles)));
   }
 
@@ -82,7 +119,7 @@ class GridBloc extends Bloc<GridEvent, GridState> {
 
   /// Moves the current [_column] of the grid backward by one.
   void _columnBackward(ColumnBackward event, Emitter<GridState> emit) {
-    if (state is GridComplete || state is GridRowFlipping ||  _column <= -1) {
+    if (state is GridComplete || state is GridRowFlipping || _column <= -1) {
       return;
     }
     _tiles[_row][_column] = const Tile();
