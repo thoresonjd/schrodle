@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 /// {@template glossary}
 /// Stores words read from a file.
@@ -21,13 +23,16 @@ class Glossary {
 
   /// Populates the [Glossary] instance from a file given a [filePath].
   Future<void> _populate({required String filePath}) async {
-    _words = List<String>.empty(growable: true);
-    (await File(filePath)
-            .openRead()
-            .map(utf8.decode)
-            .transform(const LineSplitter())
-            .toList())
-        .forEach(_words.add);
+    if (kIsWeb) {
+      _words = (await rootBundle.loadString(filePath)).split('\r\n');
+    } else {
+      (await File(filePath)
+              .openRead()
+              .map(utf8.decode)
+              .transform(const LineSplitter())
+              .toList())
+          .forEach(_words.add);
+    }
   }
 
   /// Determines if the given [word] exists in the [Glossary] instance.
