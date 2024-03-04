@@ -1,15 +1,32 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:schrodle/grid/bloc/grid_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:schrodle/game/game.dart';
+import 'package:schrodle/grid/grid.dart';
 
-/// Determines the appropriate [GridEvent] to
-/// trigger given a [LogicalKeyboardKey].
-GridEvent gridEventFromKey({required LogicalKeyboardKey key}) {
+/// Handles key presses appropriately, including determination of proper
+/// [GridEvent] to trigger given a [LogicalKeyboardKey].
+void handleKeyPress({
+  required BuildContext context,
+  required LogicalKeyboardKey key,
+}) {
+  final gameProvider = BlocProvider.of<GameBloc>(context);
+  final gridProvider = BlocProvider.of<GridBloc>(context);
   switch (key) {
     case LogicalKeyboardKey.enter:
-      return RowFlip();
+      late final String guess;
+      try {
+        guess = gridProvider.getRow();
+        final isValidGuess = gameProvider.isValidGuess(guess);
+        gameProvider.add(GuessMade(guess: guess, isValidGuess: isValidGuess));
+        if (isValidGuess) {
+          gridProvider.add(RowFlip());
+        }
+      // ignore: empty_catches
+      } on Exception {}
     case LogicalKeyboardKey.backspace:
-      return ColumnBackward();
+      gridProvider.add(ColumnBackward());
     default:
-      return ColumnForward(letter: key.keyLabel.toUpperCase());
+      gridProvider.add(ColumnForward(letter: key.keyLabel.toUpperCase()));
   }
 }
