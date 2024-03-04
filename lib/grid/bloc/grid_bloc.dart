@@ -38,7 +38,8 @@ class GridBloc extends Bloc<GridEvent, GridState> {
     );
   }
 
-  String getRow() {
+  /// Retrieves the current row's letters, from left to right, as a [String].
+  String currentRowAsString() {
     if (state is GridComplete ||
         _row >= _numRows ||
         _column < _numColumns - 1) {

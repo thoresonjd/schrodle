@@ -4,9 +4,12 @@ part of 'grid_bloc.dart';
 /// The generic representation of a grid event.
 /// {@endtemplate}
 @immutable
-sealed class GridEvent {
+sealed class GridEvent extends Equatable {
   /// {@macro grid_event}
   const GridEvent();
+
+  @override
+  List<Object> get props => [];
 }
 
 /// {@template load_grid}
@@ -33,6 +36,9 @@ class ColumnForward extends GridEvent {
 
   /// The letter to place in the next column after advancing forward.
   final String letter;
+
+  @override
+  List<Object> get props => [letter];
 }
 
 /// {@template column_backward}

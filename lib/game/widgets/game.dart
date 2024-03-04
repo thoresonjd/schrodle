@@ -4,7 +4,11 @@ import 'package:schrodle/game/game.dart';
 import 'package:schrodle/grid/grid.dart';
 import 'package:schrodle/keyboard/keyboard.dart';
 
+/// {@template game}
+/// Renders the game.
+/// {@endtemplate}
 class Game extends StatelessWidget {
+  /// {@macro game}
   const Game({super.key});
 
   @override

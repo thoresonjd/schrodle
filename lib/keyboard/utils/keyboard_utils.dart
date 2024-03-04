@@ -16,7 +16,7 @@ void handleKeyPress({
     case LogicalKeyboardKey.enter:
       late final String guess;
       try {
-        guess = gridProvider.getRow();
+        guess = gridProvider.currentRowAsString();
         final isValidGuess = gameProvider.isValidGuess(guess);
         gameProvider.add(GuessMade(guess: guess, isValidGuess: isValidGuess));
         if (isValidGuess) {
