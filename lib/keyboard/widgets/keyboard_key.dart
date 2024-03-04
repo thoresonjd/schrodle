@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:schrodle/grid/bloc/grid_bloc.dart';
 import 'package:schrodle/keyboard/utils/keyboard_utils.dart';
 
 /// {@template keyboard_key}
@@ -17,9 +15,8 @@ class KeyboardKey extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final gridProvider = BlocProvider.of<GridBloc>(context);
     return GestureDetector(
-      onTap: () => {gridProvider.add(gridEventFromKey(key: keyboardKey))},
+      onTap: () => {handleKeyPress(context: context, key: keyboardKey)},
       child: Card(
         child: Text(keyboardKey.keyLabel),
       ),

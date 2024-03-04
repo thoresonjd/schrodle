@@ -8,7 +8,7 @@ part 'grid_event.dart';
 part 'grid_state.dart';
 
 /// {@template grid_bloc}
-/// Tracks the state of the grid and manages grid event.
+/// Tracks the state of the grid and manages grid events.
 /// {@endtemplate}
 class GridBloc extends Bloc<GridEvent, GridState> {
   /// {@macro grid_bloc}
@@ -23,9 +23,9 @@ class GridBloc extends Bloc<GridEvent, GridState> {
 
   static const _numRows = 5;
   static const _numColumns = 5;
+  late final List<List<Tile>> _tiles;
   int _row = 0;
   int _column = -1;
-  late final List<List<Tile>> _tiles;
 
   /// Assigns a [Tile] at each intersecting row and column.
   void _initializeGrid() {
@@ -36,6 +36,20 @@ class GridBloc extends Bloc<GridEvent, GridState> {
         (col) => const Tile(),
       ),
     );
+  }
+
+  /// Retrieves the current row's letters, from left to right, as a [String].
+  String currentRowAsString() {
+    if (state is GridComplete ||
+        _row >= _numRows ||
+        _column < _numColumns - 1) {
+      throw Exception('Cannot retrieve a guess.');
+    }
+    final buffer = StringBuffer();
+    for (var column = 0; column < _numColumns; column++) {
+      buffer.write(_tiles[_row][column].letter);
+    }
+    return buffer.toString().toLowerCase();
   }
 
   /// Loads the grid.
@@ -65,7 +79,7 @@ class GridBloc extends Bloc<GridEvent, GridState> {
     if (_row >= _numRows) {
       add(CompleteGrid());
     }
-    _column = -1; 
+    _column = -1;
     emit(GridIncomplete(grid: Grid(tiles: _tiles)));
   }
 
@@ -82,7 +96,7 @@ class GridBloc extends Bloc<GridEvent, GridState> {
 
   /// Moves the current [_column] of the grid backward by one.
   void _columnBackward(ColumnBackward event, Emitter<GridState> emit) {
-    if (state is GridComplete || state is GridRowFlipping ||  _column <= -1) {
+    if (state is GridComplete || state is GridRowFlipping || _column <= -1) {
       return;
     }
     _tiles[_row][_column] = const Tile();

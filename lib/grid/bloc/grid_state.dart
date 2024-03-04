@@ -32,6 +32,9 @@ final class GridRowFlipping extends GridState {
   
   /// The active row number undergoing a flip animation.
   final int row;
+
+  @override
+  List<Object> get props => [super.grid, row];
 }
 
 /// {@template grid_updated}

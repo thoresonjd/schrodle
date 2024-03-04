@@ -17,7 +17,7 @@ class Grid extends StatelessWidget {
   static const _gridWidth = 500.0;
   static const _gridPadding = 50.0;
   static const _tileSpacing = 4.0;
-  static const _tileFlipSpeed = 400;
+  static const _tileFlipTime = 400;
 
   late final List<List<Tile>> _tiles;
 
@@ -29,7 +29,7 @@ class Grid extends StatelessWidget {
         (column) => Tile(
           row: row,
           column: column,
-          flipSpeed: _tileFlipSpeed,
+          flipTime: _tileFlipTime,
         ),
       ),
     );
@@ -48,7 +48,7 @@ class Grid extends StatelessWidget {
             // tiles. Therefore, we wait for the final tile to fully complete
             // its flip animation before moving on.
             final sleepTime =
-                column < _numColumns - 1 ? _tileFlipSpeed ~/ 2 : _tileFlipSpeed;
+                column < _numColumns - 1 ? _tileFlipTime ~/ 2 : _tileFlipTime;
             final duration = Duration(milliseconds: sleepTime);
             await Future.delayed(duration, () => {});
           }

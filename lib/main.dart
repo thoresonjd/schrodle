@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:schrodle/grid/grid.dart';
-import 'package:schrodle/keyboard/keyboard.dart';
+import 'package:schrodle/game/widgets/game.dart';
 
 void main() {
   runApp(const MyApp());
@@ -35,22 +33,7 @@ class MyHomePage extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(title),
       ),
-      body: MultiBlocProvider(
-        providers: [
-          BlocProvider<GridBloc>(
-            create: (context) => GridBloc()..add(LoadGrid()),
-          ),
-          BlocProvider<KeyboardBloc>(
-            create: (context) => KeyboardBloc()..add(LoadKeyboard()),
-          ),
-        ],
-        child: Column(
-          children: [
-            Center(child: Grid()),
-            const Keyboard(),
-          ],
-        ),
-      ),
+      body: const Game(),
     );
   }
 }

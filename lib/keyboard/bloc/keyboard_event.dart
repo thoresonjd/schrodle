@@ -4,8 +4,12 @@ part of 'keyboard_bloc.dart';
 /// The generic representation of a keyboard event.
 /// {@endtemplate}
 @immutable
-sealed class KeyboardEvent {
+sealed class KeyboardEvent extends Equatable {
+  /// {@macro keyboard_event}
   const KeyboardEvent();
+
+  @override
+  List<Object> get props => [];
 }
 
 /// {@template load_keyboard}
@@ -23,6 +27,9 @@ class KeyPress extends KeyboardEvent {
   
   /// The pressed key.
   final LogicalKeyboardKey key;
+
+  @override
+  List<Object> get props => [key];
 }
 
 /// {@template key_release}
@@ -35,4 +42,7 @@ class KeyRelease extends KeyboardEvent {
 
   /// The released key.
   final LogicalKeyboardKey key;
+
+  @override
+  List<Object> get props => [key];  
 }

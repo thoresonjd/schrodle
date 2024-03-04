@@ -12,15 +12,15 @@ class Tile extends StatefulWidget {
   Tile(
       {required this.row,
       required this.column,
-      required this.flipSpeed,
+      required this.flipTime,
       super.key,})
       : flipCardController = FlipCardController();
 
   /// Controls when the tile is flipped.
   late final FlipCardController flipCardController;
 
-  /// The speed at which a tile flips in milliseconds.
-  final int flipSpeed;
+  /// The time it takes a tile to flip in milliseconds.
+  final int flipTime;
 
   /// The row the tile is located in.
   final int row;
@@ -55,7 +55,7 @@ class _TileState extends State<Tile> {
           controller: widget.flipCardController,
           flipOnTouch: false,
           direction: FlipDirection.VERTICAL,
-          speed: widget.flipSpeed,
+          speed: widget.flipTime,
           front: ColoredBox(
             color: Colors.red,
             child: Center(
