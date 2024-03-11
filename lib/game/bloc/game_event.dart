@@ -22,13 +22,10 @@ class LoadGame extends GameEvent {}
 /// {@endtemplate}
 class GuessMade extends GameEvent {
   /// {@macro guess_made}
-  const GuessMade({required this.guess, required this.isValidGuess});
+  const GuessMade({required this.guess});
 
   /// The submitted guess.
   final String guess;
-
-  /// Whether the guess is valid or not.
-  final bool isValidGuess;
 }
 
 /// {@template game_over}

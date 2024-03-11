@@ -22,10 +22,7 @@ final class GameInitial extends GameState {}
 /// {@endtemplate}
 final class GameInProgress extends GameState {
   /// {@macro game_in_progress}
-  const GameInProgress({required this.isCurrentGuessValid});
-  
-  /// Whether the word currently guessed is valid or not.
-  final bool isCurrentGuessValid;
+  const GameInProgress();
 }
 
 /// {@template game_won}

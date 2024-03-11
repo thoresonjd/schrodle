@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:schrodle/grid/constants/letter_status.dart';
 import 'package:schrodle/grid/models/grid.dart';
 import 'package:schrodle/grid/models/tile.dart';
 
@@ -27,17 +28,6 @@ class GridBloc extends Bloc<GridEvent, GridState> {
   int _row = 0;
   int _column = -1;
 
-  /// Assigns a [Tile] at each intersecting row and column.
-  void _initializeGrid() {
-    _tiles = List<List<Tile>>.generate(
-      _numRows,
-      (row) => List<Tile>.generate(
-        _numColumns,
-        (col) => const Tile(),
-      ),
-    );
-  }
-
   /// Retrieves the current row's letters, from left to right, as a [String].
   String currentRowAsString() {
     if (state is GridComplete ||
@@ -50,6 +40,39 @@ class GridBloc extends Bloc<GridEvent, GridState> {
       buffer.write(_tiles[_row][column].letter);
     }
     return buffer.toString().toLowerCase();
+  }
+
+  Color getColorFromStatus(LetterStatus status) {
+    switch (status) {
+      case LetterStatus.guessed:
+        return Colors.blue;
+      case LetterStatus.correctSpot:
+        return Colors.green;
+      case LetterStatus.present:
+        return Colors.yellow;
+      case LetterStatus.notPresent:
+      case LetterStatus.unanswered:
+        return Colors.red;
+    }
+  }
+
+  void updateRowColors(List<LetterStatus> statuses) {
+    for (var column = 0; column < _numColumns; column++) {
+      final tile = _tiles[_row][column];
+      _tiles[_row][column] = Tile(
+          letter: tile.letter, color: getColorFromStatus(statuses[column]));
+    }
+  }
+
+  /// Assigns a [Tile] at each intersecting row and column.
+  void _initializeGrid() {
+    _tiles = List<List<Tile>>.generate(
+      _numRows,
+      (row) => List<Tile>.generate(
+        _numColumns,
+        (col) => const Tile(),
+      ),
+    );
   }
 
   /// Loads the grid.

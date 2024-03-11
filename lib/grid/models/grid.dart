@@ -12,9 +12,9 @@ class Grid extends Equatable {
   /// The two-dimensional layout of all tiles in the grid.
   final List<List<Tile>> tiles;
 
-  /// Retrieves the letter of the tile at the location of [row] and [column].
-  String? letterAt({required int row, required int column}) =>
-      tiles[row][column].letter;
+  /// Retrieves the tile at the location of [row] and [column].
+  Tile at({required int row, required int column}) =>
+      tiles[row][column];
 
   @override
   List<Object?> get props => [tiles];
