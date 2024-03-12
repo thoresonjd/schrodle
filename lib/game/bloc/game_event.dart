@@ -27,8 +27,3 @@ class GuessMade extends GameEvent {
   /// The submitted guess.
   final String guess;
 }
-
-/// {@template game_over}
-/// A [GameEvent] that triggers when the game has ended.
-/// {@endtemplate}
-class GameOver extends GameEvent {}

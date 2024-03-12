@@ -25,12 +25,13 @@ final class GameInProgress extends GameState {
   const GameInProgress();
 }
 
-/// {@template game_won}
-/// A [GameState] indicating that the game has been won.
+/// {@template game_over}
+/// A [GameState] indicating that the game is over.
 /// {@endtemplate}
-final class GameWon extends GameState {}
+final class GameOver extends GameState {
+  /// {@macro game_over}
+  const GameOver({required this.won});
 
-/// {@template game_lost}
-/// A [GameState] indicating that the game has been lost.
-/// {@endtemplate}
-final class GameLost extends GameState {}
+  /// Determines if the game had been won or lost.
+  final bool won;
+}

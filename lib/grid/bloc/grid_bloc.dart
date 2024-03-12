@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:schrodle/grid/constants/letter_status.dart';
+import 'package:schrodle/grid/constants/tile_status.dart';
 import 'package:schrodle/grid/models/grid.dart';
 import 'package:schrodle/grid/models/tile.dart';
 
@@ -42,25 +42,27 @@ class GridBloc extends Bloc<GridEvent, GridState> {
     return buffer.toString().toLowerCase();
   }
 
-  Color getColorFromStatus(LetterStatus status) {
+  /// Retrieves the [Color] for the corresponding [TileStatus].
+  static Color _getColorFromStatus(TileStatus status) {
     switch (status) {
-      case LetterStatus.guessed:
+      case TileStatus.guessed:
         return Colors.blue;
-      case LetterStatus.correctSpot:
+      case TileStatus.correctSpot:
         return Colors.green;
-      case LetterStatus.present:
+      case TileStatus.present:
         return Colors.yellow;
-      case LetterStatus.notPresent:
-      case LetterStatus.unanswered:
+      case TileStatus.notPresent:
+      case TileStatus.unanswered:
         return Colors.red;
     }
   }
 
-  void updateRowColors(List<LetterStatus> statuses) {
+  /// Updates the tile colors for the current row.
+  void updateRowColors(List<TileStatus> statuses) {
     for (var column = 0; column < _numColumns; column++) {
       final tile = _tiles[_row][column];
       _tiles[_row][column] = Tile(
-          letter: tile.letter, color: getColorFromStatus(statuses[column]));
+          letter: tile.letter, color: _getColorFromStatus(statuses[column]),);
     }
   }
 

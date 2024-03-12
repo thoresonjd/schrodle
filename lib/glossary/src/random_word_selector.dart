@@ -27,4 +27,9 @@ class RandomWordSelector {
     final index = _rng.nextInt(max);
     return glossary[index];
   }
+
+  /// Chooses between two provided words
+  String choose(String first, String second) {
+    return _rng.nextBool() ? first : second;
+  }
 }
