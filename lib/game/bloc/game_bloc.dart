@@ -73,7 +73,6 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     /// We can also make it easier by randomly selecting between target and
     /// impostor words entirely instead of letter-by-letter.
     final word = _randomWordSelector.choose(_targetWord, _impostorWord);
-    print(word);
     final lettersLeft = word.characters.toList();
     // Mark letters in correct spot first
     for (var i = 0; i < _numColumns; i++) {

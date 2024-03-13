@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:schrodle/game/bloc/game_bloc.dart';
 import 'package:schrodle/grid/bloc/grid_bloc.dart';
 import 'package:schrodle/grid/widgets/tile.dart';
 
@@ -18,7 +19,6 @@ class Grid extends StatelessWidget {
   static const _gridPadding = 50.0;
   static const _tileSpacing = 4.0;
   static const _tileFlipTime = 400;
-
   late final List<List<Tile>> _tiles;
 
   void _createTiles() {
@@ -37,26 +37,38 @@ class Grid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<GridBloc, GridState>(
-      listener: (BuildContext context, GridState state) async {
-        if (state is GridRowFlipping) {
-          for (var column = 0; column < _numColumns; column++) {
-            _tiles[state.row][column].flip();
-            // Half way through a tile's flip animation, the next tile begins
-            // its own flip. Thus, we must wait for each tile to flip half way
-            // before initiating the next flip. The final tile has no successive
-            // tiles. Therefore, we wait for the final tile to fully complete
-            // its flip animation before moving on.
-            final sleepTime =
-                column < _numColumns - 1 ? _tileFlipTime ~/ 2 : _tileFlipTime;
-            final duration = Duration(milliseconds: sleepTime);
-            await Future.delayed(duration, () => {});
-          }
-          if (context.mounted) {
-            BlocProvider.of<GridBloc>(context).add(RowForward());
-          }
-        }
-      },
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<GridBloc, GridState>(
+          listener: (BuildContext context, GridState state) async {
+            if (state is GridRowFlipping) {
+              for (var column = 0; column < _numColumns; column++) {
+                _tiles[state.row][column].flip();
+                // Half way through a tile's flip animation, the next tile
+                // begins its own flip. Thus, we must wait for each tile to flip
+                // half way before initiating the next flip. The final tile has
+                // no successive tiles. Therefore, we wait for the final tile to
+                // fully complete its flip animation before moving on.
+                final sleepTime = column < _numColumns - 1
+                    ? _tileFlipTime ~/ 2
+                    : _tileFlipTime;
+                final duration = Duration(milliseconds: sleepTime);
+                await Future.delayed(duration, () => {});
+              }
+              if (context.mounted) {
+                BlocProvider.of<GridBloc>(context).add(RowForward());
+              }
+            }
+          },
+        ),
+        BlocListener<GameBloc, GameState>(
+          listener: (BuildContext context, GameState state) {
+            if (state is GameOver) {
+              BlocProvider.of<GridBloc>(context).add(CompleteGrid());
+            }
+          },
+        ),
+      ],
       child: SizedBox(
         width: _gridWidth,
         child: GridView.builder(
