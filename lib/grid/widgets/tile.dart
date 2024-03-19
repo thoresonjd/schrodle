@@ -9,12 +9,12 @@ import 'package:schrodle/grid/bloc/grid_bloc.dart';
 /// {@endtemplate}
 class Tile extends StatefulWidget {
   /// {@macro tile}
-  Tile(
-      {required this.row,
-      required this.column,
-      required this.flipTime,
-      super.key,})
-      : flipCardController = FlipCardController();
+  Tile({
+    required this.row,
+    required this.column,
+    required this.flipTime,
+    super.key,
+  }) : flipCardController = FlipCardController();
 
   /// Controls when the tile is flipped.
   late final FlipCardController flipCardController;
@@ -41,15 +41,17 @@ class _TileState extends State<Tile> {
     return BlocBuilder<GridBloc, GridState>(
       builder: (context, state) {
         late Text text;
+        late Color color;
         switch (state.runtimeType) {
           case GridRowFlipping:
           case GridIncomplete:
           case GridComplete:
-            final letter =
-                state.grid.letterAt(row: widget.row, column: widget.column);
-            text = Text(letter ?? '');
+            final tile = state.grid.at(row: widget.row, column: widget.column);
+            text = Text(tile.letter ?? '');
+            color = tile.color ?? Colors.red;
           default:
             text = const Text('');
+            color = Colors.red;
         }
         return FlipCard(
           controller: widget.flipCardController,
@@ -63,7 +65,7 @@ class _TileState extends State<Tile> {
             ),
           ),
           back: ColoredBox(
-            color: Colors.orange,
+            color: color,
             child: Center(
               child: text,
             ),

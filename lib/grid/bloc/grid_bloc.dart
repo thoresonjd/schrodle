@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:schrodle/grid/constants/tile_status.dart';
 import 'package:schrodle/grid/models/grid.dart';
 import 'package:schrodle/grid/models/tile.dart';
 
@@ -27,17 +28,6 @@ class GridBloc extends Bloc<GridEvent, GridState> {
   int _row = 0;
   int _column = -1;
 
-  /// Assigns a [Tile] at each intersecting row and column.
-  void _initializeGrid() {
-    _tiles = List<List<Tile>>.generate(
-      _numRows,
-      (row) => List<Tile>.generate(
-        _numColumns,
-        (col) => const Tile(),
-      ),
-    );
-  }
-
   /// Retrieves the current row's letters, from left to right, as a [String].
   String currentRowAsString() {
     if (state is GridComplete ||
@@ -50,6 +40,41 @@ class GridBloc extends Bloc<GridEvent, GridState> {
       buffer.write(_tiles[_row][column].letter);
     }
     return buffer.toString().toLowerCase();
+  }
+
+  /// Retrieves the [Color] for the corresponding [TileStatus].
+  static Color _getColorFromStatus(TileStatus status) {
+    switch (status) {
+      case TileStatus.guessed:
+        return Colors.blue;
+      case TileStatus.correctSpot:
+        return Colors.green;
+      case TileStatus.present:
+        return Colors.yellow;
+      case TileStatus.notPresent:
+      case TileStatus.unanswered:
+        return Colors.red;
+    }
+  }
+
+  /// Updates the tile colors for the current row.
+  void updateRowColors(List<TileStatus> statuses) {
+    for (var column = 0; column < _numColumns; column++) {
+      final tile = _tiles[_row][column];
+      _tiles[_row][column] = Tile(
+          letter: tile.letter, color: _getColorFromStatus(statuses[column]),);
+    }
+  }
+
+  /// Assigns a [Tile] at each intersecting row and column.
+  void _initializeGrid() {
+    _tiles = List<List<Tile>>.generate(
+      _numRows,
+      (row) => List<Tile>.generate(
+        _numColumns,
+        (col) => const Tile(),
+      ),
+    );
   }
 
   /// Loads the grid.

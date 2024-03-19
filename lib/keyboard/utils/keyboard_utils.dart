@@ -17,13 +17,16 @@ void handleKeyPress({
       late final String guess;
       try {
         guess = gridProvider.currentRowAsString();
-        final isValidGuess = gameProvider.isValidGuess(guess);
-        gameProvider.add(GuessMade(guess: guess, isValidGuess: isValidGuess));
-        if (isValidGuess) {
-          gridProvider.add(RowFlip());
-        }
-      // ignore: empty_catches
-      } on Exception {}
+      } on Exception {
+        return;
+      }
+      if (!gameProvider.isValidGuess(guess)) {
+        return;
+      }
+      gameProvider.updateGridStatus(guess);
+      gridProvider.updateRowColors(gameProvider.currentRowStatus);
+      gameProvider.add(GuessMade(guess: guess));
+      gridProvider.add(RowFlip());
     case LogicalKeyboardKey.backspace:
       gridProvider.add(ColumnBackward());
     default:
