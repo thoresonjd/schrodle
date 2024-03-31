@@ -117,12 +117,12 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   /// Handles guesses as they are made.
   void _guessMade(GuessMade event, Emitter<GameState> emit) {
     if (_isTargetWordGuessed()) {
-      emit(const GameOver(won: true));
+      emit(GameOver(won: true, targetWord: _targetWord));
       return;
     }
     _row++;
     if (_row >= _numRows) {
-      emit(const GameOver(won: false));
+      emit(GameOver(won: false, targetWord: _targetWord));
       return;
     }
     emit(const GameInProgress());

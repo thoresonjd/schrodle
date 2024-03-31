@@ -62,7 +62,9 @@ class GridBloc extends Bloc<GridEvent, GridState> {
     for (var column = 0; column < _numColumns; column++) {
       final tile = _tiles[_row][column];
       _tiles[_row][column] = Tile(
-          letter: tile.letter, color: _getColorFromStatus(statuses[column]),);
+        letter: tile.letter,
+        color: _getColorFromStatus(statuses[column]),
+      );
     }
   }
 
