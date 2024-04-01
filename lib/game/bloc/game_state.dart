@@ -30,8 +30,11 @@ final class GameInProgress extends GameState {
 /// {@endtemplate}
 final class GameOver extends GameState {
   /// {@macro game_over}
-  const GameOver({required this.won});
+  const GameOver({required this.won, required this.targetWord});
 
   /// Determines if the game had been won or lost.
   final bool won;
+
+  /// The Schrodle solution.
+  final String targetWord;
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:schrodle/dialog/dialog.dart';
 import 'package:schrodle/game/bloc/game_bloc.dart';
 import 'package:schrodle/grid/bloc/grid_bloc.dart';
 import 'package:schrodle/grid/widgets/tile.dart';
@@ -65,6 +66,13 @@ class Grid extends StatelessWidget {
           listener: (BuildContext context, GameState state) {
             if (state is GameOver) {
               BlocProvider.of<GridBloc>(context).add(CompleteGrid());
+              final message =
+                  state.won ? 'YOU WON!' : state.targetWord.toUpperCase();
+              dialog(
+                context: context,
+                message: message,
+                displayTime: 2500,
+              );
             }
           },
         ),
