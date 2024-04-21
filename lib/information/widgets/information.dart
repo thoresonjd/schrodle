@@ -28,21 +28,27 @@ class Information extends StatelessWidget {
             ),
           ),
           const Text('About the Game'),
-          const Text('Schrodle is a Wordle-based game inspired by the '
-            "Schrödinger's Cat thought experiment."),
+          const Text(
+            'Schrodle is a Wordle-based game inspired by the '
+            "Schrödinger's Cat thought experiment.",
+          ),
           const Text('The game works exactly like Wordle, but with a twist.'),
           const Text(
             'Like Wordle, the player is tasked with guessing the daily word, '
             'which we call the "target." However, in addition to the target, '
             'there is a secondary word, called the "impostor." Whenever a '
-            'guess is made, the guess has a 50% chance of being validated '
-            'against either the target or the impostor. Therefore, if the '
-            'impostor is used to validate the guess, letters can be marked as '
-            'present in the target word when, in fact, the are absent. Letters '
-            'may be simultaneously market present and not present. Thus, the '
-            "Schrödinger's Cat thought experiment is, in essence, upheld."
+            'guess is made, there is a 50/50 chance that the guess will be '
+            'validated against either the target or the impostor. Therefore, '
+            'if the impostor is used to validate the guess, letters can be '
+            'marked as present in the target word when, in fact, they are '
+            'absent (or in the incorrect position). It follows that letters '
+            'may be simultaneously market correctly and incorrectly with '
+            "respect to the target. Thus, the Schrödinger's Cat thought "
+            'experiment is, in essence, upheld.',
           ),
           const Text('Example'),
+          const Text('Target: AXIOM'),
+          const Text('Impostor: LOGIC'),
           const ExampleGrid(),
         ],
       ),

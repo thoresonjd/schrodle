@@ -12,26 +12,50 @@ class ExampleGrid extends StatelessWidget {
       children: [
         ExampleRow(
           numTiles: rowSize,
+          tileLetters: 'PURGE',
           tileColors: List<Color>.generate(rowSize, (index) => Colors.red),
-          tileLetters: List<String>.generate(rowSize, (index) => 'a'),
+          annotation: 'AXIOM selected; 0 letters marked present or correct',
+        ),
+        const Divider(height: dividerSize, color: Colors.transparent),
+        const ExampleRow(
+          numTiles: rowSize,
+          tileLetters: 'SONIC',
+          tileColors: [
+            Colors.red,
+            Colors.green,
+            Colors.red,
+            Colors.green,
+            Colors.green,
+          ],
+          annotation: 'LOGIC selected; 3 letters marked correct',
+        ),
+        const Divider(height: dividerSize, color: Colors.transparent),
+        const ExampleRow(
+          numTiles: rowSize,
+          tileLetters: 'TOXIC',
+          tileColors: [
+            Colors.red,
+            Colors.yellow,
+            Colors.yellow,
+            Colors.yellow,
+            Colors.red,
+          ],
+          annotation:
+              'AXIOM selected; 3 letters marked present',
         ),
         const Divider(height: dividerSize, color: Colors.transparent),
         ExampleRow(
           numTiles: rowSize,
-          tileColors: List<Color>.generate(rowSize, (index) => Colors.red),
-          tileLetters: List<String>.generate(rowSize, (index) => 'a'),
+          tileLetters: 'LOGIC',
+          tileColors: List<Color>.generate(rowSize, (index) => Colors.green),
+          annotation: 'LOGIC selected; impostor guessed',
         ),
         const Divider(height: dividerSize, color: Colors.transparent),
         ExampleRow(
           numTiles: rowSize,
-          tileColors: List<Color>.generate(rowSize, (index) => Colors.red),
-          tileLetters: List<String>.generate(rowSize, (index) => 'a'),
-        ),
-        const Divider(height: dividerSize, color: Colors.transparent),
-        ExampleRow(
-          numTiles: rowSize,
-          tileColors: List<Color>.generate(rowSize, (index) => Colors.red),
-          tileLetters: List<String>.generate(rowSize, (index) => 'a'),
+          tileLetters: 'AXIOM',
+          tileColors: List<Color>.generate(rowSize, (index) => Colors.blue),
+          annotation: 'AXIOM selected; target guessed',
         ),
       ],
     );
