@@ -62,6 +62,14 @@ class GameBloc extends Bloc<GameEvent, GameState> {
           List<TileStatus>.filled(_numColumns, TileStatus.guessed);
       return;
     }
+    // It may make it easier for the player to know if they have guessed the
+    // impostor word. We can try this instead of relying on a 50/50 chance of
+    // the impostor word being selected when correctly guessed.
+    // if (guess == _impostorWord) {
+    //   _gridStatus[_row] =
+    //       List<TileStatus>.filled(_numColumns, TileStatus.correctSpot);
+    //   return;
+    // }
     // Build word to check against where each letter has a fifty percent chance
     // of being derived from either the target word or the impostor word.
     // final buffer = StringBuffer();
