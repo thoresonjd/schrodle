@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:schrodle/game/widgets/game.dart';
+import 'package:schrodle/information/information.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,6 +33,16 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(title),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.help_outline),
+            onPressed: () =>
+              showDialog<void>(
+                context: context,
+                builder: (context) => const Information(),
+              ),
+          ),
+        ],
       ),
       body: const Game(),
     );

@@ -1,5 +1,5 @@
 import 'dart:math' show Random;
-import 'package:schrodle/glossary/src/glossary.dart';
+import 'package:schrodle/glossary/classes/glossary.dart';
 
 /// {@template random_word_selector}
 /// Handles random word selection from a [Glossary].

@@ -1,1 +1,1 @@
-export 'src/dialog.dart';
+export 'utils/dialog.dart';
