@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:schrodle/game/game.dart';
-import 'package:schrodle/grid/grid.dart';
+import 'package:schrodle/game_grid/game_grid.dart';
 import 'package:schrodle/keyboard/keyboard.dart';
 
 /// {@template game}
@@ -15,21 +14,26 @@ class Game extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<GameBloc>(
-          create: (BuildContext context) => GameBloc()..add(LoadGame()),
-        ),
-        BlocProvider<GridBloc>(
-          create: (BuildContext context) => GridBloc()..add(LoadGrid()),
+        BlocProvider<GameGridBloc>(
+          create: (BuildContext context) => GameGridBloc()..add(LoadGrid()),
         ),
         BlocProvider<KeyboardBloc>(
-          create: (BuildContext context) => KeyboardBloc()..add(LoadKeyboard()),
+          create: (BuildContext context) => 
+            KeyboardBloc()..add(ActivateKeyboard(),),
         ),
       ],
-      child: Column(
-        children: [
-          Center(child: Grid()),
-          const Keyboard(),
-        ],
+      child: BlocBuilder<GameGridBloc, GameGridState>(
+        builder: (BuildContext context, GameGridState state) {
+          if (state is GameOver) {
+            return const Text('Game Over!');
+          }
+          return Column(
+            children: [
+              Center(child: GameGrid()),
+              const Keyboard(),
+            ],
+          );
+        },
       ),
     );
   }
