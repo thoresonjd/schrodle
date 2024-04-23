@@ -1,7 +1,10 @@
 /// Represents the guess status for tiles in the grid.
 enum TileStatus {
   /// The tile has not been filled with a guess/letter.
-  unanswered,
+  unoccupied,
+
+  /// The tile is occupied by a letter.
+  occupied,
 
   /// The tile's letter is in the correct location.
   correctSpot,

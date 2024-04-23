@@ -9,10 +9,10 @@ sealed class KeyboardState extends Equatable {
   List<Object?> get props => [];
 }
 
-/// {@template keyboard_initial}
-/// A [KeyboardState] representing the initial inactive state of the keyboard.
+/// {@template keyboard_inactive}
+/// A [KeyboardState] indicating that the keyboard is inactive.
 /// {@endtemplate}
-final class KeyboardInitial extends KeyboardState {}
+final class KeyboardInactive extends KeyboardState {}
 
 /// {@template keyboard_active}
 /// A [KeyboardState] indicating that the keyboard is active.

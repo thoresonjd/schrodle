@@ -12,10 +12,15 @@ sealed class KeyboardEvent extends Equatable {
   List<Object> get props => [];
 }
 
-/// {@template load_keyboard}
-/// A [KeyboardEvent] that triggers when the keyboard must be initialized.
+/// {@template activate_keyboard}
+/// A [KeyboardEvent] that triggers when the keyboard must be activated.
 /// {@endtemplate}
-class LoadKeyboard extends KeyboardEvent {}
+class ActivateKeyboard extends KeyboardEvent {}
+
+/// {@template deactivate_keyboard}
+/// A [KeyboardEvent] that triggers when the keyboard must be deactivated.
+/// {@endtemplate}
+class DeactivateKeyboard extends KeyboardEvent {}
 
 /// {@template key_press}
 /// A [KeyboardEvent] that occurs whenever a [key] is pressed.

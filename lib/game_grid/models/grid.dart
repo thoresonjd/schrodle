@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:schrodle/grid/models/tile.dart';
+import 'package:schrodle/game_grid/models/tile.dart';
 
 /// {@template grid}
 /// Model representing the grid layout.
