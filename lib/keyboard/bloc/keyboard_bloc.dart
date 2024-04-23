@@ -22,6 +22,7 @@ class KeyboardBloc extends Bloc<KeyboardEvent, KeyboardState> {
   /// The set of all keys currently being pressed.
   final Set<LogicalKeyboardKey> _keysPressed = <LogicalKeyboardKey>{};
 
+  /// Retrieves the active status of the keyboard.
   bool get isActive => state is KeyboardActive;
 
   /// Activates the keyboard.

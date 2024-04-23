@@ -23,14 +23,20 @@ final class GridInitial extends GameGridState {
   const GridInitial({required super.grid});
 }
 
+/// {@template guess_evaluated}
+/// A [GameGridState] denoted that the most recent guess has been evaluated.
+/// {@endtemplate}
 final class GuessEvaluated extends GameGridState {
+  /// {@macro guess_evaluated}
   const GuessEvaluated({required super.grid, this.message});
 
+  /// The message associated with the guess evaluation, if any.
   final String? message;
 }
 
 /// {@template row_flipping}
-/// A [GameGridState] indicating that the active row is undergoing a flip animation.
+/// A [GameGridState] indicating that the active row
+/// is undergoing a flip animation.
 /// {@endtemplate}
 final class RowFlipping extends GameGridState {
   /// {@macro grid_row_flipping}

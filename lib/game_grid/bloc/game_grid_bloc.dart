@@ -28,13 +28,15 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
   static const _numColumns = 5;
   int _row = 0;
   int _column = -1;
-  bool gameShouldEnd = false;
   late final List<List<Tile>> _tiles;
   final _randomWordSelector = RandomWordSelector();
   late final Glossary _validGuesses;
   late final Glossary _validSolutions;
   late final String _targetWord;
   late final String _impostorWord;
+
+  /// Indicates that the game state should transition to [GameOver].
+  bool gameShouldEnd = false;
 
   /// Populates two [Glossary] instances with valid solutions and guesses.
   Future<void> _populateGlossaries() async {
@@ -57,7 +59,7 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
     if (guess == _targetWord) {
       for (var column = 0; column < _numColumns; column++) {
         _tiles[_row][column] = Tile(
-            status: TileStatus.guessed, letter: _tiles[_row][column].letter);
+            status: TileStatus.guessed, letter: _tiles[_row][column].letter,);
       }
       return;
     }

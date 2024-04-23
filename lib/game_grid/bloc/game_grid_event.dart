@@ -33,7 +33,8 @@ class RowFlip extends GameGridEvent {}
 class RowForward extends GameGridEvent {}
 
 /// {@template column_forward}
-/// A [GameGridEvent] that occurs whenever the current column must advance forward.
+/// A [GameGridEvent] that occurs whenever the
+/// current column must advance forward.
 /// {@endtemplate}
 class ColumnForward extends GameGridEvent {
   /// {@macro column_forward}
@@ -47,7 +48,8 @@ class ColumnForward extends GameGridEvent {
 }
 
 /// {@template column_backward}
-/// A [GameGridEvent] that occurs whenever the current column must regress backward.
+/// A [GameGridEvent] that occurs whenever the
+/// current column must regress backward.
 /// {@endtemplate}
 class ColumnBackward extends GameGridEvent {}
 
