@@ -8,19 +8,27 @@ class Results extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      content: Column(
-        children: [
-          const Text('Thank you for playing Schrodle!'),
-          TextButton(
-            child: const Text('Copy results'),
-            onPressed: () => Clipboard.setData(
-              ClipboardData(
-                text: results,
+    return Align(
+      child: AlertDialog(
+        content: Column(  
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Align(
+              alignment: Alignment.topRight,
+              child: IconButton(
+                alignment: Alignment.centerRight,
+                onPressed: () => Navigator.maybePop(context),
+                icon: const Icon(Icons.clear),
               ),
             ),
-          ),
-        ],
+            const Text('Thank you for playing Schrodle!'),
+            TextButton.icon(
+              label: const Text('Copy results'),
+              icon: const Icon(Icons.copy),
+              onPressed: () => Clipboard.setData(ClipboardData(text: results)),
+            ),
+          ],
+        ),
       ),
     );
   }

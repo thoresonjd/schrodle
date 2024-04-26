@@ -158,7 +158,6 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
       }
       buffer.writeln();
     }
-    print(buffer.toString());
     return buffer.toString();
   }
 
