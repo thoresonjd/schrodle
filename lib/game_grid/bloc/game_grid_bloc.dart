@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:schrodle/game_grid/constants/tile_status.dart';
+import 'package:schrodle/game_grid/constants/tile_status_emojis.dart';
 import 'package:schrodle/game_grid/models/grid.dart';
 import 'package:schrodle/game_grid/models/tile.dart';
 import 'package:schrodle/glossary/glossary.dart';
@@ -29,11 +30,12 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
   int _row = 0;
   int _column = -1;
   late final List<List<Tile>> _tiles;
-  final _randomWordSelector = RandomWordSelector();
+  late final RandomWordSelector _randomWordSelector;
   late final Glossary _validGuesses;
   late final Glossary _validSolutions;
   late final String _targetWord;
   late final String _impostorWord;
+  late final DateTime _today;
 
   /// Indicates that the game state should transition to [GameOver].
   bool gameShouldEnd = false;
@@ -42,6 +44,11 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
   Future<void> _populateGlossaries() async {
     _validGuesses = await Glossary.fromFile(filePath: 'glossary/guesses');
     _validSolutions = await Glossary.fromFile(filePath: 'glossary/solutions');
+  }
+
+  DateTime _getDate() {
+    final now = DateTime.now();
+    return DateTime(now.year, now.month, now.day);
   }
 
   /// Selects both the [_targetWord] and the [_impostorWord].
@@ -56,10 +63,12 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
 
   /// Updates the grid status at the current row given a [guess].
   void _updateGridStatus(String guess) {
-    if (guess == _targetWord) {
+    if (_isTargetWord(guess)) {
       for (var column = 0; column < _numColumns; column++) {
         _tiles[_row][column] = Tile(
-            status: TileStatus.guessed, letter: _tiles[_row][column].letter,);
+          status: TileStatus.guessed,
+          letter: _tiles[_row][column].letter,
+        );
       }
       return;
     }
@@ -139,9 +148,25 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
     return guess;
   }
 
+  String get results {
+    final date = _today.toString().split(' ')[0];
+    final buffer = StringBuffer()
+      ..writeln('Schrodle $date ${_row < _numRows ? _row : 'X'}/$_numRows');
+    for (var row = 0; row < _row; row++) {
+      for (final column in _tiles[row]) {
+        buffer.write(tileStatusEmojis[column.status]);
+      }
+      buffer.writeln();
+    }
+    return buffer.toString();
+  }
+
   /// Loads the grid.
   Future<void> _loadGrid(LoadGrid event, Emitter<GameGridState> emit) async {
     await _populateGlossaries();
+    _today = _getDate();
+    _randomWordSelector =
+        RandomWordSelector(seed: _today.millisecondsSinceEpoch);
     _selectWords();
     _initializeGrid();
     emit(GameInProgress(grid: Grid(tiles: _tiles)));

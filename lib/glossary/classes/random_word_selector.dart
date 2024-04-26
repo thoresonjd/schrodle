@@ -6,17 +6,10 @@ import 'package:schrodle/glossary/classes/glossary.dart';
 /// {@endtemplate}
 class RandomWordSelector {
   /// {@macro random_word_selector}
-  RandomWordSelector() {
-    final now = DateTime.now();
-    final today = DateTime(now.year, now.month, now.day);
-    final seed = today.millisecondsSinceEpoch;
-    this.seed(seed: seed);
-  }
+  RandomWordSelector({required int seed}): _rng = Random(seed);
 
-  late Random _rng;
-
-  /// Initializes the random number generator via a [seed].
-  void seed({required int seed}) => _rng = Random(seed);
+  /// Random number generator.
+  late final Random _rng;
 
   /// Selects a random word from the given [glossary].
   String select(Glossary glossary) {
