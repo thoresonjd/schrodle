@@ -73,26 +73,33 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
       }
       return;
     }
-    // It may make it easier for the player to know if they have guessed the
-    // impostor word. We can try this instead of relying on a 50/50 chance of
-    // the impostor word being selected when correctly guessed.
-    // if (guess == _impostorWord) {
-    //   for (var column = 0; column < _numColumns; column++) {
-    //     _tiles[_row][column].status = TileStatus.correctSpot;
-    //   }
-    //   return;
-    // }
-    // Build word to check against where each letter has a fifty percent chance
-    // of being derived from either the target word or the impostor word.
-    // final buffer = StringBuffer();
-    // for (var i = 0; i < _numColumns; i++) {
-    //   final choice = _randomWordSelector.choose(_targetWord, _impostorWord);
-    //   buffer.write(choice[i]);
-    // }
-    // final word = buffer.toString();
-    /// We can also make it easier by randomly selecting between target and
-    /// impostor words entirely instead of letter-by-letter.
-    final word = _randomWordSelector.choose(_targetWord, _impostorWord);
+    late final String word;
+    if (_hardMode) {
+      // Build word to check against where each letter has a fifty percent chance
+      // of being derived from either the target word or the impostor word.
+      final buffer = StringBuffer();
+      for (var i = 0; i < _numColumns; i++) {
+        final choice = _randomWordSelector.choose(_targetWord, _impostorWord);
+        buffer.write(choice[i]);
+      }
+      word = buffer.toString();
+    } else {
+      // It may make it easier for the player to know if they have guessed the
+      // impostor word. We can try this instead of relying on a 50/50 chance of
+      // the impostor word being selected when correctly guessed.
+      if (guess == _impostorWord) {
+        for (var column = 0; column < _numColumns; column++) {
+          _tiles[_row][column] = Tile(
+            status: TileStatus.correctSpot,
+            letter: _tiles[_row][column].letter,
+          );
+        }
+        return;
+      }
+      /// We can also make it easier by randomly selecting between target and
+      /// impostor words entirely instead of letter-by-letter.
+      word = _randomWordSelector.choose(_targetWord, _impostorWord);
+    }
     final lettersLeft = word.characters.toList();
     // Mark letters in correct spot first
     for (var column = 0; column < _numColumns; column++) {

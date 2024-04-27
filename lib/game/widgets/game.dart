@@ -10,7 +10,7 @@ import 'package:schrodle/keyboard/keyboard.dart';
 /// {@endtemplate}
 class Game extends StatefulWidget {
   /// {@macro game}
-  Game({super.key});
+  const Game({super.key});
 
   @override
   State<Game> createState() => _GameState();
@@ -18,8 +18,7 @@ class Game extends StatefulWidget {
 
 class _GameState extends State<Game> {
   final title = 'Schrodle';
-  late final bool hardMode;
-  bool gameModeSelected = false;
+  bool? hardMode;
 
   /// Renders results in a dialog box.
   void _showResults(BuildContext context) {
@@ -40,74 +39,78 @@ class _GameState extends State<Game> {
 
   @override
   Widget build(BuildContext context) {
-    return !gameModeSelected
-        ? Row(
+    return hardMode == null
+      // Game mode selection
+      ? Scaffold(
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text('Choose game mode'),
-              TextButton(
-                child: const Text('Normal'),
-                onPressed: () => setState(() {
-                  hardMode = false;
-                  gameModeSelected = true;
-                }),
-              ),
-              TextButton(
-                child: const Text('Hard'),
-                onPressed: () => setState(() {
-                  hardMode = true;
-                  gameModeSelected = true;
-                }),
-              ),
-            ],
-          )
-        : MultiBlocProvider(
-            providers: [
-              BlocProvider<GameGridBloc>(
-                create: (BuildContext context) =>
-                    GameGridBloc()..add(LoadGrid(hardMode: hardMode)),
-              ),
-              BlocProvider<KeyboardBloc>(
-                create: (BuildContext context) => KeyboardBloc()
-                  ..add(
-                    ActivateKeyboard(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                    child: const Text('Normal'),
+                    onPressed: () => setState(() { hardMode = false; }),
                   ),
+                  TextButton(
+                    child: const Text('Hard'),
+                    onPressed: () => setState(() { hardMode = true; }),
+                  ),
+                ],
               ),
             ],
-            child: BlocConsumer<GameGridBloc, GameGridState>(
-              listener: (BuildContext context, GameGridState state) {
-                if (state is GameOver) {
-                  _showResults(context);
-                }
-              },
-              builder: (BuildContext context, GameGridState state) {
-                return Scaffold(
-                  appBar: AppBar(
-                    backgroundColor:
-                        Theme.of(context).colorScheme.inversePrimary,
-                    title: Text(title),
-                    actions: [
-                      if (state is GameOver)
-                        IconButton(
-                          icon: const Icon(Icons.bar_chart),
-                          onPressed: () => _showResults(context),
-                        ),
+          ),
+        )
+      // Game
+      : MultiBlocProvider(
+          providers: [
+            BlocProvider<GameGridBloc>(
+              create: (BuildContext context) =>
+                  GameGridBloc()..add(LoadGrid(hardMode: hardMode!)),
+            ),
+            BlocProvider<KeyboardBloc>(
+              create: (BuildContext context) => KeyboardBloc()
+                ..add(
+                  ActivateKeyboard(),
+                ),
+            ),
+          ],
+          child: BlocConsumer<GameGridBloc, GameGridState>(
+            listener: (BuildContext context, GameGridState state) {
+              if (state is GameOver) {
+                _showResults(context);
+              }
+            },
+            builder: (BuildContext context, GameGridState state) {
+              return Scaffold(
+                appBar: AppBar(
+                  backgroundColor:
+                      Theme.of(context).colorScheme.inversePrimary,
+                  title: Text(title),
+                  actions: [
+                    if (state is GameOver)
                       IconButton(
-                        icon: const Icon(Icons.help_outline),
-                        onPressed: () => _showInformation(context),
+                        icon: const Icon(Icons.bar_chart),
+                        onPressed: () => _showResults(context),
                       ),
+                    IconButton(
+                      icon: const Icon(Icons.help_outline),
+                      onPressed: () => _showInformation(context),
+                    ),
+                  ],
+                ),
+                body: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Center(child: GameGrid(hardMode: hardMode!)),
+                      const Keyboard(),
                     ],
                   ),
-                  body: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        Center(child: GameGrid(hardMode: hardMode)),
-                        const Keyboard(),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
-          );
+                ),
+              );
+            },
+          ),
+        );
   }
 }
