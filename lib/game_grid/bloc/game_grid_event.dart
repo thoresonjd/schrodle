@@ -15,7 +15,16 @@ sealed class GameGridEvent extends Equatable {
 /// {@template load_grid}
 /// A [GameGridEvent] that triggers when the grid must be initialized.
 /// {@endtemplate}
-class LoadGrid extends GameGridEvent {}
+class LoadGrid extends GameGridEvent {
+  /// {@macro load_grid}
+  const LoadGrid({required this.hardMode});
+
+  /// Denotes if the game is to be played in hard mode.
+  final bool hardMode;
+
+  @override
+  List<Object> get props => [hardMode];
+}
 
 /// {@template guess_made}
 /// A [GameGridEvent] that occurs whenever a guess is made.
