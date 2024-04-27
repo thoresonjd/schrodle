@@ -25,10 +25,10 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
     on<EndGame>(_endGame);
   }
 
-  static const _numRows = 5;
-  static const _numColumns = 5;
   int _row = 0;
   int _column = -1;
+  static const int _numColumns = 5;
+  late final int _numRows;
   late final List<List<Tile>> _tiles;
   late final RandomWordSelector _randomWordSelector;
   late final Glossary _validGuesses;
@@ -36,6 +36,7 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
   late final String _targetWord;
   late final String _impostorWord;
   late final DateTime _today;
+  late final bool _hardMode;
 
   /// Indicates that the game state should transition to [GameOver].
   bool gameShouldEnd = false;
@@ -164,6 +165,8 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
   /// Loads the grid.
   Future<void> _loadGrid(LoadGrid event, Emitter<GameGridState> emit) async {
     await _populateGlossaries();
+    _hardMode = event.hardMode;
+    _numRows = _hardMode ? 7 : 5;
     _today = _getDate();
     _randomWordSelector =
         RandomWordSelector(seed: _today.millisecondsSinceEpoch);
