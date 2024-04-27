@@ -15,7 +15,7 @@ class ExampleRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const tileSize = 50.0;
+    const tileSize = 30.0;
     const dividerSize = 2.5;
     final row = List<Widget>.generate(
       numTiles,
