@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:schrodle/information/widgets/example_row.dart';
+import 'package:schrodle/theme/theme.dart';
 
 class ExampleGrid extends StatelessWidget {
   const ExampleGrid({super.key});
@@ -16,7 +17,7 @@ class ExampleGrid extends StatelessWidget {
           ExampleRow(
             numTiles: rowSize,
             tileLetters: 'PURGE',
-            tileColors: List<Color>.generate(rowSize, (index) => Colors.red),
+            tileColors: List<Color>.generate(rowSize, (index) => AppColors.absent),
             annotation: 'AXIOM selected; 0 letters marked present or correct',
           ),
           const Divider(height: dividerSize, color: Colors.transparent),
@@ -24,11 +25,11 @@ class ExampleGrid extends StatelessWidget {
             numTiles: rowSize,
             tileLetters: 'SONIC',
             tileColors: [
-              Colors.red,
-              Colors.green,
-              Colors.red,
-              Colors.green,
-              Colors.green,
+              AppColors.absent,
+              AppColors.correct,
+              AppColors.absent,
+              AppColors.correct,
+              AppColors.correct,
             ],
             annotation: 'LOGIC selected; 3 letters marked correct',
           ),
@@ -37,11 +38,11 @@ class ExampleGrid extends StatelessWidget {
             numTiles: rowSize,
             tileLetters: 'TOXIC',
             tileColors: [
-              Colors.red,
-              Colors.yellow,
-              Colors.yellow,
-              Colors.yellow,
-              Colors.red,
+              AppColors.absent,
+              AppColors.present,
+              AppColors.present,
+              AppColors.present,
+              AppColors.absent
             ],
             annotation:
                 'AXIOM selected; 3 letters marked present',
@@ -50,14 +51,14 @@ class ExampleGrid extends StatelessWidget {
           ExampleRow(
             numTiles: rowSize,
             tileLetters: 'LOGIC',
-            tileColors: List<Color>.generate(rowSize, (index) => Colors.green),
+            tileColors: List<Color>.generate(rowSize, (index) => AppColors.correct),
             annotation: 'LOGIC selected; impostor guessed',
           ),
           const Divider(height: dividerSize, color: Colors.transparent),
           ExampleRow(
             numTiles: rowSize,
             tileLetters: 'AXIOM',
-            tileColors: List<Color>.generate(rowSize, (index) => Colors.blue),
+            tileColors: List<Color>.generate(rowSize, (index) => AppColors.guessed),
             annotation: 'AXIOM selected; target guessed',
           ),
         ],

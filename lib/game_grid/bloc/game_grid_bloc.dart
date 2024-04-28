@@ -90,7 +90,7 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
       if (guess == _impostorWord) {
         for (var column = 0; column < _numColumns; column++) {
           _tiles[_row][column] = Tile(
-            status: TileStatus.correctSpot,
+            status: TileStatus.correct,
             letter: _tiles[_row][column].letter,
           );
         }
@@ -107,15 +107,15 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
       if (guess[column] == word[column]) {
         lettersLeft.remove(guess[column]);
         _tiles[_row][column] =
-            Tile(status: TileStatus.correctSpot, letter: tile.letter);
+            Tile(status: TileStatus.correct, letter: tile.letter);
       } else {
         _tiles[_row][column] =
-            Tile(status: TileStatus.notPresent, letter: tile.letter);
+            Tile(status: TileStatus.absent, letter: tile.letter);
       }
     }
     // Mark letters present in the incorrect spot
     for (var i = 0; i < _numColumns; i++) {
-      if (_tiles[_row][i].status != TileStatus.correctSpot &&
+      if (_tiles[_row][i].status != TileStatus.correct &&
           lettersLeft.contains(guess[i])) {
         _tiles[_row][i] =
             Tile(status: TileStatus.present, letter: _tiles[_row][i].letter);

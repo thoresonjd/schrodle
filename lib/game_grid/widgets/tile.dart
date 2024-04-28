@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schrodle/game_grid/bloc/game_grid_bloc.dart';
 import 'package:schrodle/game_grid/constants/tile_status.dart';
+import 'package:schrodle/theme/theme.dart';
 
 /// {@template tile}
 /// Widget displaying a tile.
@@ -36,15 +37,16 @@ class Tile extends StatefulWidget {
   static Color colorFromStatus({required TileStatus status}) {
     switch (status) {
       case TileStatus.guessed:
-        return Colors.blue;
-      case TileStatus.correctSpot:
-        return Colors.green;
+        return AppColors.guessed;
+      case TileStatus.correct:
+        return AppColors.correct;
       case TileStatus.present:
-        return Colors.yellow;
-      case TileStatus.notPresent:
+        return AppColors.present;
+      case TileStatus.absent:
+        return AppColors.absent;
       case TileStatus.occupied:
       case TileStatus.unoccupied:
-        return Colors.red;
+        return AppColors.unevaluated;
     }
   }
 
@@ -62,15 +64,15 @@ class _TileState extends State<Tile> {
             : state.grid.at(row: widget.row, column: widget.column);
         final text = Text(tile == null ? '' : tile.letter);
         final color = tile == null
-            ? Colors.red
+            ? AppColors.unevaluated
             : Tile.colorFromStatus(status: tile.status);
         return FlipCard(
           controller: widget.flipCardController,
           flipOnTouch: false,
           direction: FlipDirection.VERTICAL,
           speed: widget.flipTime,
-          front: ColoredBox(
-            color: Colors.red,
+          front: Container(
+            decoration: BoxDecoration(border: Border.all(), color: AppColors.unevaluated),
             child: Center(
               child: text,
             ),
