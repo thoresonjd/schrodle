@@ -71,13 +71,14 @@ class _TileState extends State<Tile> {
           flipOnTouch: false,
           direction: FlipDirection.VERTICAL,
           speed: widget.flipTime,
-          front: Container(
-            decoration: BoxDecoration(border: Border.all(), color: AppColors.unevaluated),
+          front: Card(
+            color: AppColors.unevaluated,
             child: Center(
               child: text,
             ),
           ),
-          back: ColoredBox(
+          back: Card(
+            shape: const RoundedRectangleBorder(),
             color: color,
             child: Center(
               child: text,

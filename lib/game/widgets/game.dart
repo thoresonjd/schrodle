@@ -41,30 +41,32 @@ class _GameState extends State<Game> {
   Widget build(BuildContext context) {
     return hardMode == null
       // Game mode selection
-      ? Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text('Welcome to Schrodle!'),
-            const Text('Choose game mode'),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextButton(
-                  child: const Text('Normal'),
-                  onPressed: () => setState(() { hardMode = false; }),
-                ),
-                TextButton(
-                  child: const Text('Hard'),
-                  onPressed: () => setState(() { hardMode = true; }),
-                ),
-              ],
-            ),
-            TextButton.icon(
-              icon: const Icon(Icons.help_outline),
-              label: const Text('About the Game'),
-              onPressed: () => _showInformation(context),
-            ),
-          ],
+      ? Scaffold(
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text('Welcome to Schrodle!'),
+              const Text('Choose game mode'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                    child: const Text('Normal'),
+                    onPressed: () => setState(() { hardMode = false; }),
+                  ),
+                  TextButton(
+                    child: const Text('Hard'),
+                    onPressed: () => setState(() { hardMode = true; }),
+                  ),
+                ],
+              ),
+              TextButton.icon(
+                icon: const Icon(Icons.help_outline),
+                label: const Text('About the Game'),
+                onPressed: () => _showInformation(context),
+              ),
+            ],
+          ),
         )
       // Game
       : MultiBlocProvider(
