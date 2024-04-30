@@ -6,18 +6,12 @@ final class AppTheme {
 
   ThemeData get themeData => ThemeData(
     colorScheme: _colorScheme,
-    cardTheme: _cardtheme,
     iconButtonTheme: _iconButtonTheme,
     textButtonTheme: _textButtonTheme,
   );
 
-  ColorScheme get _colorScheme => const ColorScheme.dark();
-
-  CardTheme get _cardtheme => const CardTheme(
-    shape: RoundedRectangleBorder(
-      side: BorderSide(color: AppColors.light),
-    ),
-    margin: EdgeInsets.zero,
+  ColorScheme get _colorScheme => const ColorScheme.dark(
+    background: Color.fromRGBO(25, 25, 25, 1),
   );
 
   IconButtonThemeData get _iconButtonTheme => IconButtonThemeData(

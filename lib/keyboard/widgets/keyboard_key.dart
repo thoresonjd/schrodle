@@ -15,10 +15,37 @@ class KeyboardKey extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => {handleKeyPress(context: context, key: keyboardKey)},
-      child: Card(
-        child: Text(keyboardKey.keyLabel),
+    return Container(
+      margin: EdgeInsets.all(2),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade900,
+        // border: Border.all(width: 2),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () => {handleKeyPress(context: context, key: keyboardKey)},
+          child: Container(
+            constraints: const BoxConstraints(
+              minHeight: 50,
+              minWidth: 50,
+            ),
+            decoration: BoxDecoration(
+              border: Border(
+                left: BorderSide(color: Colors.grey.shade800, width: 5),
+                top: BorderSide(color: Colors.grey.shade800, width: 5),
+                right: const BorderSide(width: 10),
+                bottom: const BorderSide(width: 10),
+              ),
+            ),
+            child: Center(
+              child: Container(
+                margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                child: Text(keyboardKey.keyLabel),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
