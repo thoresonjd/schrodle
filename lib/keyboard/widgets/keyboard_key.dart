@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:schrodle/keyboard/utils/keyboard_utils.dart';
+import 'package:schrodle/theme/theme.dart';
 
 /// {@template keyboard_key}
 /// Renders a single keyboard key.
@@ -16,13 +17,12 @@ class KeyboardKey extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(2),
-      decoration: BoxDecoration(
-        color: Colors.grey.shade900,
-        // border: Border.all(width: 2),
+      margin: const EdgeInsets.all(2),
+      decoration: const BoxDecoration(
+        color: AppColors.background,
       ),
       child: Material(
-        color: Colors.transparent,
+        color: AppColors.none,
         child: InkWell(
           onTap: () => {handleKeyPress(context: context, key: keyboardKey)},
           child: Container(
@@ -30,12 +30,12 @@ class KeyboardKey extends StatelessWidget {
               minHeight: 50,
               minWidth: 50,
             ),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               border: Border(
-                left: BorderSide(color: Colors.grey.shade800, width: 5),
-                top: BorderSide(color: Colors.grey.shade800, width: 5),
-                right: const BorderSide(width: 10),
-                bottom: const BorderSide(width: 10),
+                left: BorderSide(color: AppColors.highlight, width: 5),
+                top: BorderSide(color: AppColors.highlight, width: 5),
+                right: BorderSide(width: 10),
+                bottom: BorderSide(width: 10),
               ),
             ),
             child: Center(

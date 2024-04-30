@@ -6,12 +6,18 @@ final class AppTheme {
 
   ThemeData get themeData => ThemeData(
     colorScheme: _colorScheme,
+    dialogTheme: _dialogTheme,
     iconButtonTheme: _iconButtonTheme,
     textButtonTheme: _textButtonTheme,
   );
 
   ColorScheme get _colorScheme => const ColorScheme.dark(
-    background: Color.fromRGBO(25, 25, 25, 1),
+    background: AppColors.background,
+  );
+
+  DialogTheme get _dialogTheme => const DialogTheme(
+    backgroundColor: AppColors.background,
+    surfaceTintColor: AppColors.none,
   );
 
   IconButtonThemeData get _iconButtonTheme => IconButtonThemeData(
