@@ -62,26 +62,33 @@ class _TileState extends State<Tile> {
         final tile = state is GridInitial
             ? null
             : state.grid.at(row: widget.row, column: widget.column);
-        final text = Text(tile == null ? '' : tile.letter);
+        final tileStatus = tile?.status;
+        final tileLetter = tile == null ? '' : tile.letter;
         final color = tile == null
             ? AppColors.unevaluated
             : Tile.colorFromStatus(status: tile.status);
+        final borderColor =
+          tileStatus == null || tileStatus == TileStatus.unoccupied
+            ? AppColors.highlight
+            : AppColors.light;
         return FlipCard(
           controller: widget.flipCardController,
           flipOnTouch: false,
           direction: FlipDirection.VERTICAL,
           speed: widget.flipTime,
-          front: Card(
-            color: AppColors.unevaluated,
+          front: Container(
+            decoration: BoxDecoration(
+              color: AppColors.unevaluated,
+              border: Border.all(color: borderColor),
+            ),
             child: Center(
-              child: text,
+              child: Text(tileLetter),
             ),
           ),
-          back: Card(
-            shape: const RoundedRectangleBorder(),
+          back: ColoredBox(
             color: color,
             child: Center(
-              child: text,
+              child: Text(tileLetter),
             ),
           ),
         );
