@@ -46,6 +46,11 @@ class _GameState extends State<Game> {
           body: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              const Image(
+                width: 200,
+                height: 200,
+                image: AssetImage('images/schrodle-light.png'),
+              ),
               const Text('Welcome to Schrodle!'),
               const Text('Choose game mode'),
               SizedBox(height: 10),

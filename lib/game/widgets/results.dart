@@ -21,6 +21,11 @@ class Results extends StatelessWidget {
                 icon: const Icon(Icons.clear),
               ),
             ),
+            const Image(
+              width: 200,
+              height: 200,
+              image: AssetImage('images/schrodle-light.png'),
+            ),
             const Text('Thank you for playing Schrodle!'),
             SizedBox(height: 10),
             TextButton.icon(
