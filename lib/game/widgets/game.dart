@@ -4,6 +4,7 @@ import 'package:schrodle/game/widgets/results.dart';
 import 'package:schrodle/game_grid/game_grid.dart';
 import 'package:schrodle/information/information.dart';
 import 'package:schrodle/keyboard/keyboard.dart';
+import 'package:schrodle/theme/classes/app_colors.dart';
 
 /// {@template game}
 /// Renders the game.
@@ -47,19 +48,36 @@ class _GameState extends State<Game> {
             children: [
               const Text('Welcome to Schrodle!'),
               const Text('Choose game mode'),
+              SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextButton(
                     child: const Text('Normal'),
                     onPressed: () => setState(() { hardMode = false; }),
+                    style: TextButton.styleFrom(
+                      foregroundColor: AppColors.normal,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(16)),
+                        side: BorderSide(color: AppColors.normal),
+                      ),
+                    ),
                   ),
+                  SizedBox(width: 10),
                   TextButton(
                     child: const Text('Hard'),
                     onPressed: () => setState(() { hardMode = true; }),
+                    style: TextButton.styleFrom(
+                      foregroundColor: AppColors.hard,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(16)),
+                        side: BorderSide(color: AppColors.hard),
+                      ),
+                    ),
                   ),
                 ],
               ),
+              SizedBox(height: 10),
               TextButton.icon(
                 icon: const Icon(Icons.help_outline),
                 label: const Text('About the Game'),

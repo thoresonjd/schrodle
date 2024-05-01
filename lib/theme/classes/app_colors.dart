@@ -11,4 +11,7 @@ abstract final class AppColors {
   static const Color present = Color(0xFFF2B829); // Jake the Dog
   static const Color correct = Color(0xFF39a024); // Finn the Human (backpack)
   static const Color guessed = Color(0xFFFF00CD); // Princess Bubblegum
+  static const Color normal = Color.fromRGBO(102, 187, 106, 1);
+  static const Color hard = Colors.red;
+  static const Color button = Colors.blue;
 }

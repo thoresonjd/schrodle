@@ -18,6 +18,10 @@ final class AppTheme {
   DialogTheme get _dialogTheme => const DialogTheme(
     backgroundColor: AppColors.background,
     surfaceTintColor: AppColors.none,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(32)),
+      side: BorderSide(color: AppColors.light),
+    ),
   );
 
   IconButtonThemeData get _iconButtonTheme => IconButtonThemeData(
@@ -28,8 +32,12 @@ final class AppTheme {
 
   TextButtonThemeData get _textButtonTheme => TextButtonThemeData(
     style: TextButton.styleFrom(
-      iconColor: AppColors.light,
-      foregroundColor: AppColors.light,
+      iconColor: AppColors.button,
+      foregroundColor: AppColors.button,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(16)),
+        side: BorderSide(color: AppColors.button),
+      ),
     ),
   );
 }

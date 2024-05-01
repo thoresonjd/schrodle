@@ -22,6 +22,7 @@ class Results extends StatelessWidget {
               ),
             ),
             const Text('Thank you for playing Schrodle!'),
+            SizedBox(height: 10),
             TextButton.icon(
               label: const Text('Copy results'),
               icon: const Icon(Icons.copy),
