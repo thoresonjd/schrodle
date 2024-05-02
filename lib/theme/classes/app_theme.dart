@@ -6,6 +6,7 @@ final class AppTheme {
 
   ThemeData get themeData => ThemeData(
     colorScheme: _colorScheme,
+    fontFamily: 'Courier Prime',
     dialogTheme: _dialogTheme,
     iconButtonTheme: _iconButtonTheme,
     textButtonTheme: _textButtonTheme,
