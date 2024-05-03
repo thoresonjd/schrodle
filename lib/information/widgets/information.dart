@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:schrodle/information/widgets/example_grid.dart';
+import 'package:schrodle/theme/theme.dart';
 
 class Information extends StatelessWidget {
   const Information({super.key});
@@ -28,7 +29,16 @@ class Information extends StatelessWidget {
                 icon: const Icon(Icons.clear),
               ),
             ),
-            const Text('About the Game'),
+            const Center(
+              child: Text(
+                'Schrodle',
+                style: AppTextStyles.heading,
+              ),
+            ),
+            const Text(
+              'About the Game',
+              style: AppTextStyles.subheading,
+            ),
             const Text(
               'Schrodle is a Wordle-based game inspired by the '
               "Schrödinger's Cat thought experiment.",
@@ -47,11 +57,19 @@ class Information extends StatelessWidget {
               "respect to the target. Thus, the Schrödinger's Cat thought "
               'experiment is, in essence, upheld.',
             ),
-            const Text('Example'),
+            const SizedBox(height: 25),
+            const Text(
+              'Example',
+              style: AppTextStyles.subheading,
+            ),
             const Text('Target: AXIOM'),
             const Text('Impostor: LOGIC'),
             const ExampleGrid(),
-            const Text('Hard mode'),
+            const SizedBox(height: 25),
+            const Text(
+              'Hard mode',
+              style: AppTextStyles.subheading,
+            ),
             const Text(
               'In hard mode, there is a 50/50 chance for each individual '
               'letter of the guess to be validated against the corresponding '

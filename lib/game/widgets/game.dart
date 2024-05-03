@@ -4,7 +4,7 @@ import 'package:schrodle/game/widgets/results.dart';
 import 'package:schrodle/game_grid/game_grid.dart';
 import 'package:schrodle/information/information.dart';
 import 'package:schrodle/keyboard/keyboard.dart';
-import 'package:schrodle/theme/classes/app_colors.dart';
+import 'package:schrodle/theme/theme.dart';
 
 /// {@template game}
 /// Renders the game.
@@ -47,12 +47,20 @@ class _GameState extends State<Game> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Image(
-                width: 200,
-                height: 200,
+                width: 150,
+                height: 150,
                 image: AssetImage('images/schrodle-light.png'),
               ),
-              const Text('Welcome to Schrodle!'),
-              const Text('Choose game mode'),
+              const Text(
+                'Welcome to Schrodle!',
+                style: AppTextStyles.subheading,
+              ),
+              const Text(
+                'Choose a game mode',
+                style: TextStyle(
+                  fontSize: 20,
+                ),  
+              ),
               SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -61,11 +69,7 @@ class _GameState extends State<Game> {
                     child: const Text('Normal'),
                     onPressed: () => setState(() { hardMode = false; }),
                     style: TextButton.styleFrom(
-                      foregroundColor: AppColors.normal,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(16)),
-                        side: BorderSide(color: AppColors.normal),
-                      ),
+                      backgroundColor: AppColors.normal,
                     ),
                   ),
                   SizedBox(width: 10),
@@ -73,11 +77,7 @@ class _GameState extends State<Game> {
                     child: const Text('Hard'),
                     onPressed: () => setState(() { hardMode = true; }),
                     style: TextButton.styleFrom(
-                      foregroundColor: AppColors.hard,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(16)),
-                        side: BorderSide(color: AppColors.hard),
-                      ),
+                      backgroundColor: AppColors.hard,
                     ),
                   ),
                 ],
@@ -85,7 +85,7 @@ class _GameState extends State<Game> {
               SizedBox(height: 10),
               TextButton.icon(
                 icon: const Icon(Icons.help_outline),
-                label: const Text('About the Game'),
+                label: const Text('Learn more'),
                 onPressed: () => _showInformation(context),
               ),
             ],

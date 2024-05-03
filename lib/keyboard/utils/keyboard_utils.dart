@@ -25,6 +25,6 @@ void handleKeyPress({
     case LogicalKeyboardKey.backspace:
       gameGridProvider.add(ColumnBackward());
     default:
-      gameGridProvider.add(ColumnForward(letter: key.keyLabel.toUpperCase()));
+      gameGridProvider.add(ColumnForward(letter: key.keyLabel));
   }
 }

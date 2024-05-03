@@ -21,7 +21,10 @@ final class AppTheme {
     surfaceTintColor: AppColors.none,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(32)),
-      side: BorderSide(color: AppColors.light),
+      side: BorderSide(
+        color: AppColors.light,
+        width: 3,
+      ),
     ),
   );
 
@@ -33,11 +36,11 @@ final class AppTheme {
 
   TextButtonThemeData get _textButtonTheme => TextButtonThemeData(
     style: TextButton.styleFrom(
-      iconColor: AppColors.button,
-      foregroundColor: AppColors.button,
+      backgroundColor: AppColors.button,
+      foregroundColor: AppColors.light,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(16)),
-        side: BorderSide(color: AppColors.button),
+        side: BorderSide(color: AppColors.light),
       ),
     ),
   );

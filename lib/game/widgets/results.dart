@@ -22,11 +22,17 @@ class Results extends StatelessWidget {
               ),
             ),
             const Image(
-              width: 200,
-              height: 200,
+              width: 150,
+              height: 150,
               image: AssetImage('images/schrodle-light.png'),
             ),
-            const Text('Thank you for playing Schrodle!'),
+            SizedBox(height: 10),
+            const Text(
+              'Thank you for playing Schrodle!',
+              style: TextStyle(
+                fontSize: 17.5,
+              ),
+            ),
             SizedBox(height: 10),
             TextButton.icon(
               label: const Text('Copy results'),

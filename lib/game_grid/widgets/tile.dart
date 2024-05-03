@@ -82,13 +82,25 @@ class _TileState extends State<Tile> {
               border: Border.all(color: borderColor),
             ),
             child: Center(
-              child: Text(tileLetter),
+              child: Text(
+                tileLetter,
+                style: const TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ),
           back: ColoredBox(
             color: color,
             child: Center(
-              child: Text(tileLetter),
+              child: Text(
+                tileLetter,
+                style: const TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ),
         );

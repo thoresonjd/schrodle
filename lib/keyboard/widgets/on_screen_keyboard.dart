@@ -15,7 +15,8 @@ class OnScreenKeyboard extends StatelessWidget {
       children: [
         KeyboardRow(start: 0, end: 9),
         KeyboardRow(start: 10, end: 18),
-        KeyboardRow(start: 19, end: 27),
+        KeyboardRow(start: 19, end: 25),
+        KeyboardRow(start: 26, end: 27),
       ],
     );
   }

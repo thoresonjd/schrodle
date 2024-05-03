@@ -41,7 +41,13 @@ class KeyboardKey extends StatelessWidget {
             child: Center(
               child: Container(
                 margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                child: Text(keyboardKey.keyLabel),
+                child: Text(
+                  keyboardKey.keyLabel,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold
+                  ),
+                ),
               ),
             ),
           ),

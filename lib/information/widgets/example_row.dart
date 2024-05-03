@@ -16,7 +16,6 @@ class ExampleRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const tileSize = 30.0;
-    const dividerSize = 2.5;
     final row = List<Widget>.generate(
       numTiles,
       (index) => Row(
@@ -26,13 +25,22 @@ class ExampleRow extends StatelessWidget {
             height: tileSize,
             child: ColoredBox(
               color: tileColors[index],
-              child: Align(child: Text(tileLetters[index])),
+              child: Align(
+                child: Text(
+                  tileLetters[index],
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ), 
+                ),
+              ),
             ),
           ),
-          const VerticalDivider(width: dividerSize, color: Colors.transparent),
+          const SizedBox(width: 2.5),
         ],
       ),
-    )..add(Text(annotation));
+    )..add(const SizedBox(width: 7.5))
+    ..add(Text(annotation));
     return Row(children: row);
   }
 }

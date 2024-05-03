@@ -54,13 +54,15 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
 
   /// Selects both the [_targetWord] and the [_impostorWord].
   void _selectWords() {
-    _targetWord = _randomWordSelector.select(_validSolutions);
-    _impostorWord = _randomWordSelector.select(_validSolutions);
+    _targetWord = _randomWordSelector.select(_validSolutions).toUpperCase();
+    _impostorWord = _randomWordSelector.select(_validSolutions).toUpperCase();
   }
 
   /// Determines if a given [word] is a valid guess.
-  bool _isValidGuess(String word) =>
-      _validGuesses.search(word) || _validSolutions.search(word);
+  bool _isValidGuess(String word) {
+    final asLower = word.toLowerCase();
+    return _validGuesses.search(asLower) || _validSolutions.search(asLower);
+  }
 
   /// Updates the grid status at the current row given a [guess].
   void _updateGridStatus(String guess) {
@@ -96,6 +98,7 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
         }
         return;
       }
+
       /// We can also make it easier by randomly selecting between target and
       /// impostor words entirely instead of letter-by-letter.
       word = _randomWordSelector.choose(_targetWord, _impostorWord);
@@ -149,7 +152,7 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
       }
       buffer.write(tile.letter);
     }
-    final guess = buffer.toString().toLowerCase();
+    final guess = buffer.toString();
     if (!_isValidGuess(guess)) {
       throw Exception('Invalid guess');
     }
