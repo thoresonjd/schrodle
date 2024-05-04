@@ -5,19 +5,27 @@ import 'package:schrodle/keyboard/widgets/keyboard_row.dart';
 /// Renders the UI of an on-screen keyboard.
 /// {@endtemplate}
 class OnScreenKeyboard extends StatelessWidget {
-
   /// {@macro on_screen_keyboard}
   const OnScreenKeyboard({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      children: [
-        KeyboardRow(start: 0, end: 9),
-        KeyboardRow(start: 10, end: 18),
-        KeyboardRow(start: 19, end: 25),
-        KeyboardRow(start: 26, end: 27),
-      ],
+    final scrollController = ScrollController();
+    return Scrollbar(
+      thumbVisibility: true,
+      controller: scrollController,
+      child: SingleChildScrollView(
+        controller: scrollController,
+        scrollDirection: Axis.horizontal,
+        child: const Column(
+          children: [
+            KeyboardRow(start: 0, end: 9),
+            KeyboardRow(start: 10, end: 18),
+            KeyboardRow(start: 19, end: 25),
+            KeyboardRow(start: 26, end: 27),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -18,7 +18,7 @@ class GameGrid extends StatelessWidget {
   late final int _numRows;
   static const _numColumns = 5;
   static const _gridWidth = 350.0;
-  static const _gridHeight = 600.0;
+  static const _gridHeight = 550.0;
   static const _gridPadding = 25.0;
   static const _tileSpacing = 5.0;
   static const _tileFlipTime = 400;
