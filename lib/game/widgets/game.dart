@@ -4,6 +4,7 @@ import 'package:schrodle/game/widgets/results.dart';
 import 'package:schrodle/game_grid/game_grid.dart';
 import 'package:schrodle/information/information.dart';
 import 'package:schrodle/keyboard/keyboard.dart';
+import 'package:schrodle/theme/theme.dart';
 
 /// {@template game}
 /// Renders the game.
@@ -41,30 +42,54 @@ class _GameState extends State<Game> {
   Widget build(BuildContext context) {
     return hardMode == null
       // Game mode selection
-      ? Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text('Welcome to Schrodle!'),
-            const Text('Choose game mode'),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextButton(
-                  child: const Text('Normal'),
-                  onPressed: () => setState(() { hardMode = false; }),
-                ),
-                TextButton(
-                  child: const Text('Hard'),
-                  onPressed: () => setState(() { hardMode = true; }),
-                ),
-              ],
-            ),
-            TextButton.icon(
-              icon: const Icon(Icons.help_outline),
-              label: const Text('About the Game'),
-              onPressed: () => _showInformation(context),
-            ),
-          ],
+      ? Scaffold(
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Image(
+                width: 150,
+                height: 150,
+                image: AssetImage('images/schrodle-light.png'),
+              ),
+              const Text(
+                'Welcome to Schrodle!',
+                style: AppTextStyles.subheading,
+              ),
+              const Text(
+                'Choose a game mode',
+                style: TextStyle(
+                  fontSize: 20,
+                ),  
+              ),
+              SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                    child: const Text('Normal'),
+                    onPressed: () => setState(() { hardMode = false; }),
+                    style: TextButton.styleFrom(
+                      backgroundColor: AppColors.normal,
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  TextButton(
+                    child: const Text('Hard'),
+                    onPressed: () => setState(() { hardMode = true; }),
+                    style: TextButton.styleFrom(
+                      backgroundColor: AppColors.hard,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10),
+              TextButton.icon(
+                icon: const Icon(Icons.help_outline),
+                label: const Text('Learn more'),
+                onPressed: () => _showInformation(context),
+              ),
+            ],
+          ),
         )
       // Game
       : MultiBlocProvider(
@@ -107,7 +132,9 @@ class _GameState extends State<Game> {
                 body: SingleChildScrollView(
                   child: Column(
                     children: [
+                      SizedBox(height: 30),
                       Center(child: GameGrid(hardMode: hardMode!)),
+                      SizedBox(height: 30),
                       const Keyboard(),
                     ],
                   ),

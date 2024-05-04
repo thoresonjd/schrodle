@@ -2,7 +2,7 @@ import 'package:flutter/services.dart';
 
 /// List of all keys that the game will accept.
 final List<LogicalKeyboardKey> keys = [
-  // Top row
+  // First row
   LogicalKeyboardKey.keyQ,
   LogicalKeyboardKey.keyW,
   LogicalKeyboardKey.keyE,
@@ -14,7 +14,7 @@ final List<LogicalKeyboardKey> keys = [
   LogicalKeyboardKey.keyO,
   LogicalKeyboardKey.keyP,
 
-  // Middle row
+  // Second row
   LogicalKeyboardKey.keyA,
   LogicalKeyboardKey.keyS,
   LogicalKeyboardKey.keyD,
@@ -25,8 +25,7 @@ final List<LogicalKeyboardKey> keys = [
   LogicalKeyboardKey.keyK,
   LogicalKeyboardKey.keyL,
 
-  // Bottom row
-  LogicalKeyboardKey.enter,
+  // Third row
   LogicalKeyboardKey.keyZ,
   LogicalKeyboardKey.keyX,
   LogicalKeyboardKey.keyC,
@@ -34,5 +33,8 @@ final List<LogicalKeyboardKey> keys = [
   LogicalKeyboardKey.keyB,
   LogicalKeyboardKey.keyN,
   LogicalKeyboardKey.keyM,
+
+  // Fourth row
+  LogicalKeyboardKey.enter,
   LogicalKeyboardKey.backspace,
 ];

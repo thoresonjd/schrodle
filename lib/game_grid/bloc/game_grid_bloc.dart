@@ -54,13 +54,15 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
 
   /// Selects both the [_targetWord] and the [_impostorWord].
   void _selectWords() {
-    _targetWord = _randomWordSelector.select(_validSolutions);
-    _impostorWord = _randomWordSelector.select(_validSolutions);
+    _targetWord = _randomWordSelector.select(_validSolutions).toUpperCase();
+    _impostorWord = _randomWordSelector.select(_validSolutions).toUpperCase();
   }
 
   /// Determines if a given [word] is a valid guess.
-  bool _isValidGuess(String word) =>
-      _validGuesses.search(word) || _validSolutions.search(word);
+  bool _isValidGuess(String word) {
+    final asLower = word.toLowerCase();
+    return _validGuesses.search(asLower) || _validSolutions.search(asLower);
+  }
 
   /// Updates the grid status at the current row given a [guess].
   void _updateGridStatus(String guess) {
@@ -90,12 +92,13 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
       if (guess == _impostorWord) {
         for (var column = 0; column < _numColumns; column++) {
           _tiles[_row][column] = Tile(
-            status: TileStatus.correctSpot,
+            status: TileStatus.correct,
             letter: _tiles[_row][column].letter,
           );
         }
         return;
       }
+
       /// We can also make it easier by randomly selecting between target and
       /// impostor words entirely instead of letter-by-letter.
       word = _randomWordSelector.choose(_targetWord, _impostorWord);
@@ -107,15 +110,15 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
       if (guess[column] == word[column]) {
         lettersLeft.remove(guess[column]);
         _tiles[_row][column] =
-            Tile(status: TileStatus.correctSpot, letter: tile.letter);
+            Tile(status: TileStatus.correct, letter: tile.letter);
       } else {
         _tiles[_row][column] =
-            Tile(status: TileStatus.notPresent, letter: tile.letter);
+            Tile(status: TileStatus.absent, letter: tile.letter);
       }
     }
     // Mark letters present in the incorrect spot
     for (var i = 0; i < _numColumns; i++) {
-      if (_tiles[_row][i].status != TileStatus.correctSpot &&
+      if (_tiles[_row][i].status != TileStatus.correct &&
           lettersLeft.contains(guess[i])) {
         _tiles[_row][i] =
             Tile(status: TileStatus.present, letter: _tiles[_row][i].letter);
@@ -149,7 +152,7 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
       }
       buffer.write(tile.letter);
     }
-    final guess = buffer.toString().toLowerCase();
+    final guess = buffer.toString();
     if (!_isValidGuess(guess)) {
       throw Exception('Invalid guess');
     }
@@ -173,7 +176,7 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
   Future<void> _loadGrid(LoadGrid event, Emitter<GameGridState> emit) async {
     await _populateGlossaries();
     _hardMode = event.hardMode;
-    _numRows = _hardMode ? 7 : 5;
+    _numRows = _hardMode ? 13 : 7;
     _today = _getDate();
     _randomWordSelector =
         RandomWordSelector(seed: _today.millisecondsSinceEpoch);

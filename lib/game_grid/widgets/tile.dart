@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schrodle/game_grid/bloc/game_grid_bloc.dart';
 import 'package:schrodle/game_grid/constants/tile_status.dart';
+import 'package:schrodle/theme/theme.dart';
 
 /// {@template tile}
 /// Widget displaying a tile.
@@ -36,15 +37,16 @@ class Tile extends StatefulWidget {
   static Color colorFromStatus({required TileStatus status}) {
     switch (status) {
       case TileStatus.guessed:
-        return Colors.blue;
-      case TileStatus.correctSpot:
-        return Colors.green;
+        return AppColors.guessed;
+      case TileStatus.correct:
+        return AppColors.correct;
       case TileStatus.present:
-        return Colors.yellow;
-      case TileStatus.notPresent:
+        return AppColors.present;
+      case TileStatus.absent:
+        return AppColors.absent;
       case TileStatus.occupied:
       case TileStatus.unoccupied:
-        return Colors.red;
+        return AppColors.unevaluated;
     }
   }
 
@@ -52,33 +54,57 @@ class Tile extends StatefulWidget {
   State<Tile> createState() => _TileState();
 }
 
-class _TileState extends State<Tile> {
+class _TileState extends State<Tile> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocBuilder<GameGridBloc, GameGridState>(
       builder: (context, state) {
         final tile = state is GridInitial
             ? null
             : state.grid.at(row: widget.row, column: widget.column);
-        final text = Text(tile == null ? '' : tile.letter);
+        final tileStatus = tile?.status;
+        final tileLetter = tile == null ? '' : tile.letter;
         final color = tile == null
-            ? Colors.red
+            ? AppColors.unevaluated
             : Tile.colorFromStatus(status: tile.status);
+        final borderColor =
+            tileStatus == null || tileStatus == TileStatus.unoccupied
+                ? AppColors.highlight
+                : AppColors.light;
         return FlipCard(
           controller: widget.flipCardController,
           flipOnTouch: false,
           direction: FlipDirection.VERTICAL,
           speed: widget.flipTime,
-          front: ColoredBox(
-            color: Colors.red,
+          front: Container(
+            decoration: BoxDecoration(
+              color: AppColors.unevaluated,
+              border: Border.all(color: borderColor),
+            ),
             child: Center(
-              child: text,
+              child: Text(
+                tileLetter,
+                style: const TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ),
           back: ColoredBox(
             color: color,
             child: Center(
-              child: text,
+              child: Text(
+                tileLetter,
+                style: const TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ),
         );
