@@ -55,6 +55,20 @@ class Tile extends StatefulWidget {
 }
 
 class _TileState extends State<Tile> {
+  bool showBack = false;
+
+  bool hasFlipped() {
+    return widget.flipCardController.state?.isFront == false;
+  }
+
+  void setShowBack() {
+    Future.delayed(Duration.zero, () async {
+      setState(() {
+        showBack = true;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<GameGridBloc, GameGridState>(
@@ -68,9 +82,17 @@ class _TileState extends State<Tile> {
             ? AppColors.unevaluated
             : Tile.colorFromStatus(status: tile.status);
         final borderColor =
-          tileStatus == null || tileStatus == TileStatus.unoccupied
-            ? AppColors.highlight
-            : AppColors.light;
+            tileStatus == null || tileStatus == TileStatus.unoccupied
+                ? AppColors.highlight
+                : AppColors.light;
+        // FlipCards revert to front when off screen.
+        // Having an additional variable to track flip state allows for
+        // tiles to be re-flipped when on screen again.
+        if (hasFlipped()) {
+          setShowBack();
+        } else if (showBack) {
+          widget.flip();
+        }
         return FlipCard(
           controller: widget.flipCardController,
           flipOnTouch: false,
