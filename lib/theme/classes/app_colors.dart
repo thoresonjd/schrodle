@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 abstract final class AppColors {
   static const Color none = Colors.transparent;
   static const Color light = Colors.white;
-  static const Color highlight = Color(0xFF424242);
+  static const Color highlight = Color.fromARGB(255, 80, 80, 80);
   static const Color shade = Colors.black;
   static const Color background = Color(0xFF1E1E1E);
   static const Color unevaluated = none;

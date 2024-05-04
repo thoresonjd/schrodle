@@ -176,7 +176,7 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
   Future<void> _loadGrid(LoadGrid event, Emitter<GameGridState> emit) async {
     await _populateGlossaries();
     _hardMode = event.hardMode;
-    _numRows = _hardMode ? 7 : 5;
+    _numRows = _hardMode ? 13 : 7;
     _today = _getDate();
     _randomWordSelector =
         RandomWordSelector(seed: _today.millisecondsSinceEpoch);

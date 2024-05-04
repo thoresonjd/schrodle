@@ -11,15 +11,16 @@ import 'package:schrodle/keyboard/bloc/keyboard_bloc.dart';
 class GameGrid extends StatelessWidget {
   /// {@macro grid}
   GameGrid({required bool hardMode, super.key}) {
-    _numRows = hardMode ? 7 : 5;
+    _numRows = hardMode ? 13 : 7;
     _createTiles();
   }
 
   late final int _numRows;
   static const _numColumns = 5;
   static const _gridWidth = 350.0;
+  static const _gridHeight = 600.0;
   static const _gridPadding = 25.0;
-  static const _tileSpacing = 4.0;
+  static const _tileSpacing = 5.0;
   static const _tileFlipTime = 400;
   late final List<List<Tile>> _tiles;
 
@@ -68,12 +69,13 @@ class GameGrid extends StatelessWidget {
           keyboardProvider.add(DeactivateKeyboard());
         }
       },
-      child: SizedBox(
+      child: Container(
         width: _gridWidth,
+        constraints: BoxConstraints(maxHeight: _gridHeight),
         child: GridView.builder(
           shrinkWrap: true,
-          padding: const EdgeInsets.all(_gridPadding),
-          physics: const NeverScrollableScrollPhysics(),
+          //padding: const EdgeInsets.all(_gridPadding),
+          physics: const AlwaysScrollableScrollPhysics(),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: _numColumns,
             crossAxisSpacing: _tileSpacing,

@@ -26,10 +26,6 @@ class KeyboardKey extends StatelessWidget {
         child: InkWell(
           onTap: () => {handleKeyPress(context: context, key: keyboardKey)},
           child: Container(
-            constraints: const BoxConstraints(
-              minHeight: 50,
-              minWidth: 50,
-            ),
             decoration: const BoxDecoration(
               border: Border(
                 left: BorderSide(color: AppColors.highlight, width: 5),

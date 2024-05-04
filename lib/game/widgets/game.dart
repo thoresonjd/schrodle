@@ -132,7 +132,9 @@ class _GameState extends State<Game> {
                 body: SingleChildScrollView(
                   child: Column(
                     children: [
+                      SizedBox(height: 30),
                       Center(child: GameGrid(hardMode: hardMode!)),
+                      SizedBox(height: 30),
                       const Keyboard(),
                     ],
                   ),
