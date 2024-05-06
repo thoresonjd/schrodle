@@ -6,13 +6,13 @@ import 'package:schrodle/glossary/classes/glossary.dart';
 /// {@endtemplate}
 class RandomWordSelector {
   /// {@macro random_word_selector}
-  RandomWordSelector({required int seed}): _rng = Random(seed);
+  RandomWordSelector({required int seed}) : _rng = Random(seed);
 
   /// Random number generator.
   late final Random _rng;
 
   /// Selects a random word from the given [glossary].
-  String select(Glossary glossary) {
+  String select({required Glossary glossary}) {
     if (glossary.isEmpty) {
       throw Exception('The provided glossary is empty');
     }
@@ -22,7 +22,7 @@ class RandomWordSelector {
   }
 
   /// Chooses between two provided words
-  String choose(String first, String second) {
+  String choose({required String first, required String second}) {
     return _rng.nextBool() ? first : second;
   }
 }

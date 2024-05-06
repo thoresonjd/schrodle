@@ -22,9 +22,6 @@ class KeyboardBloc extends Bloc<KeyboardEvent, KeyboardState> {
   /// The set of all keys currently being pressed.
   final Set<LogicalKeyboardKey> _keysPressed = <LogicalKeyboardKey>{};
 
-  /// Retrieves the active status of the keyboard.
-  bool get isActive => state is KeyboardActive;
-
   /// Activates the keyboard.
   void _activateKeyboard(ActivateKeyboard event, Emitter<KeyboardState> emit) {
     emit(KeyboardActive());
@@ -65,6 +62,9 @@ class KeyboardBloc extends Bloc<KeyboardEvent, KeyboardState> {
   /// Determines if a [key] is can be pressed. A key can be pressed if it is
   /// contained in the set of all keys accepted by the game and not contained
   /// in the set of all currently pressed keys.
-  bool canPress(LogicalKeyboardKey key) =>
+  bool canPress({required LogicalKeyboardKey key}) =>
       keys.contains(key) && !_keysPressed.contains(key);
+
+  /// Retrieves the active status of the keyboard.
+  bool get isActive => state is KeyboardActive;
 }

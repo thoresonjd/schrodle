@@ -10,6 +10,7 @@ class Information extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     final paddingHorizontal = size.width * 0.1;
     final paddingVertical = size.height * 0.1;
+    const sectionSpacing = 25.0;
     return AlertDialog(
       insetPadding: EdgeInsets.fromLTRB(
         paddingHorizontal,
@@ -32,12 +33,12 @@ class Information extends StatelessWidget {
             const Center(
               child: Text(
                 'Schrodle',
-                style: AppTextStyles.heading,
+                style: SchrodleTypography.heading,
               ),
             ),
             const Text(
               'About the Game',
-              style: AppTextStyles.subheading,
+              style: SchrodleTypography.subheading,
             ),
             const Text(
               'Schrodle is a Wordle-based game inspired by the '
@@ -57,24 +58,24 @@ class Information extends StatelessWidget {
               "respect to the target. Thus, the Schrödinger's Cat thought "
               'experiment is, in essence, upheld.',
             ),
-            const SizedBox(height: 25),
+            const SizedBox(height: sectionSpacing),
             const Text(
               'Example',
-              style: AppTextStyles.subheading,
+              style: SchrodleTypography.subheading,
             ),
             const Text('Target: AXIOM'),
             const Text('Impostor: LOGIC'),
             const ExampleGrid(),
-            const SizedBox(height: 25),
+            const SizedBox(height: sectionSpacing),
             const Text(
               'Hard mode',
-              style: AppTextStyles.subheading,
+              style: SchrodleTypography.subheading,
             ),
             const Text(
               'In hard mode, there is a 50/50 chance for each individual '
               'letter of the guess to be validated against the corresponding '
               'letter in either the target or the impostor. To compensate, the '
-              'player is allotted additional guesses.'
+              'player is allotted additional guesses.',
             ),
           ],
         ),

@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:schrodle/game_grid/constants/tile_status.dart';
+import 'package:schrodle/game_grid/data/tile_status.dart';
 
 /// {@template tile}
 /// Model representing a grid tile.

@@ -8,9 +8,12 @@ class Results extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const logoSize = 150.0;
+    const sectionSpacing = 10.0;
+    const textSize = 17.5;
     return Align(
       child: AlertDialog(
-        content: Column(  
+        content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Align(
@@ -22,18 +25,18 @@ class Results extends StatelessWidget {
               ),
             ),
             const Image(
-              width: 150,
-              height: 150,
+              width: logoSize,
+              height: logoSize,
               image: AssetImage('images/schrodle-light.png'),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: sectionSpacing),
             const Text(
               'Thank you for playing Schrodle!',
               style: TextStyle(
-                fontSize: 17.5,
+                fontSize: textSize,
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: sectionSpacing),
             TextButton.icon(
               label: const Text('Copy results'),
               icon: const Icon(Icons.copy),

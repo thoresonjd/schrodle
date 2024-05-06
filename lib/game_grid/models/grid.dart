@@ -13,8 +13,7 @@ class Grid extends Equatable {
   final List<List<Tile>> tiles;
 
   /// Retrieves the tile at the location of [row] and [column].
-  Tile at({required int row, required int column}) =>
-      tiles[row][column];
+  Tile at({required int row, required int column}) => tiles[row][column];
 
   @override
   List<Object?> get props => [tiles];

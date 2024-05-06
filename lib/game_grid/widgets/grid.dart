@@ -2,26 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schrodle/dialog/dialog.dart';
 import 'package:schrodle/game_grid/bloc/game_grid_bloc.dart';
+import 'package:schrodle/game_grid/data/allotted_guesses.dart';
 import 'package:schrodle/game_grid/widgets/tile.dart';
 import 'package:schrodle/keyboard/bloc/keyboard_bloc.dart';
 
 /// {@template grid}
 /// Widget displaying the grid.
 /// {@endtemplate}
-class GameGrid extends StatelessWidget {
+class Grid extends StatelessWidget {
   /// {@macro grid}
-  GameGrid({required bool hardMode, super.key}) {
-    _numRows = hardMode ? 13 : 7;
+  Grid({required bool hardMode, super.key}) {
+    _numRows = hardMode ? allottedGuessesHard : allottedGuessesNormal;
     _createTiles();
   }
 
-  late final int _numRows;
-  static const _numColumns = 5;
-  static const _gridWidth = 350.0;
-  static const _gridHeight = 550.0;
-  static const _gridPadding = 25.0;
-  static const _tileSpacing = 5.0;
   static const _tileFlipTime = 400;
+  static const _numColumns = 5;
+  late final int _numRows;
   late final List<List<Tile>> _tiles;
 
   void _createTiles() {
@@ -40,11 +37,18 @@ class GameGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const gridWidth = 350.0;
+    const gridHeight = 450.0;
+    const tileSpacing = 5.0;
+    const dialogTime = 1000;
     final gameGridProvider = BlocProvider.of<GameGridBloc>(context);
     final keyboardProvider = BlocProvider.of<KeyboardBloc>(context);
     return BlocListener<GameGridBloc, GameGridState>(
       listener: (BuildContext context, GameGridState state) async {
-        if (state is RowFlipping) {
+        if (state is GameInProgress && !keyboardProvider.isActive) {
+          // Wait for game to initialize before activating the keyboard.
+          keyboardProvider.add(ActivateKeyboard());
+        } else if (state is RowFlipping) {
           keyboardProvider.add(DeactivateKeyboard());
           for (var column = 0; column < _numColumns; column++) {
             _tiles[state.row][column].flip();
@@ -63,23 +67,25 @@ class GameGrid extends StatelessWidget {
             keyboardProvider.add(ActivateKeyboard());
           }
         } else if (state is GuessEvaluated && state.message != null) {
-          dialog(context: context, message: state.message!, displayTime: 1000);
+          final message = state.message!.replaceAll('Exception: ', '');
+          dialog(context: context, message: message, displayTime: dialogTime);
         } else if (gameGridProvider.gameShouldEnd) {
           gameGridProvider.add(EndGame());
           keyboardProvider.add(DeactivateKeyboard());
         }
       },
       child: Container(
-        width: _gridWidth,
-        constraints: BoxConstraints(maxHeight: _gridHeight),
+        width: gridWidth,
+        constraints: const BoxConstraints(
+          maxHeight: gridHeight,
+        ),
         child: GridView.builder(
           shrinkWrap: true,
-          //padding: const EdgeInsets.all(_gridPadding),
           physics: const AlwaysScrollableScrollPhysics(),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: _numColumns,
-            crossAxisSpacing: _tileSpacing,
-            mainAxisSpacing: _tileSpacing,
+            crossAxisSpacing: tileSpacing,
+            mainAxisSpacing: tileSpacing,
           ),
           itemCount: _numRows * _numColumns,
           itemBuilder: (BuildContext context, int index) {

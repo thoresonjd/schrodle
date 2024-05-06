@@ -36,7 +36,7 @@ class Glossary {
   }
 
   /// Determines if the given [word] exists in the [Glossary] instance.
-  bool search(String word) {
+  bool search({required String word}) {
     if (_words.isEmpty) {
       return false;
     }

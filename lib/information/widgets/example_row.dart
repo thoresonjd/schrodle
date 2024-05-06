@@ -16,6 +16,9 @@ class ExampleRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const tileSize = 30.0;
+    const tileSpacing = 2.5;
+    const rowEndMargin = 7.5;
+    const textSize = 20.0;
     final row = List<Widget>.generate(
       numTiles,
       (index) => Row(
@@ -29,18 +32,19 @@ class ExampleRow extends StatelessWidget {
                 child: Text(
                   tileLetters[index],
                   style: const TextStyle(
-                    fontSize: 20,
+                    fontSize: textSize,
                     fontWeight: FontWeight.bold,
-                  ), 
+                  ),
                 ),
               ),
             ),
           ),
-          const SizedBox(width: 2.5),
+          const SizedBox(width: tileSpacing),
         ],
       ),
-    )..add(const SizedBox(width: 7.5))
-    ..add(Text(annotation));
+    )
+      ..add(const SizedBox(width: rowEndMargin))
+      ..add(Text(annotation));
     return Row(children: row);
   }
 }
