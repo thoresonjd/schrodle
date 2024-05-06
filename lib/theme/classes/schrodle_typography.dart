@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-abstract final class AppTextStyles {
+abstract final class SchrodleTypography {
   static const TextStyle heading = TextStyle(
     fontSize: 45,
     fontWeight: FontWeight.bold,

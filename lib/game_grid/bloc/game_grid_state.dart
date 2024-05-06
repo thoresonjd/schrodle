@@ -18,9 +18,17 @@ sealed class GameGridState extends Equatable {
 /// {@template grid_initial}
 /// A [GameGridState] representing the initial state of the grid.
 /// {@endtemplate}
-final class GridInitial extends GameGridState {
+final class GameGridInitial extends GameGridState {
   /// {@macro grid_initial}
-  const GridInitial({required super.grid});
+  const GameGridInitial({required super.grid});
+}
+
+/// {@template game_in_progress}
+/// A [GameGridState] denoting that the game is currently in progress.
+/// {@endtemplate}
+final class GameInProgress extends GameGridState {
+  /// {@macro grid_incomplete}
+  const GameInProgress({required super.grid});
 }
 
 /// {@template guess_evaluated}
@@ -58,14 +66,6 @@ final class RowFlipping extends GameGridState {
 final class GridUpdated extends GameGridState {
   /// {@macro grid_updated}
   const GridUpdated({required super.grid});
-}
-
-/// {@template game_in_progress}
-/// A [GameGridState] denoting that the game is currently in progress.
-/// {@endtemplate}
-final class GameInProgress extends GameGridState {
-  /// {@macro grid_incomplete}
-  const GameInProgress({required super.grid});
 }
 
 /// {@template game_over}

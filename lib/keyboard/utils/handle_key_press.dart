@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schrodle/game_grid/game_grid.dart';
-import 'package:schrodle/keyboard/keyboard.dart';
+import 'package:schrodle/keyboard/bloc/keyboard_bloc.dart';
 
 /// Handles key presses appropriately, including determination of proper
 /// [GameGridEvent] to trigger given a [LogicalKeyboardKey].

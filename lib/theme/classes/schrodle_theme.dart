@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:schrodle/theme/theme.dart';
 
-final class AppTheme {
-  const AppTheme();
+final class SchrodleTheme {
+  const SchrodleTheme();
 
   ThemeData get themeData => ThemeData(
     colorScheme: _colorScheme,
@@ -13,16 +13,16 @@ final class AppTheme {
   );
 
   ColorScheme get _colorScheme => const ColorScheme.dark(
-    background: AppColors.background,
+    background: SchrodleColors.background,
   );
 
   DialogTheme get _dialogTheme => const DialogTheme(
-    backgroundColor: AppColors.background,
-    surfaceTintColor: AppColors.none,
+    backgroundColor: SchrodleColors.background,
+    surfaceTintColor: SchrodleColors.none,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(32)),
       side: BorderSide(
-        color: AppColors.light,
+        color: SchrodleColors.light,
         width: 3,
       ),
     ),
@@ -30,17 +30,17 @@ final class AppTheme {
 
   IconButtonThemeData get _iconButtonTheme => IconButtonThemeData(
     style: IconButton.styleFrom(
-      foregroundColor: AppColors.light,
+      foregroundColor: SchrodleColors.light,
     ),
   );
 
   TextButtonThemeData get _textButtonTheme => TextButtonThemeData(
     style: TextButton.styleFrom(
-      backgroundColor: AppColors.button,
-      foregroundColor: AppColors.light,
+      backgroundColor: SchrodleColors.button,
+      foregroundColor: SchrodleColors.light,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(16)),
-        side: BorderSide(color: AppColors.light),
+        side: BorderSide(color: SchrodleColors.light),
       ),
     ),
   );
