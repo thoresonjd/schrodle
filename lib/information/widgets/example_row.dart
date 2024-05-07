@@ -1,16 +1,28 @@
 import 'package:flutter/material.dart';
 
+/// {@template example_row}
+/// Renders an row as part of an example game grid scenario.
+/// {@endtemplate}
 class ExampleRow extends StatelessWidget {
-  const ExampleRow(
-      {super.key,
-      required this.numTiles,
-      required this.tileLetters,
-      required this.tileColors,
-      required this.annotation});
+  /// {@macro example_row}
+  const ExampleRow({
+    required this.numTiles,
+    required this.tileLetters,
+    required this.tileColors,
+    required this.annotation,
+    super.key,
+  });
 
+  /// The number of tiles in the row.
   final int numTiles;
+
+  /// The string representing the letters of each tile in the row.
   final String tileLetters;
+
+  /// The list of colors corresponding to each tile in the row.
   final List<Color> tileColors;
+
+  /// The annotation explaining the row and its contents.
   final String annotation;
 
   @override

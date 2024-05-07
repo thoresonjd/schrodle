@@ -5,7 +5,6 @@ import 'package:schrodle/game_grid/models/tile.dart';
 /// Model representing the grid layout.
 /// {@endtemplate}
 class Grid extends Equatable {
-
   /// {@macro grid}
   const Grid({required this.tiles});
 

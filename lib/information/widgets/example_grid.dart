@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:schrodle/information/widgets/example_row.dart';
 import 'package:schrodle/theme/theme.dart';
 
+/// {@template example_grid}
+/// Renders an example game grid scenario.
+/// {@endtemplate}
 class ExampleGrid extends StatelessWidget {
+  /// {@macro example_grid}
   const ExampleGrid({super.key});
 
   @override
@@ -48,7 +52,7 @@ class ExampleGrid extends StatelessWidget {
                 SchrodleColors.present,
                 SchrodleColors.present,
                 SchrodleColors.present,
-                SchrodleColors.absent
+                SchrodleColors.absent,
               ],
               annotation: 'AXIOM selected; 3 letters marked present',
             ),

@@ -5,7 +5,6 @@ import 'package:schrodle/game_grid/data/tile_status.dart';
 /// Model representing a grid tile.
 /// {@endtemplate}
 class Tile extends Equatable {
-
   /// {@macro tile}
   const Tile({required this.status, this.letter = ''});
 

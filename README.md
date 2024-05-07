@@ -1,30 +1,32 @@
-# schrodle
+<div align="center">
+  <img src="./assets/images/schrodle-text-half-inverse.png" style="width: 20vw;"/>
+</div>
 
-A new Flutter project.
+# Schrodle
 
-## Getting Started
+## Premise
 
-This project is a starting point for a Flutter application.
+Schrodle is a game that is inspired by [Wordle](https://en.wikipedia.org/wiki/Wordle) and the [Schrödinger's Cat](https://en.wikipedia.org/wiki/Schr%C3%B6dinger's_cat) thought experiment.
 
-A few resources to get you started if this is your first Flutter project:
+The game works exactly like Wordle, but with a twist.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Like Wordle, the player is tasked with guessing the daily word, which we call the "target." However, in addition to the target, there is a secondary word, called the "impostor." Whenever a guess is made, there is a 50/50 chance that the guess will be validated against either the target or the impostor. Therefore, if the impostor is used to validate the guess, letters can be marked as present in the target word when, in fact, they are absent (or in the incorrect position). It follows that letters may be simultaneously market correctly and incorrectly with respect to the target. Thus, the Schrödinger's Cat thought experiment is in essence, upheld.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+In hard mode, there is a 50/50 chance for each individual letter of the guess to be validated against the corresponding letter in either the target or the impostor. To compensate, the player is allotted additional guesses.
 
-## Set Up
+## Example Scenario
 
-To build this project locally, make sure you meet the following requirements:
+<img src="./assets/images/example-scenario.png">
 
-[] Install Flutter SDK - https://docs.flutter.dev/get-started/install/windows/desktop
-- From VS Code, run:
-    [] `$ dart pub get`
+## Setup
 
-## Run
+To set up this project locally:
+- Install the [Flutter SDK](https://docs.flutter.dev/get-started/install)
+- Clone this repository
+- Run `flutter pub get` in the root directory of this repository
 
-Open "./lib/main.dart" and click the "Run" button above the main function.
+## Credit
 
-Alternatively, press F5 as a shortcut.
+Created by Justin Thoreson and Ana Mendes.\
+Inspired by [Wordle](https://en.wikipedia.org/wiki/Wordle), developed by Josh Wardle.\
+Inspired by the [Schrödinger's Cat](https://en.wikipedia.org/wiki/Schr%C3%B6dinger's_cat) thought experiment, devised by Erwin Schrödinger.

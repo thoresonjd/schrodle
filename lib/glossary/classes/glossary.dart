@@ -11,6 +11,8 @@ class Glossary {
   /// {@macro glossary}
   Glossary._();
 
+  /// The underlying representation of a [Glossary]; a list of words.
+  /// Since the glossary files are unique, this is essentially just a set.
   late final List<String> _words;
 
   /// Static factory method that constructs a [Glossary] instance and
@@ -36,6 +38,7 @@ class Glossary {
   }
 
   /// Determines if the given [word] exists in the [Glossary] instance.
+  /// Since the glossary files are sorted, a binary search is utilized.
   bool search({required String word}) {
     if (_words.isEmpty) {
       return false;

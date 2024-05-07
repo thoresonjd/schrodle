@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+/// Renders a dialog box displaying the message given by [message] for an amount
+/// of time given by [displayTime].
 void dialog(
     {required BuildContext context,
     required String message,

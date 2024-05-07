@@ -1,25 +1,25 @@
 part of 'game_grid_bloc.dart';
 
 /// {@template game_grid_state}
-/// The generic representation of a grid state.
+/// The generic representation of a game grid state.
 /// {@endtemplate}
 @immutable
 sealed class GameGridState extends Equatable {
-  /// {@macro grid_state}
+  /// {@macro game_grid_state}
   const GameGridState({required this.grid});
 
-  /// The value (layout) of the grid.
+  /// The value, or layout, of the grid.
   final Grid grid;
 
   @override
   List<Object> get props => [grid];
 }
 
-/// {@template grid_initial}
-/// A [GameGridState] representing the initial state of the grid.
+/// {@template game_grid_initial}
+/// A [GameGridState] representing the initial state of the game grid.
 /// {@endtemplate}
 final class GameGridInitial extends GameGridState {
-  /// {@macro grid_initial}
+  /// {@macro game_grid_initial}
   const GameGridInitial({required super.grid});
 }
 
@@ -27,12 +27,12 @@ final class GameGridInitial extends GameGridState {
 /// A [GameGridState] denoting that the game is currently in progress.
 /// {@endtemplate}
 final class GameInProgress extends GameGridState {
-  /// {@macro grid_incomplete}
+  /// {@macro game_in_progress}
   const GameInProgress({required super.grid});
 }
 
 /// {@template guess_evaluated}
-/// A [GameGridState] denoted that the most recent guess has been evaluated.
+/// A [GameGridState] denoting that the most recent guess has been evaluated.
 /// {@endtemplate}
 final class GuessEvaluated extends GameGridState {
   /// {@macro guess_evaluated}

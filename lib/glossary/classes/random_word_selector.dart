@@ -2,7 +2,7 @@ import 'dart:math' show Random;
 import 'package:schrodle/glossary/classes/glossary.dart';
 
 /// {@template random_word_selector}
-/// Handles random word selection from a [Glossary].
+/// Handles random word selection.
 /// {@endtemplate}
 class RandomWordSelector {
   /// {@macro random_word_selector}
@@ -21,7 +21,7 @@ class RandomWordSelector {
     return glossary[index];
   }
 
-  /// Chooses between two provided words
+  /// Chooses between two provided words.
   String choose({required String first, required String second}) {
     return _rng.nextBool() ? first : second;
   }

@@ -16,11 +16,19 @@ class Grid extends StatelessWidget {
     _createTiles();
   }
 
+  /// The time it takes to flip a tile, in milliseconds.
   static const _tileFlipTime = 400;
+
+  /// The number of columns in the grid.
   static const _numColumns = 5;
+
+  /// The number of rows in the grid.
   late final int _numRows;
+
+  /// The underlying representation of the grid: a 2D [Tile] matrix.
   late final List<List<Tile>> _tiles;
 
+  /// Initializes the tiles in the grid.
   void _createTiles() {
     _tiles = List<List<Tile>>.generate(
       _numRows,

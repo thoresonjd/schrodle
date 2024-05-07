@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+/// {@template results}
+/// Displays the results dialog when the game ends.
+/// {@endtemplate}
 class Results extends StatelessWidget {
+  /// {@macro results}
   const Results({required this.results, super.key});
 
+  /// The results of the completed game as a [String].
   final String results;
 
   @override

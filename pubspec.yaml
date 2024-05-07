@@ -1,5 +1,5 @@
 name: schrodle
-description: "A new Flutter project."
+description: "Schrodle is a game that is inspired by Wordle and the Schrödinger's Cat thought experiment."
 version: 1.0.0+1
 
 environment:
