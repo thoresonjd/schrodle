@@ -10,11 +10,11 @@ import 'package:schrodle/glossary/glossary.dart';
 part 'game_grid_event.dart';
 part 'game_grid_state.dart';
 
-/// {@template grid_bloc}
-/// Tracks the state of the grid and manages grid events.
+/// {@template game_grid_bloc}
+/// Tracks the state of the game and manages grid events.
 /// {@endtemplate}
 class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
-  /// {@macro grid_bloc}
+  /// {@macro game_grid_bloc}
   GameGridBloc() : super(GameGridInitial(grid: Grid(tiles: List.empty()))) {
     on<LoadGrid>(_loadGrid);
     on<GuessMade>(_guessMade);
@@ -25,17 +25,40 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
     on<EndGame>(_endGame);
   }
 
+  /// The number of columns in the grid.
   static const int _numColumns = 5;
+
+  /// The number of rows in the grid.
   late final int _numRows;
+
+  /// The underlying representation of the grid: a 2D [Tile] matrix.
   late final List<List<Tile>> _tiles;
+
+  /// Selects random words from those given.
   late final RandomWordSelector _randomWordSelector;
+
+  /// The glossary of all valid guesses.
   late final Glossary _validGuesses;
+
+  /// The glossary of all valid solutions.
   late final Glossary _validSolutions;
+
+  /// The target word.
   late final String _target;
+
+  /// The impostor word.
   late final String _impostor;
+
+  /// The date of the current Schrodle game.
   late final DateTime _today;
+
+  /// Whether the game should be played in normal mode or hard mode.
   late final bool _hardMode;
+
+  /// The current row to track in the grid.
   int _row = 0;
+
+  /// The current column to track in the grid.
   int _column = -1;
 
   /// Indicates that the game state should transition to [GameOver].
@@ -47,7 +70,8 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
     _validSolutions = await Glossary.fromFile(filePath: 'glossary/solutions');
   }
 
-  DateTime _getDate() {
+  /// Retrieves the current date.
+  DateTime get _date {
     final now = DateTime.now();
     return DateTime(now.year, now.month, now.day);
   }
@@ -76,7 +100,7 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
     await _populateGlossaries();
     _hardMode = event.hardMode;
     _numRows = _hardMode ? allottedGuessesHard : allottedGuessesNormal;
-    _today = _getDate();
+    _today = _date;
     _randomWordSelector =
         RandomWordSelector(seed: _today.millisecondsSinceEpoch);
     _selectWords();
@@ -91,7 +115,8 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
         _validSolutions.search(word: asLower);
   }
 
-  String _buildGuess() {
+  /// Builds and retrieves the current guess made.
+  String get _guess {
     final buffer = StringBuffer();
     for (final tile in _tiles[_row]) {
       if (tile.status == TileStatus.unoccupied) {
@@ -109,6 +134,7 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
   /// Checks if [_target] has been guessed.
   bool _isTarget(String word) => word == _target;
 
+  /// Checks if [_impostor] has been guessed.
   bool _isImpostor(String word) => word == _impostor;
 
   /// Updates the grid status at the current row given a [guess].
@@ -182,7 +208,7 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
   void _guessMade(GuessMade event, Emitter<GameGridState> emit) {
     late final String guess;
     try {
-      guess = _buildGuess();
+      guess = _guess;
     } on Exception catch (e) {
       emit(GuessEvaluated(grid: Grid(tiles: _tiles), message: e.toString()));
       return;
@@ -248,6 +274,7 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
     emit(GameOver(grid: Grid(tiles: _tiles)));
   }
 
+  /// Retrieves the character for the gived [TileStatus].
   String _characterFromStatus(TileStatus status) {
     switch (status) {
       case TileStatus.guessed:
@@ -263,14 +290,14 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
     }
   }
 
+  /// Retrieves the results of the completed game as a [String].
   String get results {
     final date = _today.toString().split(' ')[0];
     final buffer = StringBuffer()
-      ..writeln(
-        'Schrodle $date\n'
-        '${_hardMode ? 'Hard' : 'Normal'} Mode '
-        '${_row < _numRows ? _row : 'X'}/$_numRows',
-      );
+      ..writeln('Schrodle')
+      ..writeln('Date: $date')
+      ..writeln('Mode: ${_hardMode ? 'Hard' : 'Normal'}')
+      ..writeln('Score: ${_row <= _numRows ? _row : 'X'}/$_numRows',);
     for (var row = 0; row < _row; row++) {
       for (final column in _tiles[row]) {
         buffer.write(_characterFromStatus(column.status));

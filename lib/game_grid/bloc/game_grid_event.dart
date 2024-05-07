@@ -19,7 +19,7 @@ class LoadGrid extends GameGridEvent {
   /// {@macro load_grid}
   const LoadGrid({required this.hardMode});
 
-  /// Denotes if the game is to be played in hard mode.
+  /// Denotes whether the game is to be played in hard mode.
   final bool hardMode;
 
   @override

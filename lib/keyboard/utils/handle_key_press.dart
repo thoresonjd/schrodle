@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schrodle/game_grid/game_grid.dart';
 import 'package:schrodle/keyboard/bloc/keyboard_bloc.dart';
 
-/// Handles key presses appropriately, including determination of proper
+/// Handles key presses appropriately. Ultimately determines the proper
 /// [GameGridEvent] to trigger given a [LogicalKeyboardKey].
 void handleKeyPress({
   required BuildContext context,

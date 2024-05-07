@@ -21,7 +21,7 @@ class Game extends StatefulWidget {
 class _GameState extends State<Game> {
   bool? hardMode;
 
-  /// Renders results in a dialog box.
+  /// Renders game results in a dialog box.
   void _showResults(BuildContext context) {
     final results = BlocProvider.of<GameGridBloc>(context).results;
     showDialog<void>(
@@ -30,7 +30,7 @@ class _GameState extends State<Game> {
     );
   }
 
-  /// Renders information in a dialog box.
+  /// Renders game information in a dialog box.
   void _showInformation(BuildContext context) {
     showDialog<void>(
       context: context,
@@ -38,6 +38,7 @@ class _GameState extends State<Game> {
     );
   }
 
+  /// Renders game's landing page, which includes game mode selection.
   Widget _landing() {
     const logoSize = 150.0;
     const sectionSpacing = 10.0;
@@ -97,6 +98,7 @@ class _GameState extends State<Game> {
     );
   }
 
+  /// Renders the game components, which include the grid and the keyboard.
   Widget _game(BuildContext context) {
     const title = 'Schrodle';
     const sectionSpacing = 15.0;
