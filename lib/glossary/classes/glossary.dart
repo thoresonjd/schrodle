@@ -26,7 +26,7 @@ class Glossary {
   /// Populates the [Glossary] instance from a file given a [filePath].
   Future<void> _populate({required String filePath}) async {
     if (kIsWeb) {
-      _words = (await rootBundle.loadString(filePath)).split('\r\n');
+      _words = (await rootBundle.loadString(filePath)).split(' ');
     } else {
       (await File(filePath)
               .openRead()
