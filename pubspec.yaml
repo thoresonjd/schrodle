@@ -26,7 +26,9 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/
+    - assets/fonts/
+    - assets/glossary/
+    - assets/images/
   fonts:
     - family: Courier Prime
       fonts:

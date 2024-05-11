@@ -50,7 +50,7 @@ class _GameState extends State<Game> {
           const Image(
             width: logoSize,
             height: logoSize,
-            image: AssetImage('images/schrodle-light.png'),
+            image: AssetImage('assets/images/schrodle-light.png'),
           ),
           const Text(
             'Welcome to Schrodle!',

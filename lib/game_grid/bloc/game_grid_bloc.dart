@@ -66,8 +66,10 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
 
   /// Populates two [Glossary] instances with valid solutions and guesses.
   Future<void> _populateGlossaries() async {
-    _validGuesses = await Glossary.fromFile(filePath: 'glossary/guesses');
-    _validSolutions = await Glossary.fromFile(filePath: 'glossary/solutions');
+    _validGuesses =
+        await Glossary.fromFile(filePath: 'assets/glossary/guesses');
+    _validSolutions =
+        await Glossary.fromFile(filePath: 'assets/glossary/solutions');
   }
 
   /// Retrieves the current date.
@@ -297,7 +299,7 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
       ..writeln('Schrodle')
       ..writeln('Date: $date')
       ..writeln('Mode: ${_hardMode ? 'Hard' : 'Normal'}')
-      ..writeln('Score: ${_row <= _numRows ? _row : 'X'}/$_numRows',);
+      ..writeln('Score: ${_row <= _numRows ? _row : 'X'}/$_numRows');
     for (var row = 0; row < _row; row++) {
       for (final column in _tiles[row]) {
         buffer.write(_characterFromStatus(column.status));
