@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:schrodle/information/widgets/example_tile.dart';
 
 /// {@template example_row}
 /// Renders an row as part of an example game grid scenario.
@@ -27,30 +28,13 @@ class ExampleRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const tileSize = 30.0;
     const tileSpacing = 2.5;
     const rowEndMargin = 7.5;
-    const textSize = 20.0;
     final row = List<Widget>.generate(
       numTiles,
       (index) => Row(
         children: [
-          SizedBox(
-            width: tileSize,
-            height: tileSize,
-            child: ColoredBox(
-              color: tileColors[index],
-              child: Align(
-                child: Text(
-                  tileLetters[index],
-                  style: const TextStyle(
-                    fontSize: textSize,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-          ),
+          ExampleTile(letter: tileLetters[index], color: tileColors[index]),
           const SizedBox(width: tileSpacing),
         ],
       ),

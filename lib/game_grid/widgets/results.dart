@@ -32,7 +32,7 @@ class Results extends StatelessWidget {
             const Image(
               width: logoSize,
               height: logoSize,
-              image: AssetImage('images/schrodle-light.png'),
+              image: AssetImage('assets/images/schrodle-light.png'),
             ),
             const SizedBox(height: sectionSpacing),
             const Text(

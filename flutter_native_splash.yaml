@@ -1,0 +1,5 @@
+flutter_native_splash:
+  color: "#000000"
+  image: assets/images/schrodle-light.png
+  web: true
+  web_image_mode: center

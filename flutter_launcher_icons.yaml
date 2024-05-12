@@ -1,0 +1,7 @@
+flutter_launcher_icons:
+  web:
+    generate: true
+    image_path: "assets/images/schrodle-s-light.png"
+    background_color: "#000000"
+    theme_color: "#000000"
+  

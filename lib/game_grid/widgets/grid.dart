@@ -45,8 +45,8 @@ class Grid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const gridWidth = 350.0;
-    const gridHeight = 450.0;
+    const gridWidth = 300.0;
+    const gridHeight = 400.0;
     const tileSpacing = 5.0;
     const dialogTime = 1000;
     final gameGridProvider = BlocProvider.of<GameGridBloc>(context);
