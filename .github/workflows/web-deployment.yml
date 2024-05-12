@@ -1,0 +1,29 @@
+name: Deploy to Web via GitHub Pages
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    name: Build Web
+    env:
+      my_secret: ${{secrets.COMMIT_SECRET}}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: "stable"
+      - run: flutter config --enable-web
+      - run: flutter clean
+      - run: flutter pub get
+      - run: flutter build web --base-href /${{github.event.repository.name}}/
+      - run: |
+          cd build/web
+          git init
+          git config --global user.email ${{vars.EMAIL}}
+          git config --global user.name ${{vars.USERNAME}}
+          git status
+          git remote add origin https://${{secrets.COMMIT_SECRET}}@github.com/${{vars.USERNAME}}/${{github.event.repository.name}}.git
+          git checkout -b gh-pages
+          git add --all
+          git commit -m "Deploy new build"
+          git push -f origin gh-pages
