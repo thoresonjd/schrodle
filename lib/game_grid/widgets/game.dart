@@ -101,7 +101,7 @@ class _GameState extends State<Game> {
   /// Renders the game components, which include the grid and the keyboard.
   Widget _game(BuildContext context) {
     const title = 'Schrodle';
-    const sectionSpacing = 15.0;
+    const sectionSpacing = 7.5;
     return MultiBlocProvider(
       providers: [
         BlocProvider<GameGridBloc>(
