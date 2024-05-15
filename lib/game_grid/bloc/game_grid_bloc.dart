@@ -61,8 +61,11 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
   /// The current column to track in the grid.
   int _column = -1;
 
+  /// Indicates that [_target] has been guessed.
+  bool _targetGuessed = false;
+
   /// Indicates that the game state should transition to [GameOver].
-  bool gameShouldEnd = false;
+  bool get gameShouldEnd => _targetGuessed || _row > _numRows;
 
   /// Populates two [Glossary] instances with valid solutions and guesses.
   Future<void> _populateGlossaries() async {
@@ -217,7 +220,7 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
     }
     _updateGridStatus(guess);
     if (_isTarget(guess)) {
-      gameShouldEnd = true;
+      _targetGuessed = true;
       emit(GuessEvaluated(grid: Grid(tiles: _tiles), message: 'Yay!'));
     } else if (_isFinalGuess()) {
       emit(GuessEvaluated(grid: Grid(tiles: _tiles), message: _target));
@@ -299,7 +302,7 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
       ..writeln('Schrodle')
       ..writeln('Date: $date')
       ..writeln('Mode: ${_hardMode ? 'Hard' : 'Normal'}')
-      ..writeln('Score: ${_row <= _numRows ? _row : 'X'}/$_numRows');
+      ..writeln('Score: ${_targetGuessed ? _row : 'X'}/$_numRows');
     for (var row = 0; row < _row; row++) {
       for (final column in _tiles[row]) {
         buffer.write(_characterFromStatus(column.status));
