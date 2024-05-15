@@ -306,7 +306,8 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
       ..writeln('Schrodle')
       ..writeln('Date: $date')
       ..writeln('Mode: ${_hardMode ? 'Hard' : 'Normal'}')
-      ..writeln('Score: ${_targetGuessed ? _row : 'X'}/$_numRows');
+      ..writeln('Score: ${_targetGuessed ? _row : 'X'}/$_numRows')
+      ..writeln('https://thoresonjd.github.io/schrodle/');
     for (var row = 0; row < _row; row++) {
       for (final column in _tiles[row]) {
         buffer.write(_characterFromStatus(column.status));
