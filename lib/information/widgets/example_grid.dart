@@ -63,7 +63,7 @@ class ExampleGrid extends StatelessWidget {
               tileColors:
                   List<Color>.generate(rowSize, (index) => 
                     SchrodleColors.correct,),
-              annotation: 'LOGIC selected; impostor guessed',
+              annotation: 'Impostor guessed',
             ),
             const Divider(height: dividerSize, color: Colors.transparent),
             ExampleRow(
@@ -72,7 +72,7 @@ class ExampleGrid extends StatelessWidget {
               tileColors:
                   List<Color>.generate(rowSize, (index) => 
                     SchrodleColors.guessed,),
-              annotation: 'AXIOM selected; target guessed',
+              annotation: 'Target guessed',
             ),
           ],
         ),

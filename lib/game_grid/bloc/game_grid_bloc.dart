@@ -61,8 +61,14 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
   /// The current column to track in the grid.
   int _column = -1;
 
+  /// Indicates that [_target] has been guessed.
+  bool _targetGuessed = false;
+
+  /// Indicates that [_impostor] has been guessed.
+  bool _impostorGuessed = false;
+
   /// Indicates that the game state should transition to [GameOver].
-  bool gameShouldEnd = false;
+  bool get gameShouldEnd => _targetGuessed || _row > _numRows;
 
   /// Populates two [Glossary] instances with valid solutions and guesses.
   Future<void> _populateGlossaries() async {
@@ -164,19 +170,20 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
       }
       word = buffer.toString();
     } else if (_isImpostor(guess)) {
+      // Normal mode:
       // It may make it easier for the player to know if they have guessed the
       // impostor word. We can try this instead of relying on a 50/50 chance of
       // the impostor word being selected when correctly guessed.
-      for (var column = 0; column < _numColumns; column++) {
-        _tiles[_row][column] = Tile(
-          status: TileStatus.correct,
-          letter: _tiles[_row][column].letter,
-        );
-      }
-      return;
+      word = _impostor;
+      _impostorGuessed = true;
+    } else if (_impostorGuessed) {
+      // Normal mode:
+      // We can also prevent the impostor word from being selected again once
+      // guessed for the first time.
+      word = _target;
     } else {
-      /// Normal mode:
-      /// Randomly select between target and impostor words for each guess.
+      // Normal mode:
+      // Randomly select between target and impostor words for each guess.
       word = _randomWordSelector.choose(first: _target, second: _impostor);
     }
     final lettersLeft = word.characters.toList();
@@ -217,7 +224,7 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
     }
     _updateGridStatus(guess);
     if (_isTarget(guess)) {
-      gameShouldEnd = true;
+      _targetGuessed = true;
       emit(GuessEvaluated(grid: Grid(tiles: _tiles), message: 'Yay!'));
     } else if (_isFinalGuess()) {
       emit(GuessEvaluated(grid: Grid(tiles: _tiles), message: _target));
@@ -299,7 +306,8 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
       ..writeln('Schrodle')
       ..writeln('Date: $date')
       ..writeln('Mode: ${_hardMode ? 'Hard' : 'Normal'}')
-      ..writeln('Score: ${_row <= _numRows ? _row : 'X'}/$_numRows');
+      ..writeln('Score: ${_targetGuessed ? _row : 'X'}/$_numRows')
+      ..writeln('https://thoresonjd.github.io/schrodle/');
     for (var row = 0; row < _row; row++) {
       for (final column in _tiles[row]) {
         buffer.write(_characterFromStatus(column.status));
