@@ -45,31 +45,28 @@ class Information extends StatelessWidget {
               style: SchrodleTypography.subheading,
             ),
             const Text(
-              'Schrodle is a game that is inspired by Wordle and '
-              "the Schrödinger's Cat thought experiment.",
-            ),
-            const Text('The game works exactly like Wordle, but with a twist.'),
-            const Text(
-              'Like Wordle, the player is tasked with guessing the daily word, '
-              'which we call the "target." However, in addition to the target, '
-              'there is a secondary word, called the "impostor." Whenever a '
-              'guess is made, there is a 50/50 chance that the guess will be '
-              'validated against either the target or the impostor. Therefore, '
-              'if the impostor is used to validate the guess, letters can be '
-              'marked as present in the target word when, in fact, they are '
-              'absent (or in the incorrect position). It follows that letters '
-              'may be simultaneously market correctly and incorrectly with '
-              "respect to the target. Thus, the Schrödinger's Cat thought "
-              'experiment is, in essence, upheld.',
+              'Schrodle is a game that is inspired by Wordle and the '
+              "Schrödinger's Cat thought experiment. The game works exactly "
+              'like Wordle, but with a twist. Like Wordle, the player is '
+              'tasked with guessing the daily word, which we call the '
+              '"target." However, in addition to the target, there is a '
+              'secondary word, called the "impostor."', 
             ),
             const SizedBox(height: sectionSpacing),
             const Text(
-              'Example',
+              'Normal mode',
               style: SchrodleTypography.subheading,
             ),
-            const Text('Target: AXIOM'),
-            const Text('Impostor: LOGIC'),
-            const ExampleGrid(),
+            const Text(
+              'Whenever a guess is made, there is a 50/50 chance that the ' 
+              'guess will be validated against either the target or the '
+              'impostor. Therefore, if the impostor is selected to validate '
+              'the guess, letters can be marked as present in the target word '
+              'when, in fact, they are absent (or in the incorrect position). '
+              'It follows that letters may be simultaneously market correctly '
+              'and incorrectly with respect to the target. Thus, the '
+              "Schrödinger's Cat thought experiment is, in essence, upheld.",
+            ),
             const SizedBox(height: sectionSpacing),
             const Text(
               'Hard mode',
@@ -81,6 +78,15 @@ class Information extends StatelessWidget {
               'letter in either the target or the impostor. To compensate, the '
               'player is allotted additional guesses.',
             ),
+            const SizedBox(height: sectionSpacing),
+            const Text(
+              'Example',
+              style: SchrodleTypography.subheading,
+            ),
+            const Text('Mode: Normal'),
+            const Text('Target: AXIOM'),
+            const Text('Impostor: LOGIC'),
+            const ExampleGrid(),
             const SizedBox(height: sectionSpacing),
             const Text(
               'Credit',
