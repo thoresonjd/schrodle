@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:schrodle/game_grid/data/allotted_guesses.dart';
 import 'package:schrodle/game_grid/data/tile_status.dart';
+import 'package:schrodle/game_grid/data/tile_status_characters.dart';
 import 'package:schrodle/game_grid/models/grid.dart';
 import 'package:schrodle/game_grid/models/tile.dart';
 import 'package:schrodle/glossary/glossary.dart';
@@ -283,22 +284,6 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
     emit(GameOver(grid: Grid(tiles: _tiles)));
   }
 
-  /// Retrieves the character for the gived [TileStatus].
-  String _characterFromStatus(TileStatus status) {
-    switch (status) {
-      case TileStatus.guessed:
-        return '🟪';
-      case TileStatus.correct:
-        return '🟩';
-      case TileStatus.present:
-        return '🟨';
-      case TileStatus.absent:
-      case TileStatus.unoccupied:
-      case TileStatus.occupied:
-        return '⬛';
-    }
-  }
-
   /// Retrieves the results of the completed game as a [String].
   String get results {
     final date = _today.toString().split(' ')[0];
@@ -310,7 +295,7 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
       ..writeln('https://thoresonjd.github.io/schrodle/');
     for (var row = 0; row < _row; row++) {
       for (final column in _tiles[row]) {
-        buffer.write(_characterFromStatus(column.status));
+        buffer.write(tileStatusCharacters[column.status]);
       }
       buffer.writeln();
     }
