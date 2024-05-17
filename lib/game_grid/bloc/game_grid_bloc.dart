@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:schrodle/game_grid/data/allotted_guesses.dart';
+import 'package:schrodle/game_grid/data/game_url.dart';
 import 'package:schrodle/game_grid/data/tile_status.dart';
 import 'package:schrodle/game_grid/data/tile_status_characters.dart';
 import 'package:schrodle/game_grid/models/grid.dart';
@@ -292,7 +293,7 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
       ..writeln('Date: $date')
       ..writeln('Mode: ${_hardMode ? 'Hard' : 'Normal'}')
       ..writeln('Score: ${_targetGuessed ? _row : 'X'}/$_numRows')
-      ..writeln('https://thoresonjd.github.io/schrodle/');
+      ..writeln(gameUrl);
     for (var row = 0; row < _row; row++) {
       for (final column in _tiles[row]) {
         buffer.write(tileStatusCharacters[column.status]);
