@@ -1,5 +1,5 @@
 /// The number of allotted guesses when game is played in normal mode.
-const allottedGuessesNormal = 7;
+const allottedGuessesNormal = 10;
 
 /// The number of allotted guesses when game is played in hard mode.
-const allottedGuessesHard = 13;
+const allottedGuessesHard = 20;
