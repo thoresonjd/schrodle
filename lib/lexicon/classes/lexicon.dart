@@ -3,27 +3,28 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
-/// {@template glossary}
-/// Stores words read from a file.
-/// Assumes the words are unique and sorted.
+/// {@template lexicon}
+/// Encapsulates a vocabulary of known words.
+/// Assumes the words are unique and sorted before read from a file.
 /// {@endtemplate}
-class Glossary {
-  /// {@macro glossary}
-  Glossary._();
+class Lexicon {
+  /// {@macro lexicon}
+  Lexicon._();
 
-  /// The underlying representation of a [Glossary]; a list of words.
-  /// Since the glossary files are unique, this is essentially just a set.
+  /// The underlying representation of a [Lexicon]; a list of words.
+  /// Since the lexicon files are unique, this is essentially just a set.
+  /// A [List] is used in favor of a [Set] to allow for indexing. 
   late final List<String> _words;
 
-  /// Static factory method that constructs a [Glossary] instance and
+  /// Static factory method that constructs a [Lexicon] instance and
   /// populates it from a file given a [filePath].
-  static Future<Glossary> fromFile({required String filePath}) async {
-    final glossary = Glossary._();
-    await glossary._populate(filePath: filePath);
-    return glossary;
+  static Future<Lexicon> fromFile({required String filePath}) async {
+    final lexicon = Lexicon._();
+    await lexicon._populate(filePath: filePath);
+    return lexicon;
   }
 
-  /// Populates the [Glossary] instance from a file given a [filePath].
+  /// Populates the [Lexicon] instance from a file given a [filePath].
   Future<void> _populate({required String filePath}) async {
     if (kIsWeb) {
       _words = (await rootBundle.loadString(filePath)).split(' ');
@@ -37,8 +38,8 @@ class Glossary {
     }
   }
 
-  /// Determines if the given [word] exists in the [Glossary] instance.
-  /// Since the glossary files are sorted, a binary search is utilized.
+  /// Determines if the given [word] exists in the [Lexicon] instance.
+  /// Since the lexicon files are sorted, a binary search is utilized.
   bool search({required String word}) {
     if (_words.isEmpty) {
       return false;
@@ -64,9 +65,9 @@ class Glossary {
   /// Retrieves the word at the given [index].
   String operator [](int index) => _words[index];
 
-  /// Determines if the glossary is empty.
+  /// Determines if the lexicon is empty.
   bool get isEmpty => _words.isEmpty;
 
-  /// Retrieves the number of words in the glossary.
+  /// Retrieves the number of words in the lexicon.
   int get length => _words.length;
 }

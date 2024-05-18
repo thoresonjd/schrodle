@@ -10,22 +10,13 @@ class OnScreenKeyboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scrollController = ScrollController();
-    return Scrollbar(
-      thumbVisibility: true,
-      controller: scrollController,
-      child: SingleChildScrollView(
-        controller: scrollController,
-        scrollDirection: Axis.horizontal,
-        child: const Column(
-          children: [
-            KeyboardRow(start: 0, end: 9),
-            KeyboardRow(start: 10, end: 18),
-            KeyboardRow(start: 19, end: 25),
-            KeyboardRow(start: 26, end: 27),
-          ],
-        ),
-      ),
+    return const Column(
+      children: [
+        KeyboardRow(start: 0, end: 9),
+        KeyboardRow(start: 10, end: 18),
+        KeyboardRow(start: 19, end: 25),
+        KeyboardRow(start: 26, end: 27),
+      ],
     );
   }
 }

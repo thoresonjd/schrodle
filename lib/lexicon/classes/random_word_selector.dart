@@ -1,5 +1,5 @@
 import 'dart:math' show Random;
-import 'package:schrodle/glossary/classes/glossary.dart';
+import 'package:schrodle/lexicon/classes/lexicon.dart';
 
 /// {@template random_word_selector}
 /// Handles random word selection.
@@ -11,14 +11,14 @@ class RandomWordSelector {
   /// Random number generator.
   late final Random _rng;
 
-  /// Selects a random word from the given [glossary].
-  String select({required Glossary glossary}) {
-    if (glossary.isEmpty) {
-      throw Exception('The provided glossary is empty');
+  /// Selects a random word from the given [lexicon].
+  String select({required Lexicon lexicon}) {
+    if (lexicon.isEmpty) {
+      throw Exception('The provided lexicon is empty');
     }
-    final max = glossary.length;
+    final max = lexicon.length;
     final index = _rng.nextInt(max);
-    return glossary[index];
+    return lexicon[index];
   }
 
   /// Chooses between two provided words.
