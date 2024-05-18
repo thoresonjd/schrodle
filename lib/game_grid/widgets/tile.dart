@@ -86,7 +86,7 @@ class _TileState extends State<Tile> with AutomaticKeepAliveClientMixin {
               color: SchrodleColors.unevaluated,
               border: Border.all(color: borderColor),
             ),
-            child: Center(
+            child: FittedBox(
               child: Text(
                 tileLetter,
                 style: const TextStyle(
@@ -98,7 +98,7 @@ class _TileState extends State<Tile> with AutomaticKeepAliveClientMixin {
           ),
           back: ColoredBox(
             color: color,
-            child: Center(
+            child: FittedBox(
               child: Text(
                 tileLetter,
                 style: const TextStyle(
