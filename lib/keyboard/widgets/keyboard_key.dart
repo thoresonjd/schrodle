@@ -15,46 +15,51 @@ class KeyboardKey extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const keySpacing = 2.0;
-    const textMargin = 5.0;
-    const borderHighlightSize = 5.0;
-    const borderShadowSize = 10.0;
-    const textSize = 20.0;
-    return Container(
-      margin: const EdgeInsets.all(keySpacing),
-      decoration: const BoxDecoration(
-        color: SchrodleColors.background,
-      ),
-      child: Material(
-        color: SchrodleColors.none,
-        child: InkWell(
-          onTap: () => {handleKeyPress(context: context, key: keyboardKey)},
+    const keySpacing = 1.0;
+    const textPaddingHorizontal = 10.0;
+    const textPaddingVertical = 5.0;
+    const borderHighlightSize = 2.5;
+    const borderShadowSize = 5.0;
+    const textSize = 25.0;
+    return Flexible(
+      child: IntrinsicWidth(
+        child: FittedBox(
           child: Container(
+            margin: const EdgeInsets.all(keySpacing),
             decoration: const BoxDecoration(
-              border: Border(
-                left: BorderSide(
-                  color: SchrodleColors.highlight,
-                  width: borderHighlightSize,
-                ),
-                top: BorderSide(
-                  color: SchrodleColors.highlight,
-                  width: borderHighlightSize,
-                ),
-                right: BorderSide(width: borderShadowSize),
-                bottom: BorderSide(width: borderShadowSize),
-              ),
+              color: SchrodleColors.background,
             ),
-            child: Center(
-              child: Container(
-                margin: const EdgeInsets.only(
-                  left: textMargin,
-                  right: textMargin,
-                ),
-                child: Text(
-                  keyboardKey.keyLabel,
-                  style: const TextStyle(
-                    fontSize: textSize,
-                    fontWeight: FontWeight.bold,
+            child: Material(
+              color: SchrodleColors.none,
+              child: InkWell(
+                onTap: () => {handleKeyPress(context: context, key: keyboardKey)},
+                child: Container(
+                  padding: const EdgeInsets.fromLTRB(
+                    textPaddingHorizontal,
+                    textPaddingVertical,
+                    textPaddingHorizontal,
+                    textPaddingVertical,
+                  ),
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      left: BorderSide(
+                        color: SchrodleColors.highlight,
+                        width: borderHighlightSize,
+                      ),
+                      top: BorderSide(
+                        color: SchrodleColors.highlight,
+                        width: borderHighlightSize,
+                      ),
+                      right: BorderSide(width: borderShadowSize),
+                      bottom: BorderSide(width: borderShadowSize),
+                    ),
+                  ),
+                  child: Text(
+                    keyboardKey.keyLabel,
+                    style: const TextStyle(
+                      fontSize: textSize,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
