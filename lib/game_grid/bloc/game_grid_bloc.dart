@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:schrodle/game_grid/data/allotted_guesses.dart';
+import 'package:schrodle/game_grid/data/game_mode.dart';
 import 'package:schrodle/game_grid/data/game_url.dart';
 import 'package:schrodle/game_grid/data/tile_status.dart';
 import 'package:schrodle/game_grid/data/tile_status_characters.dart';
@@ -54,8 +54,8 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
   /// The date of the current Schrodle game.
   late final DateTime _today;
 
-  /// Whether the game should be played in normal mode or hard mode.
-  late final bool _hardMode;
+  /// Determines which mode the game shall be played in.
+  late final GameMode _gameMode;
 
   /// The current row to track in the grid.
   int _row = 0;
@@ -108,8 +108,8 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
   /// Loads the grid.
   Future<void> _loadGrid(LoadGrid event, Emitter<GameGridState> emit) async {
     await _populateLexicons();
-    _hardMode = event.hardMode;
-    _numRows = _hardMode ? allottedGuessesHard : allottedGuessesNormal;
+    _gameMode = event.gameMode;
+    _numRows = _gameMode.allottedGuesses;
     _today = _date;
     _randomWordSelector =
         RandomWordSelector(seed: _today.millisecondsSinceEpoch);
@@ -159,7 +159,7 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
       return;
     }
     late final String word;
-    if (_hardMode) {
+    if (_gameMode == GameMode.hard) {
       // Hard mode:
       // Build the word to check against where each individual letter has a
       // fifty percentchance of being derived from either the target word or
@@ -291,7 +291,7 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
     final buffer = StringBuffer()
       ..writeln('Schrodle')
       ..writeln('Date: $date')
-      ..writeln('Mode: ${_hardMode ? 'Hard' : 'Normal'}')
+      ..writeln('Mode: ${_gameMode.name}')
       ..writeln('Score: ${_targetGuessed ? _row : 'X'}/$_numRows')
       ..writeln(gameUrl);
     for (var row = 0; row < _row; row++) {

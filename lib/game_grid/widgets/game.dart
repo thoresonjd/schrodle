@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schrodle/game_grid/bloc/game_grid_bloc.dart';
+import 'package:schrodle/game_grid/data/game_mode.dart';
 import 'package:schrodle/game_grid/widgets/grid.dart';
 import 'package:schrodle/game_grid/widgets/results.dart';
 import 'package:schrodle/information/information.dart';
@@ -19,7 +20,7 @@ class Game extends StatefulWidget {
 }
 
 class _GameState extends State<Game> {
-  bool? hardMode;
+  GameMode? gameMode;
 
   /// Renders game results in a dialog box.
   void _showResults(BuildContext context) {
@@ -68,7 +69,7 @@ class _GameState extends State<Game> {
             children: [
               TextButton(
                 onPressed: () => setState(() {
-                  hardMode = false;
+                  gameMode = GameMode.normal;
                 }),
                 style: TextButton.styleFrom(
                   backgroundColor: SchrodleColors.normal,
@@ -78,7 +79,7 @@ class _GameState extends State<Game> {
               const SizedBox(width: sectionSpacing),
               TextButton(
                 onPressed: () => setState(() {
-                  hardMode = true;
+                  gameMode = GameMode.hard;
                 }),
                 style: TextButton.styleFrom(
                   backgroundColor: SchrodleColors.hard,
@@ -106,7 +107,7 @@ class _GameState extends State<Game> {
       providers: [
         BlocProvider<GameGridBloc>(
           create: (BuildContext context) =>
-              GameGridBloc()..add(LoadGrid(hardMode: hardMode!)),
+              GameGridBloc()..add(LoadGrid(gameMode: gameMode!)),
         ),
         BlocProvider<KeyboardBloc>(
           create: (BuildContext context) =>
@@ -140,7 +141,7 @@ class _GameState extends State<Game> {
               child: Column(
                 children: [
                   const SizedBox(height: sectionSpacing),
-                  Center(child: Grid(hardMode: hardMode!)),
+                  Center(child: Grid(gameMode: gameMode!)),
                   const SizedBox(height: sectionSpacing),
                   const Keyboard(),
                 ],
@@ -154,6 +155,6 @@ class _GameState extends State<Game> {
 
   @override
   Widget build(BuildContext context) {
-    return hardMode == null ? _landing() : _game(context);
+    return gameMode == null ? _landing() : _game(context);
   }
 }

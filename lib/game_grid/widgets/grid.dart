@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schrodle/dialog/dialog.dart';
 import 'package:schrodle/game_grid/bloc/game_grid_bloc.dart';
-import 'package:schrodle/game_grid/data/allotted_guesses.dart';
+import 'package:schrodle/game_grid/data/game_mode.dart';
 import 'package:schrodle/game_grid/widgets/tile.dart';
 import 'package:schrodle/keyboard/bloc/keyboard_bloc.dart';
 
@@ -11,8 +11,8 @@ import 'package:schrodle/keyboard/bloc/keyboard_bloc.dart';
 /// {@endtemplate}
 class Grid extends StatelessWidget {
   /// {@macro grid}
-  Grid({required bool hardMode, super.key}) {
-    _numRows = hardMode ? allottedGuessesHard : allottedGuessesNormal;
+  Grid({required GameMode gameMode, super.key}) {
+    _numRows = gameMode.allottedGuesses;
     _createTiles();
   }
 

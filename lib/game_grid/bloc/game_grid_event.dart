@@ -17,13 +17,13 @@ sealed class GameGridEvent extends Equatable {
 /// {@endtemplate}
 class LoadGrid extends GameGridEvent {
   /// {@macro load_grid}
-  const LoadGrid({required this.hardMode});
+  const LoadGrid({required this.gameMode});
 
-  /// Denotes whether the game is to be played in hard mode.
-  final bool hardMode;
+  /// Denotes which game mode shall be played.
+  final GameMode gameMode;
 
   @override
-  List<Object> get props => [hardMode];
+  List<Object> get props => [gameMode];
 }
 
 /// {@template guess_made}
