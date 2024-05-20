@@ -22,7 +22,11 @@ class RandomWordSelector {
   }
 
   /// Chooses between two provided words.
-  String choose({required String first, required String second}) {
-    return _rng.nextBool() ? first : second;
+  String choose({
+    required String first,
+    required String second,
+    required double probabilityFirst,
+  }) {
+    return _rng.nextDouble() <= probabilityFirst ? first : second;
   }
 }
