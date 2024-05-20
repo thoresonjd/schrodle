@@ -42,8 +42,11 @@ abstract final class SchrodleColors {
   /// The color representing normal mode.
   static const Color normal = Color(0xFF66BB6A);
 
+  /// The color representing probabilistic mode.
+  static const Color probabilistic = Color(0xFFF9A825);
+
   /// The color representing hard mode.
-  static const Color hard = Colors.red;
+  static const Color hard = Color(0xFFE53935);
   
   /// The color to render on a button
   static const Color button = Colors.blue;

@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:schrodle/game_grid/data/allotted_guesses.dart';
+import 'package:schrodle/game_grid/data/game_mode.dart';
 import 'package:schrodle/game_grid/data/game_url.dart';
 import 'package:schrodle/game_grid/data/tile_status.dart';
 import 'package:schrodle/game_grid/data/tile_status_characters.dart';
@@ -26,6 +26,9 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
     on<ColumnBackward>(_columnBackward);
     on<EndGame>(_endGame);
   }
+
+  /// The amount in which the probability of target word selection changes.
+  static const double _targetSelectionProbabilityDelta = 0.1;
 
   /// The number of columns in the grid.
   static const int _numColumns = 5;
@@ -54,8 +57,11 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
   /// The date of the current Schrodle game.
   late final DateTime _today;
 
-  /// Whether the game should be played in normal mode or hard mode.
-  late final bool _hardMode;
+  /// Determines which mode the game shall be played in.
+  late final GameMode _gameMode;
+
+  /// The probability in which the target word will be selected.
+  double _targetSelectionProbability = 0.5;
 
   /// The current row to track in the grid.
   int _row = 0;
@@ -74,8 +80,7 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
 
   /// Populates two [Lexicon] instances with valid solutions and guesses.
   Future<void> _populateLexicons() async {
-    _validGuesses =
-        await Lexicon.fromFile(filePath: 'assets/lexicon/guesses');
+    _validGuesses = await Lexicon.fromFile(filePath: 'assets/lexicon/guesses');
     _validSolutions =
         await Lexicon.fromFile(filePath: 'assets/lexicon/solutions');
   }
@@ -108,8 +113,8 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
   /// Loads the grid.
   Future<void> _loadGrid(LoadGrid event, Emitter<GameGridState> emit) async {
     await _populateLexicons();
-    _hardMode = event.hardMode;
-    _numRows = _hardMode ? allottedGuessesHard : allottedGuessesNormal;
+    _gameMode = event.gameMode;
+    _numRows = _gameMode.allottedGuesses;
     _today = _date;
     _randomWordSelector =
         RandomWordSelector(seed: _today.millisecondsSinceEpoch);
@@ -159,34 +164,48 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
       return;
     }
     late final String word;
-    if (_hardMode) {
+    if (_gameMode == GameMode.hard) {
       // Hard mode:
       // Build the word to check against where each individual letter has a
       // fifty percentchance of being derived from either the target word or
       // the impostor word.
       final buffer = StringBuffer();
       for (var i = 0; i < _numColumns; i++) {
-        final choice =
-            _randomWordSelector.choose(first: _target, second: _impostor);
+        final choice = _randomWordSelector.choose(
+          first: _target,
+          second: _impostor,
+          probabilityFirst: _targetSelectionProbability,
+        );
         buffer.write(choice[i]);
       }
       word = buffer.toString();
     } else if (_isImpostor(guess)) {
-      // Normal mode:
+      // Normal + Probabilistic mode:
       // It may make it easier for the player to know if they have guessed the
       // impostor word. We can try this instead of relying on a 50/50 chance of
       // the impostor word being selected when correctly guessed.
       word = _impostor;
       _impostorGuessed = true;
     } else if (_impostorGuessed) {
-      // Normal mode:
+      // Normal + Probabilistic mode:
       // We can also prevent the impostor word from being selected again once
       // guessed for the first time.
       word = _target;
     } else {
-      // Normal mode:
+      // Normal + Probabilistic mode:
       // Randomly select between target and impostor words for each guess.
-      word = _randomWordSelector.choose(first: _target, second: _impostor);
+      word = _randomWordSelector.choose(
+        first: _target,
+        second: _impostor,
+        probabilityFirst: _targetSelectionProbability,
+      );
+    }
+    if (_gameMode == GameMode.probabilistic) {
+      // Probabilistic mode:
+      // Update target selection probability.
+      _targetSelectionProbability += word == _target
+          ? -_targetSelectionProbabilityDelta
+          : _targetSelectionProbabilityDelta;
     }
     final lettersLeft = word.characters.toList();
     // Mark letters in correct spot first
@@ -291,7 +310,7 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
     final buffer = StringBuffer()
       ..writeln('Schrodle')
       ..writeln('Date: $date')
-      ..writeln('Mode: ${_hardMode ? 'Hard' : 'Normal'}')
+      ..writeln('Mode: ${_gameMode.name}')
       ..writeln('Score: ${_targetGuessed ? _row : 'X'}/$_numRows')
       ..writeln(gameUrl);
     for (var row = 0; row < _row; row++) {
