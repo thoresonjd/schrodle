@@ -5,6 +5,9 @@ enum GameMode {
   /// Normal mode.
   normal(name: 'Normal', allottedGuesses: 10),
 
+  /// Probabilistic mode.
+  probabilistic(name: 'Probabilistic', allottedGuesses: 10),
+
   /// Hard mode.
   hard(name: 'Hard', allottedGuesses: 20);
 
