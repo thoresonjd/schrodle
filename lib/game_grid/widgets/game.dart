@@ -20,6 +20,7 @@ class Game extends StatefulWidget {
 }
 
 class _GameState extends State<Game> {
+  /// The mode in which the game shall be played.
   GameMode? gameMode;
 
   /// Renders game results in a dialog box.
@@ -75,6 +76,16 @@ class _GameState extends State<Game> {
                   backgroundColor: SchrodleColors.normal,
                 ),
                 child: const Text('Normal'),
+              ),
+              const SizedBox(width: sectionSpacing),
+              TextButton(
+                onPressed: () => setState(() {
+                  gameMode = GameMode.probabilistic;
+                }),
+                style: TextButton.styleFrom(
+                  backgroundColor: SchrodleColors.probabilistic,
+                ),
+                child: const Text('Probabilistic'),
               ),
               const SizedBox(width: sectionSpacing),
               TextButton(
