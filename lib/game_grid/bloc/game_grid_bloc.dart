@@ -27,6 +27,9 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
     on<EndGame>(_endGame);
   }
 
+  /// The amount in which the probability of target word selection changes.
+  static const double _targetSelectionProbabilityDelta = 0.1;
+
   /// The number of columns in the grid.
   static const int _numColumns = 5;
 
@@ -57,6 +60,9 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
   /// Determines which mode the game shall be played in.
   late final GameMode _gameMode;
 
+  /// The probability in which the target word will be selected.
+  double _targetSelectionProbability = 0.5;
+
   /// The current row to track in the grid.
   int _row = 0;
 
@@ -74,8 +80,7 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
 
   /// Populates two [Lexicon] instances with valid solutions and guesses.
   Future<void> _populateLexicons() async {
-    _validGuesses =
-        await Lexicon.fromFile(filePath: 'assets/lexicon/guesses');
+    _validGuesses = await Lexicon.fromFile(filePath: 'assets/lexicon/guesses');
     _validSolutions =
         await Lexicon.fromFile(filePath: 'assets/lexicon/solutions');
   }
@@ -166,27 +171,41 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
       // the impostor word.
       final buffer = StringBuffer();
       for (var i = 0; i < _numColumns; i++) {
-        final choice =
-            _randomWordSelector.choose(first: _target, second: _impostor);
+        final choice = _randomWordSelector.choose(
+          first: _target,
+          second: _impostor,
+          probabilityFirst: _targetSelectionProbability,
+        );
         buffer.write(choice[i]);
       }
       word = buffer.toString();
     } else if (_isImpostor(guess)) {
-      // Normal mode:
+      // Normal + Probabilistic mode:
       // It may make it easier for the player to know if they have guessed the
       // impostor word. We can try this instead of relying on a 50/50 chance of
       // the impostor word being selected when correctly guessed.
       word = _impostor;
       _impostorGuessed = true;
     } else if (_impostorGuessed) {
-      // Normal mode:
+      // Normal + Probabilistic mode:
       // We can also prevent the impostor word from being selected again once
       // guessed for the first time.
       word = _target;
     } else {
-      // Normal mode:
+      // Normal + Probabilistic mode:
       // Randomly select between target and impostor words for each guess.
-      word = _randomWordSelector.choose(first: _target, second: _impostor);
+      word = _randomWordSelector.choose(
+        first: _target,
+        second: _impostor,
+        probabilityFirst: _targetSelectionProbability,
+      );
+    }
+    if (_gameMode == GameMode.probabilistic) {
+      // Probabilistic mode:
+      // Update target selection probability.
+      _targetSelectionProbability += word == _target
+          ? -_targetSelectionProbabilityDelta
+          : _targetSelectionProbabilityDelta;
     }
     final lettersLeft = word.characters.toList();
     // Mark letters in correct spot first
