@@ -12,9 +12,13 @@ Schrodle is a game that is inspired by [Wordle](https://en.wikipedia.org/wiki/Wo
 
 Whenever a guess is made, there is a 50/50 chance that the guess will be validated against either the target or the impostor. Therefore, if the impostor is selected to validate the guess, letters can be marked as present in the target word when, in fact, they are absent (or in the incorrect position). It follows that letters may be simultaneously market correctly and incorrectly with respect to the target. Thus, the Schrödinger's Cat thought experiment is in essence, upheld.
 
+## Probabilistic mode
+
+When the target is selected, the probability to select it in a subsequent guess decreases. Conversely, the probability to select the target word will increase if it is not selected. The impostor has an inverse probability as the target, where the total selection probability for both equates to 100%. 
+
 ## Hard mode
 
-In hard mode, there is a 50/50 chance for each individual letter of the guess to be validated against the corresponding letter in either the target or the impostor. To compensate, the player is allotted additional guesses.
+The guess is validated against a constructed word where each individual letter has a 50/50 chance of being derived from the corresponding index in either the target or the impostor. To compensate, the player is allotted additional guesses.
 
 ## Example Scenario
 
