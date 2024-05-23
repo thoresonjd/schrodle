@@ -16,40 +16,28 @@ class Results extends StatelessWidget {
     const logoSize = 150.0;
     const sectionSpacing = 10.0;
     const textSize = 17.5;
-    return Align(
-      child: AlertDialog(
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Align(
-              alignment: Alignment.topRight,
-              child: IconButton(
-                alignment: Alignment.centerRight,
-                onPressed: () => Navigator.maybePop(context),
-                icon: const Icon(Icons.clear),
-              ),
-            ),
-            const Image(
-              width: logoSize,
-              height: logoSize,
-              image: AssetImage('assets/images/schrodle-light.png'),
-            ),
-            const SizedBox(height: sectionSpacing),
-            const Text(
-              'Thank you for playing Schrodle!',
-              style: TextStyle(
-                fontSize: textSize,
-              ),
-            ),
-            const SizedBox(height: sectionSpacing),
-            TextButton.icon(
-              label: const Text('Copy results'),
-              icon: const Icon(Icons.copy),
-              onPressed: () => Clipboard.setData(ClipboardData(text: results)),
-            ),
-          ],
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const Image(
+          width: logoSize,
+          height: logoSize,
+          image: AssetImage('assets/images/schrodle-light.png'),
         ),
-      ),
+        const SizedBox(height: sectionSpacing),
+        const Text(
+          'Thank you for playing Schrodle!',
+          style: TextStyle(
+            fontSize: textSize,
+          ),
+        ),
+        const SizedBox(height: sectionSpacing),
+        TextButton.icon(
+          label: const Text('Copy results'),
+          icon: const Icon(Icons.copy),
+          onPressed: () => Clipboard.setData(ClipboardData(text: results)),
+        ),
+      ],
     );
   }
 }
