@@ -76,7 +76,8 @@ class Grid extends StatelessWidget {
           }
         } else if (state is GuessEvaluated && state.message != null) {
           final message = state.message!.replaceAll('Exception: ', '');
-          timedMessageDialog(context: context, message: message, displayTime: dialogTime);
+          timedMessageDialog(
+              context: context, message: message, displayTime: dialogTime,);
         } else if (gameGridProvider.gameShouldEnd) {
           gameGridProvider.add(EndGame());
           keyboardProvider.add(DeactivateKeyboard());

@@ -11,9 +11,9 @@ void timedMessageDialog({
     barrierDismissible: false,
     barrierColor: Colors.transparent,
     context: context,
-    builder: (context) {
+    builder: (_) {
       Future.delayed(Duration(milliseconds: displayTime), () {
-        Navigator.of(context).pop();
+        Navigator.of(_).maybePop();
       });
       return AlertDialog(
         title: Text(

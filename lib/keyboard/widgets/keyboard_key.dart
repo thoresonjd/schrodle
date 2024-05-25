@@ -32,7 +32,7 @@ class KeyboardKey extends StatelessWidget {
             child: Material(
               color: SchrodleColors.none,
               child: InkWell(
-                onTap: () => {handleKeyPress(context: context, key: keyboardKey)},
+                onTap: () => handleKeyPress(context: context, key: keyboardKey),
                 child: Container(
                   padding: const EdgeInsets.fromLTRB(
                     textPaddingHorizontal,
