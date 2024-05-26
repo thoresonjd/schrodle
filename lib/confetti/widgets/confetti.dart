@@ -1,5 +1,6 @@
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
+import 'package:schrodle/theme/theme.dart';
 
 /// {@template confetti}
 /// Renders a confetti animation
@@ -15,6 +16,17 @@ class Confetti extends StatefulWidget {
 class _ConfettiState extends State<Confetti> {
   /// Controls the confetti animation.
   final ConfettiController _confettiController = ConfettiController();
+
+  /// The colors for the confetti.
+  final List<Color> _confettiColors = [
+    SchrodleColors.present,
+    SchrodleColors.correct,
+    SchrodleColors.guessed,
+    SchrodleColors.normal,
+    SchrodleColors.probabilistic,
+    SchrodleColors.hard,
+    SchrodleColors.button,
+  ];
 
   @override
   void initState() {
@@ -43,6 +55,7 @@ class _ConfettiState extends State<Confetti> {
       minBlastForce: minBlastForce,
       maxBlastForce: maxBlastForce,
       gravity: gravity,
+      colors: _confettiColors,
       shouldLoop: true,
     );
   }
