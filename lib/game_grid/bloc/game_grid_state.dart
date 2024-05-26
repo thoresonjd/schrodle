@@ -73,5 +73,8 @@ final class GridUpdated extends GameGridState {
 /// {@endtemplate}
 final class GameOver extends GameGridState {
   /// {@macro game_over}
-  const GameOver({required super.grid});
+  const GameOver({required super.grid, required this.won});
+
+  /// Denotes if the game was won or lost.
+  final bool won;
 }

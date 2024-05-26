@@ -31,6 +31,28 @@ To set up this project locally:
 - Clone this repository
 - Run `flutter pub get` in the root directory of this repository
 
+## Code Structure
+
+All game code is located within the `/lib` directory. Within `/lib`, there are additional directories deticated to individual components. Component directories are further organized into the following file structure:
+```
+component 
+ |- bloc
+ |   |- component_bloc.dart
+ |   |- component_bloc_event.dart
+ |   |- component_bloc_state.dart
+ |- classes 
+ |   |- ...
+ |- data
+ |   |- ...
+ |- models
+ |   |- ...
+ |- utils
+ |   |- ...
+ |- widgets
+ |   |- ...
+ |- component.dart
+```  
+
 ## Credit
 
 Created by Justin Thoreson and Ana Mendes.\

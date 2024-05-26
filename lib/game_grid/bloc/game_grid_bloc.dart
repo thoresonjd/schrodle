@@ -301,7 +301,7 @@ class GameGridBloc extends Bloc<GameGridEvent, GameGridState> {
 
   /// Ends the game.
   void _endGame(EndGame event, Emitter<GameGridState> emit) {
-    emit(GameOver(grid: Grid(tiles: _tiles)));
+    emit(GameOver(grid: Grid(tiles: _tiles), won: _targetGuessed));
   }
 
   /// Retrieves the results of the completed game as a [String].

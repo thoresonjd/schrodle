@@ -9,10 +9,12 @@ class Schrodle extends StatelessWidget {
   /// {@macro schrodle}
   const Schrodle({super.key});
 
+  static const String _title = 'Schrodle';
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Schrodle',
+      title: _title,
       theme: const SchrodleTheme().themeData,
       home: const Game(),
     );

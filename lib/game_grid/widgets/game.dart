@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:schrodle/confetti/confetti.dart';
+import 'package:schrodle/dialog/dialog.dart';
 import 'package:schrodle/game_grid/bloc/game_grid_bloc.dart';
 import 'package:schrodle/game_grid/data/game_mode.dart';
 import 'package:schrodle/game_grid/widgets/grid.dart';
@@ -21,23 +23,17 @@ class Game extends StatefulWidget {
 
 class _GameState extends State<Game> {
   /// The mode in which the game shall be played.
-  GameMode? gameMode;
+  GameMode? _gameMode;
 
   /// Renders game results in a dialog box.
   void _showResults(BuildContext context) {
     final results = BlocProvider.of<GameGridBloc>(context).results;
-    showDialog<void>(
-      context: context,
-      builder: (_) => Results(results: results),
-    );
+    persistentWidgetDialog(context: context, widget: Results(results: results));
   }
 
   /// Renders game information in a dialog box.
   void _showInformation(BuildContext context) {
-    showDialog<void>(
-      context: context,
-      builder: (_) => const Information(),
-    );
+    persistentWidgetDialog(context: context, widget: const Information());
   }
 
   /// Renders game's landing page, which includes game mode selection.
@@ -70,7 +66,7 @@ class _GameState extends State<Game> {
             children: [
               TextButton(
                 onPressed: () => setState(() {
-                  gameMode = GameMode.normal;
+                  _gameMode = GameMode.normal;
                 }),
                 style: TextButton.styleFrom(
                   backgroundColor: SchrodleColors.normal,
@@ -80,7 +76,7 @@ class _GameState extends State<Game> {
               const SizedBox(width: sectionSpacing),
               TextButton(
                 onPressed: () => setState(() {
-                  gameMode = GameMode.probabilistic;
+                  _gameMode = GameMode.probabilistic;
                 }),
                 style: TextButton.styleFrom(
                   backgroundColor: SchrodleColors.probabilistic,
@@ -90,7 +86,7 @@ class _GameState extends State<Game> {
               const SizedBox(width: sectionSpacing),
               TextButton(
                 onPressed: () => setState(() {
-                  gameMode = GameMode.hard;
+                  _gameMode = GameMode.hard;
                 }),
                 style: TextButton.styleFrom(
                   backgroundColor: SchrodleColors.hard,
@@ -118,7 +114,7 @@ class _GameState extends State<Game> {
       providers: [
         BlocProvider<GameGridBloc>(
           create: (BuildContext context) =>
-              GameGridBloc()..add(LoadGrid(gameMode: gameMode!)),
+              GameGridBloc()..add(LoadGrid(gameMode: _gameMode!)),
         ),
         BlocProvider<KeyboardBloc>(
           create: (BuildContext context) =>
@@ -151,8 +147,10 @@ class _GameState extends State<Game> {
             body: SingleChildScrollView(
               child: Column(
                 children: [
+                  if (state is GameOver && state.won)
+                    const Confetti(),
                   const SizedBox(height: sectionSpacing),
-                  Center(child: Grid(gameMode: gameMode!)),
+                  Center(child: Grid(gameMode: _gameMode!)),
                   const SizedBox(height: sectionSpacing),
                   const Keyboard(),
                 ],
@@ -166,6 +164,6 @@ class _GameState extends State<Game> {
 
   @override
   Widget build(BuildContext context) {
-    return gameMode == null ? _landing() : _game(context);
+    return _gameMode == null ? _landing() : _game(context);
   }
 }

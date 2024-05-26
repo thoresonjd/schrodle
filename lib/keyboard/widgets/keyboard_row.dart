@@ -7,22 +7,20 @@ import 'package:schrodle/keyboard/widgets/keyboard_key.dart';
 /// {@endtemplate}
 class KeyboardRow extends StatelessWidget {
   /// {@macro keyboard_row}
-  const KeyboardRow({required int start, required int end, super.key})
-      : _start = start,
-        _end = end;
+  const KeyboardRow({required this.start, required this.end, super.key});
 
   /// The starting index of the row in [keys].
-  final int _start;
+  final int start;
 
   /// The ending index of the row in [keys].
-  final int _end;
+  final int end;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        for (var i = _start; i <= _end; i++) KeyboardKey(keyboardKey: keys[i]),
+        for (var i = start; i <= end; i++) KeyboardKey(keyboardKey: keys[i]),
       ],
     );
   }

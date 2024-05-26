@@ -5,7 +5,6 @@ import 'package:flutter/services.dart' show rootBundle;
 
 /// {@template lexicon}
 /// Encapsulates a vocabulary of known words.
-/// Assumes the words are unique and sorted before read from a file.
 /// {@endtemplate}
 class Lexicon {
   /// {@macro lexicon}
@@ -18,6 +17,7 @@ class Lexicon {
 
   /// Static factory method that constructs a [Lexicon] instance and
   /// populates it from a file given a [filePath].
+  /// Assumes the words are unique and sorted before read from file.
   static Future<Lexicon> fromFile({required String filePath}) async {
     final lexicon = Lexicon._();
     await lexicon._populate(filePath: filePath);
