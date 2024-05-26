@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:schrodle/confetti/widgets/confetti.dart';
 import 'package:schrodle/dialog/dialog.dart';
 import 'package:schrodle/game_grid/bloc/game_grid_bloc.dart';
 import 'package:schrodle/game_grid/data/game_mode.dart';
@@ -146,6 +147,8 @@ class _GameState extends State<Game> {
             body: SingleChildScrollView(
               child: Column(
                 children: [
+                  if (state is GameOver && state.won)
+                    const Confetti(),
                   const SizedBox(height: sectionSpacing),
                   Center(child: Grid(gameMode: gameMode!)),
                   const SizedBox(height: sectionSpacing),
