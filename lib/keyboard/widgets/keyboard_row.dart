@@ -17,11 +17,11 @@ class KeyboardRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final rowLength = (end - start) + 1;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        for (var i = start; i <= end; i++) KeyboardKey(keyboardKey: keys[i]),
-      ],
+      children: List<KeyboardKey>.generate(rowLength, (column) => KeyboardKey(
+          keyboardKey: keys[start + column],),),
     );
   }
 }
