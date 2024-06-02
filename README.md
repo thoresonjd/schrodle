@@ -53,6 +53,10 @@ component
  |- component.dart
 ```  
 
+## Note
+
+The game is currently designed and deployed only for the web.
+
 ## Credit
 
 Created by Justin Thoreson and Ana Mendes.\
